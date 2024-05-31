@@ -26,7 +26,7 @@ public class RegionService {
 
     public Region update(Region region, Long id) {
         Region newRegion = getById(id);
-        newRegion.setRegion(region.getRegion());
+        newRegion.setName(region.getName());
 
         return repository.save(newRegion);
     }
