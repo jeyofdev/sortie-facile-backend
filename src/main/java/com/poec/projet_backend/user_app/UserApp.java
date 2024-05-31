@@ -1,6 +1,8 @@
 package com.poec.projet_backend.user_app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.poec.projet_backend.domain.profile.Profile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +33,11 @@ public class UserApp implements UserDetails {
     private String password;
 
     private String role;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("User")
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
 
 
