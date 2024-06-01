@@ -16,7 +16,7 @@ public class DepartmentService {
     public Department getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not fouund")
+                        () -> new EntityNotFoundException(id + " not found")
                 );
     }
 

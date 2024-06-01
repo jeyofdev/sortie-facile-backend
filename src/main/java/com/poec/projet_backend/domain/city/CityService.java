@@ -27,6 +27,8 @@ public class CityService {
     public City update(City city, Long id) {
         City newCity = getById(id);
         newCity.setName(city.getName());
+        newCity.setActivities(city.getActivities());
+        newCity.setActivities(city.getActivities());
 
         return repository.save(newCity);
     }

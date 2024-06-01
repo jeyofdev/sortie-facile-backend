@@ -16,7 +16,7 @@ public class RegionService {
     public Region getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not fouund")
+                        () -> new EntityNotFoundException(id + " not found")
                 );
     }
 
