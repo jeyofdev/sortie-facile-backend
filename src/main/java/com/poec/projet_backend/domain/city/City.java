@@ -10,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @Data
 @RequiredArgsConstructor
 @Entity

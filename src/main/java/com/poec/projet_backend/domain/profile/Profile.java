@@ -27,10 +27,8 @@ public class Profile {
     private String lastname;
     private String streetNumber;
     private String street;
-//    private Region region;
     private int postalCode;
     private String description;
-//    private Department department;
     private String avatar;
     private String phone;
     private Date dateOfBirth;

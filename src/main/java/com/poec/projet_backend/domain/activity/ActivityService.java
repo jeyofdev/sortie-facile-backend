@@ -1,11 +1,10 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.city.CityRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ActivityService {
 
     private ActivityRepository repository;
@@ -17,7 +16,7 @@ public class ActivityService {
     public Activity getById(Long id) {
         return repository.findById(id)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not fouund")
+                        () -> new EntityNotFoundException(id + " not found")
                 );
     }
 
@@ -36,6 +35,11 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
+        newActivity.setBookings(activity.getBookings());
+        newActivity.setCategories(activity.getCategories());
+        newActivity.setCity(activity.getCity());
+        newActivity.setDepartment(activity.getDepartment());
+        newActivity.setRegion(activity.getRegion());
 
         return repository.save(newActivity);
     }

@@ -1,6 +1,5 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.poec.projet_backend.domain.city.City;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
