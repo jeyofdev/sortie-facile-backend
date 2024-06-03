@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("city")
+@RequestMapping("/api/v1/category")
 @RequiredArgsConstructor
 public class CategoryController {
 
@@ -27,13 +27,13 @@ public class CategoryController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Category> add(@RequestBody Category categorie) {
-        return new ResponseEntity<>(service.add(categorie), HttpStatus.CREATED);
+    public ResponseEntity<Category> add(@RequestBody Category category) {
+        return new ResponseEntity<>(service.add(category), HttpStatus.CREATED);
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category categorie, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(categorie, id), HttpStatus.OK);
+    public ResponseEntity<Category> update(@RequestBody Category category, @PathVariable Long id) {
+        return new ResponseEntity<>(service.update(category, id), HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

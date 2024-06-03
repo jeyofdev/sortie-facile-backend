@@ -21,8 +21,8 @@ public class CategoryService {
                 );
     }
 
-    public Category add(Category booking) {
-        return repository.save(booking);
+    public Category add(Category category) {
+        return repository.save(category);
     }
 
     public Category update(Category category, Long id) {
