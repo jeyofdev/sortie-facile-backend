@@ -1,12 +1,15 @@
 package com.poec.projet_backend.domain.region;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class RegionService {
+
+    @Autowired
     private RegionRepository repository;
 
     public List<Region> getAll() {

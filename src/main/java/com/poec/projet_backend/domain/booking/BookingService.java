@@ -1,12 +1,14 @@
 package com.poec.projet_backend.domain.booking;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class BookingService {
 
+    @Autowired
     private BookingRepository repository;
 
     public List<Booking> getAll() {

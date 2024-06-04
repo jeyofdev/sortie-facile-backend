@@ -3,6 +3,7 @@ package com.poec.projet_backend.domain.profile;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 @Service
 public class ProfileService {
 
+    @Autowired
     private ProfileRepository repository;
 
     public List<Profile> getAll() {
