@@ -40,7 +40,10 @@ public class JwtAuthenticationErrors implements AuthenticationEntryPoint {
         } else if (request.getAttribute("no_jwt_provided") != null) {
             error.put("no_jwt_provided", "true");
             error.put("error_message", "No JWT provided.");
+        } else {
+            error.put("error_message", "An error occured");
         }
+
 
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }

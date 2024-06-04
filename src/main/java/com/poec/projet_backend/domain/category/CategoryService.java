@@ -1,6 +1,7 @@
 package com.poec.projet_backend.domain.category;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Service
 public class CategoryService {
 
+    @Autowired
     private CategoryRepository repository;
 
     public List<Category> getAll() {
