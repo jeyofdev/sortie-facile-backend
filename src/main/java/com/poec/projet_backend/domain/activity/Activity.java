@@ -22,7 +22,6 @@ public class Activity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
 
     @Column(name="activity_name", columnDefinition = "VARCHAR(100)", nullable = false)
