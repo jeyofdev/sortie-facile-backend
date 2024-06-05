@@ -16,24 +16,31 @@ public class CategoryController {
     private CategoryService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Category>> getAll() {
+    public ResponseEntity<List<CategoryDTO>> getAll() {
         List<Category> categories = service.getAll();
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public CategoryDTO getById(@PathVariable Long id) {
+        Category newCategory = service.getById(id);
+        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
+        return categoryDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Category> add(@RequestBody Category category) {
-        return new ResponseEntity<>(service.add(category), HttpStatus.CREATED);
+    public CategoryDTO add(@RequestBody Category category) {
+        Category newCategory = service.add(category);
+        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
+        return categoryDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Category> update(@RequestBody Category category, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(category, id), HttpStatus.OK);
+    public CategoryDTO update(@RequestBody Category category, @PathVariable Long id) {
+        Category newCategory = service.update(category, id);
+        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
+        return categoryDTO;
     }
 
     @DeleteMapping("delete/{id}")

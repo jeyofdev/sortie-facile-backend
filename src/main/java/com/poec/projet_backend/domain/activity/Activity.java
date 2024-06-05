@@ -45,7 +45,7 @@ public class Activity {
     @Column(name="activity_nbGuest", columnDefinition = "INT")
     private int nbGuest;
 
-    @Column(name="activity_hour", columnDefinition = "VARCHAR(255)", nullable = false)
+    @Column(name="activity_hour", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalTime hour;
 
     @Column(name="activity_isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
