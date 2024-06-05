@@ -19,6 +19,7 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "city_name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "city")
