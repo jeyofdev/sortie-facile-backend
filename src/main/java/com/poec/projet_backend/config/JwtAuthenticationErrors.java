@@ -41,6 +41,7 @@ public class JwtAuthenticationErrors implements AuthenticationEntryPoint {
             error.put("no_jwt_provided", "true");
             error.put("error_message", "No JWT provided.");
         } else {
+            System.out.println("add city ne marche pas");
             error.put("error_message", "An error occured");
         }
 

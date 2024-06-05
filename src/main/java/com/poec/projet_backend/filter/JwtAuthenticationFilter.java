@@ -17,11 +17,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private String[] urlPublicList = {"/api/v1/auth/**", "/api/v1/activity/all", "/api/v1/activity/{id}"};
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -37,12 +40,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
+        List<String> publicList = Arrays.asList(this.urlPublicList);
+        System.out.println("tu peux pas test");
+        System.out.println(publicList);
+        System.out.println(request.getRequestURI());
+        System.out.println(publicList.contains(request.getRequestURI()));
+        if (publicList.contains(request.getRequestURI())) {
+            System.out.println("on est ici");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        System.out.println("resultat: " + request.getRequestURI());
+
+
         /* On vérifie si authHeader n'est pas null ET si la valeur de la clé "Authorization" commence par "Bearer " */
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             request.setAttribute("no_jwt_provided", "No JWT provided");
             filterChain.doFilter(request, response);
-
-
             return;
         }
 
