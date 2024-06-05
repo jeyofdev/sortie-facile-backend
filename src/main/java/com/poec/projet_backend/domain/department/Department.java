@@ -19,7 +19,7 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String department;
+    private String name;
 
     @OneToMany(mappedBy = "department")
     @JsonIgnoreProperties("department")
