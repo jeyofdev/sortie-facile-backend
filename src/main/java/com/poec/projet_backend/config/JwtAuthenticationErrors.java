@@ -16,7 +16,9 @@ import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Component
-public class JwtAuthenticationErrors implements AuthenticationEntryPoint {
+public class
+
+JwtAuthenticationErrors implements AuthenticationEntryPoint {
 
     // Cette class permet de renvoyer au FRONT les erreurs liées aux problèmes d'authentification (JWT)
     @Override
