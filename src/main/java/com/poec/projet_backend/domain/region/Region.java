@@ -19,6 +19,7 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", columnDefinition = "VARCHAR(50)", nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "region")

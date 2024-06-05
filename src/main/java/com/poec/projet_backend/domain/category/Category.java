@@ -18,6 +18,7 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
     @ManyToMany(cascade = CascadeType.ALL)

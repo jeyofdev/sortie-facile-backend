@@ -13,12 +13,12 @@ public class Contact {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", columnDefinition = "VARCHAR(100)")
+    @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    @Column(name = "email", columnDefinition = "VARCHAR(100)")
+    @Column(name = "email", columnDefinition = "VARCHAR(100)", nullable = false)
     private String email;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "message", columnDefinition = "TEXT", nullable = false)
     private String message;
 }

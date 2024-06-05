@@ -23,16 +23,32 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "firstname", columnDefinition = "VARCHAR(100)", nullable = false)
     private String firstname;
+
+    @Column(name = "lastname", columnDefinition = "VARCHAR(100)", nullable = false)
     private String lastname;
+
+    @Column(name = "streetNumber", columnDefinition = "VARCHAR(100)")
     private String streetNumber;
+
+    @Column(name = "street", columnDefinition = "VARCHAR(100)")
     private String street;
+
+    @Column(name = "zip_code", columnDefinition = "INT(5)", nullable = false)
     private int postalCode;
+
+    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
+
+    @Column(name = "avatar", columnDefinition = "VARCHAR(255)")
     private String avatar;
+
+    @Column(name = "phone", columnDefinition = "VARCHAR(14)")
     private String phone;
+
+    @Column(name = "dateOfBirth", columnDefinition = "DATE", nullable = false)
     private Date dateOfBirth;
-    // private String genre;
 
     @ManyToMany(mappedBy = "profiles")
     @JsonIgnoreProperties("profiles")
