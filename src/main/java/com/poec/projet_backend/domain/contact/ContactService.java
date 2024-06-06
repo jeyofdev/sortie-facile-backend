@@ -23,8 +23,9 @@ public class ContactService {
                 );
     }
 
-    public Contact add(Contact activity) {
-        return repository.save(activity);
+    public Contact add(Contact contact) {
+        System.out.println("contact " + contact);
+        return repository.save(contact);
     }
 
     public Contact update(Contact contact, Long id) {
