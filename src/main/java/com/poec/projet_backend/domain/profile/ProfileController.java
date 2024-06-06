@@ -23,24 +23,25 @@ public class ProfileController {
     }
 
     @GetMapping("/{id}")
-    public ProfileDTO getById(@PathVariable Long id) {
+    public ResponseEntity<ProfileDTO> getById(@PathVariable Long id) {
         Profile newProfile = service.getById(id);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return profileDTO;
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
     @PostMapping("/add")
-    public ProfileDTO add(@RequestBody Profile profile) {
-        Profile newProfile = service.add(profile);
-        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return profileDTO;
+    public ResponseEntity<ProfileDTO> add(@RequestBody ProfileDTO profile) {
+        System.out.println("ca marche?"+ profile.toString());
+//        Profile newProfile = service.add(profile);
+//        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
+        return new ResponseEntity<>(profile, HttpStatus.CREATED);
     }
 
     @PutMapping("update/{id}")
-    public ProfileDTO update(@RequestBody Profile profile, @PathVariable Long id) {
+    public ResponseEntity<ProfileDTO> update(@RequestBody Profile profile, @PathVariable Long id) {
         Profile newProfile = service.update(profile, id);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return profileDTO;
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
     @DeleteMapping("delete/{id}")

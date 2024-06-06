@@ -27,12 +27,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private String[] urlPublicList = {"/api/v1/auth/all",
+    private String[] urlPublicList = {
+            "/api/v1/auth/all",
             "/api/v1/activity/all",
             "/api/v1/activity/{id}",
             "/api/v1/category/all",
             "/api/v1/category/{id}",
-            "/api/v1/contact/add"
+            "/api/v1/contact/add",
+            "/api/v1/profile/all"
     };
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;

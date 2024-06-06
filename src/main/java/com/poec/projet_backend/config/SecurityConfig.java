@@ -44,7 +44,8 @@ public class SecurityConfig {
                         "/api/v1/activity/{id}",
                         "/api/v1/category/all",
                         "/api/v1/category/{id}",
-                        "/api/v1/contact/add"
+                        "/api/v1/contact/add",
+                        "/api/v1/profile/all"
                         ).permitAll()
                 .requestMatchers("/api/v1/demo/users-only").hasAnyRole(Role.USER.name()) /* ROLE_USER */
                 .requestMatchers("/api/v1/demo/admin-only").hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */

@@ -48,7 +48,7 @@ public class Profile {
     private String phone;
 
     @Column(name = "dateOfBirth", columnDefinition = "DATE", nullable = false)
-    private Date dateOfBirth;
+    private String dateOfBirth;
 
     @ManyToMany(mappedBy = "profiles")
     private List<Category> categories = new ArrayList<>();

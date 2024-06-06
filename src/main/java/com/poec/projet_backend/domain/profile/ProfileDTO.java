@@ -16,7 +16,7 @@ public record ProfileDTO(
         String description,
         String avatar,
         String phone,
-        Date dateOfBirth,
+        String dateOfBirth,
         List<Long> categoryIds,
         List<Long> bookingIds,
         Long userId,
