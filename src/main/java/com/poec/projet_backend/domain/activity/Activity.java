@@ -52,25 +52,20 @@ public class Activity {
     private boolean isVisible;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("activities")
     @JoinColumn(name = "city_id")
     private City city;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("activities")
     @JoinColumn(name = "region_id")
     private Region region;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("activities")
     @JoinColumn(name = "department_id")
     private Department department;
 
     @OneToMany(mappedBy = "activity")
-    @JsonIgnoreProperties("activity")
     private List<Booking> bookings = new ArrayList<>();
 
     @ManyToMany(mappedBy = "activities")
-    @JsonIgnoreProperties("activities")
     private List<Category> categories= new ArrayList<>();
 }

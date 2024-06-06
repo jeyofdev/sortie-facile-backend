@@ -1,10 +1,5 @@
 package com.poec.projet_backend.domain.contact;
 
-import com.poec.projet_backend.domain.activity.Activity;
-import com.poec.projet_backend.domain.activity.ActivityService;
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

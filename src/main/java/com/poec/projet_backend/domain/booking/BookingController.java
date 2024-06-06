@@ -1,7 +1,5 @@
 package com.poec.projet_backend.domain.booking;
 
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.city.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

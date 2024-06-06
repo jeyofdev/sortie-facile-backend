@@ -18,28 +18,28 @@ public class CityController {
     @GetMapping("/all")
     public ResponseEntity<List<CityDTO>> getAll() {
         List<City> cities = service.getAll();
-        List<CityDTO> cityDTOS = cities.stream().map(com.poec.projet_backend.domain.city.CityDTO::mapFromEntity).toList();
+        List<CityDTO> cityDTOS = cities.stream().map(CityDTO::mapFromEntity).toList();
         return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
     public CityDTO getById(@PathVariable Long id) {
         City newCity = service.getById(id);
-        CityDTO cityDTO = com.poec.projet_backend.domain.city.CityDTO.mapFromEntity(newCity);
+        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return cityDTO;
     }
 
     @PostMapping("/add")
     public CityDTO add(@RequestBody City city) {
         City newCity = service.add(city);
-        CityDTO cityDTO = com.poec.projet_backend.domain.city.CityDTO.mapFromEntity(newCity);
+        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return cityDTO;
     }
 
     @PutMapping("update/{id}")
     public CityDTO update(@RequestBody City city, @PathVariable Long id) {
         City newCity = service.update(city, id);
-        CityDTO cityDTO = com.poec.projet_backend.domain.city.CityDTO.mapFromEntity(newCity);
+        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return cityDTO;
     }
 
