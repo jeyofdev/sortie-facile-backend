@@ -1,12 +1,15 @@
 package com.poec.projet_backend.domain.contact;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@RestController
+@RequestMapping("/api/v1/contact")
+@RequiredArgsConstructor
 public class ContactController {
 
     @Autowired
@@ -28,6 +31,7 @@ public class ContactController {
 
     @PostMapping("/add")
     public ContactDTO add(@RequestBody Contact contact) {
+        System.out.println("contact controller" + contact);
         Contact newContact = service.add(contact);
         ContactDTO contactDTO = ContactDTO.mapFromEntity(newContact);
         return contactDTO;

@@ -15,6 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import com.poec.projet_backend.util.enums.CrudRoute;
+import com.poec.projet_backend.util.enums.DomainRoute;
+
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -24,7 +27,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private String[] urlPublicList = {"/api/v1/auth/**", "/api/v1/activity/all", "/api/v1/activity/{id}"};
+    private String[] urlPublicList = {"/api/v1/auth/all",
+            "/api/v1/activity/all",
+            "/api/v1/activity/{id}",
+            "/api/v1/category/all",
+            "/api/v1/category/{id}",
+            "/api/v1/contact/add"
+    };
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
