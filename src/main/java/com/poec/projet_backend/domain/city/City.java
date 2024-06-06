@@ -23,11 +23,9 @@ public class City {
     private String name;
 
     @OneToMany(mappedBy = "city")
-    @JsonIgnoreProperties("city")
     private List<Activity> activities = new ArrayList<>();
 
     @OneToMany(mappedBy = "city")
-    @JsonIgnoreProperties("city")
     private List<Profile> profiles = new ArrayList<>();
 
 }

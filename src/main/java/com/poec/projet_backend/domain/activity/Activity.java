@@ -45,32 +45,27 @@ public class Activity {
     @Column(name="activity_nbGuest", columnDefinition = "INT")
     private int nbGuest;
 
-    @Column(name="activity_hour", columnDefinition = "VARCHAR(255)", nullable = false)
+    @Column(name="activity_hour", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalTime hour;
 
     @Column(name="activity_isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
     private boolean isVisible;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("activities")
     @JoinColumn(name = "city_id")
     private City city;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("activities")
     @JoinColumn(name = "region_id")
     private Region region;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("activities")
     @JoinColumn(name = "department_id")
     private Department department;
 
     @OneToMany(mappedBy = "activity")
-    @JsonIgnoreProperties("activity")
     private List<Booking> bookings = new ArrayList<>();
 
     @ManyToMany(mappedBy = "activities")
-    @JsonIgnoreProperties("activities")
     private List<Category> categories= new ArrayList<>();
 }

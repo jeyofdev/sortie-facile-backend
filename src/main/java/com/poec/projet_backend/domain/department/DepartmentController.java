@@ -17,24 +17,31 @@ public class DepartmentController {
     private DepartmentService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Department>> getAll() {
+    public ResponseEntity<List<DepartmentDTO>> getAll() {
         List<Department> departments = service.getAll();
-        return new ResponseEntity<>(departments, HttpStatus.OK);
+        List<DepartmentDTO> departmentDTOS = departments.stream().map(DepartmentDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Department> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public DepartmentDTO getById(@PathVariable Long id) {
+        Department newDepartment = service.getById(id);
+        DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
+        return departmentDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Department> add(@RequestBody Department department) {
-        return new ResponseEntity<>(service.add(department), HttpStatus.CREATED);
+    public DepartmentDTO add(@RequestBody Department department) {
+        Department newDepartment = service.add(department);
+        DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
+        return departmentDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Department> update(@RequestBody Department department, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(department, id), HttpStatus.OK);
+    public DepartmentDTO update(@RequestBody Department department, @PathVariable Long id) {
+        Department newDepartment = service.update(department, id);
+        DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
+        return departmentDTO;
     }
 
     @DeleteMapping("delete/{id}")

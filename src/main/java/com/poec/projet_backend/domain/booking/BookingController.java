@@ -1,7 +1,5 @@
 package com.poec.projet_backend.domain.booking;
 
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.city.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,24 +17,31 @@ public class BookingController {
     private BookingService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Booking>> getAll() {
+    public ResponseEntity<List<BookingDTO>> getAll() {
         List<Booking> bookings = service.getAll();
-        return new ResponseEntity<>(bookings, HttpStatus.OK);
+        List<BookingDTO> bookingDTOS = bookings.stream().map(BookingDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Booking> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public BookingDTO getById(@PathVariable Long id) {
+        Booking newBooking = service.getById(id);
+        BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
+        return bookingDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Booking> add(@RequestBody Booking booking) {
-        return new ResponseEntity<>(service.add(booking), HttpStatus.CREATED);
+    public BookingDTO add(@RequestBody Booking booking) {
+        Booking newBooking = service.add(booking);
+        BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
+        return bookingDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Booking> update(@RequestBody Booking booking, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(booking, id), HttpStatus.OK);
+    public BookingDTO update(@RequestBody Booking booking, @PathVariable Long id) {
+        Booking newBooking = service.update(booking, id);
+        BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
+        return bookingDTO;
     }
 
     @DeleteMapping("delete/{id}")

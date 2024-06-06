@@ -1,10 +1,5 @@
 package com.poec.projet_backend.domain.contact;
 
-import com.poec.projet_backend.domain.activity.Activity;
-import com.poec.projet_backend.domain.activity.ActivityService;
-import jakarta.persistence.*;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +13,31 @@ public class ContactController {
     private ContactService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Contact>> getAll() {
+    public ResponseEntity<List<ContactDTO>> getAll() {
         List<Contact> contacts = service.getAll();
-        return new ResponseEntity<>(contacts, HttpStatus.OK);
+        List<ContactDTO> contactDTOS = contacts.stream().map(ContactDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(contactDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Contact> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public ContactDTO getById(@PathVariable Long id) {
+        Contact newContact = service.getById(id);
+        ContactDTO contactDTO = ContactDTO.mapFromEntity(newContact);
+        return contactDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Contact> add(@RequestBody Contact contact) {
-        return new ResponseEntity<>(service.add(contact), HttpStatus.CREATED);
+    public ContactDTO add(@RequestBody Contact contact) {
+        Contact newContact = service.add(contact);
+        ContactDTO contactDTO = ContactDTO.mapFromEntity(newContact);
+        return contactDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Contact> update(@RequestBody Contact contact, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(contact, id), HttpStatus.OK);
+    public ContactDTO update(@RequestBody Contact contact, @PathVariable Long id) {
+        Contact newContact = service.update(contact, id);
+        ContactDTO contactDTO = ContactDTO.mapFromEntity(newContact);
+        return contactDTO;
     }
 
     @DeleteMapping("delete/{id}")

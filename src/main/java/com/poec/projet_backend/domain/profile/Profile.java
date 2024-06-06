@@ -51,29 +51,23 @@ public class Profile {
     private Date dateOfBirth;
 
     @ManyToMany(mappedBy = "profiles")
-    @JsonIgnoreProperties("profiles")
     private List<Category> categories = new ArrayList<>();
 
     @ManyToMany
-    @JsonIgnoreProperties("profiles")
     private List<Booking> bookings = new ArrayList<>();
 
     @OneToOne(mappedBy = "profile")
-    @JsonIgnoreProperties("profile")
     private UserApp user;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("profiles")
     @JoinColumn(name = "city_id")
     private City city;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("profiles")
     @JoinColumn(name = "department_id")
     private Department department;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("profiles")
     @JoinColumn(name = "region_id")
     private Region region;
 }

@@ -23,10 +23,8 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "department")
-    @JsonIgnoreProperties("department")
     private List<Activity> activities = new ArrayList<>();
 
     @OneToMany(mappedBy = "department")
-    @JsonIgnoreProperties("department")
     private List<Profile> profiles = new ArrayList<>();
 }

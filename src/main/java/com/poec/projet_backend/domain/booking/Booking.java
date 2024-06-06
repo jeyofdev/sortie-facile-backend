@@ -24,11 +24,9 @@ public class Booking {
     private Date createdAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("bookings")
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
     @ManyToMany(mappedBy = "bookings")
-    @JsonIgnoreProperties("bookings")
     private List<Profile> profiles = new ArrayList<>();
 }

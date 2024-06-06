@@ -22,10 +22,8 @@ public class Category {
     private String title;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("categories")
     private List<Activity> activities = new ArrayList<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("categories")
     private List<Profile> profiles = new ArrayList<>();
 }

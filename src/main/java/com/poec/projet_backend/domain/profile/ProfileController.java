@@ -1,7 +1,5 @@
 package com.poec.projet_backend.domain.profile;
 
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.city.CityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,24 +16,31 @@ public class ProfileController {
     private ProfileService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Profile>> getAll() {
+    public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profiles = service.getAll();
-        return new ResponseEntity<>(profiles, HttpStatus.OK);
+        List<ProfileDTO> profileDTOS = profiles.stream().map(ProfileDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(profileDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Profile> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public ProfileDTO getById(@PathVariable Long id) {
+        Profile newProfile = service.getById(id);
+        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
+        return profileDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Profile> add(@RequestBody Profile profile) {
-        return new ResponseEntity<>(service.add(profile), HttpStatus.CREATED);
+    public ProfileDTO add(@RequestBody Profile profile) {
+        Profile newProfile = service.add(profile);
+        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
+        return profileDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Profile> update(@RequestBody Profile profile, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(profile, id), HttpStatus.OK);
+    public ProfileDTO update(@RequestBody Profile profile, @PathVariable Long id) {
+        Profile newProfile = service.update(profile, id);
+        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
+        return profileDTO;
     }
 
     @DeleteMapping("delete/{id}")

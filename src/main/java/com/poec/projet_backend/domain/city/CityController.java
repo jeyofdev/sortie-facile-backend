@@ -16,24 +16,31 @@ public class CityController {
     private CityService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<City>> getAll() {
+    public ResponseEntity<List<CityDTO>> getAll() {
         List<City> cities = service.getAll();
-        return new ResponseEntity<>(cities, HttpStatus.OK);
+        List<CityDTO> cityDTOS = cities.stream().map(CityDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<City> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public CityDTO getById(@PathVariable Long id) {
+        City newCity = service.getById(id);
+        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
+        return cityDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<City> add(@RequestBody City city) {
-        return new ResponseEntity<>(service.add(city), HttpStatus.CREATED);
+    public CityDTO add(@RequestBody City city) {
+        City newCity = service.add(city);
+        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
+        return cityDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<City> update(@RequestBody City city, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(city, id), HttpStatus.OK);
+    public CityDTO update(@RequestBody City city, @PathVariable Long id) {
+        City newCity = service.update(city, id);
+        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
+        return cityDTO;
     }
 
     @DeleteMapping("delete/{id}")

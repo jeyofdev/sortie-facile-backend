@@ -16,24 +16,31 @@ public class RegionController {
     private RegionService service;
 
     @GetMapping("/all")
-    public ResponseEntity<List<Region>> getAll() {
+    public ResponseEntity<List<RegionDTO>> getAll() {
         List<Region> regions = service.getAll();
-        return new ResponseEntity<>(regions, HttpStatus.OK);
+        List<RegionDTO> regionDTOS = regions.stream().map(RegionDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(regionDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Region> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public RegionDTO getById(@PathVariable Long id) {
+        Region newRegion = service.getById(id);
+        RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
+        return regionDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Region> add(@RequestBody Region region) {
-        return new ResponseEntity<>(service.add(region), HttpStatus.CREATED);
+    public RegionDTO add(@RequestBody Region region) {
+        Region newRegion = service.add(region);
+        RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
+        return regionDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Region> update(@RequestBody Region region, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(region, id), HttpStatus.OK);
+    public RegionDTO update(@RequestBody Region region, @PathVariable Long id) {
+        Region newRegion = service.update(region, id);
+        RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
+        return regionDTO;
     }
 
     @DeleteMapping("delete/{id}")

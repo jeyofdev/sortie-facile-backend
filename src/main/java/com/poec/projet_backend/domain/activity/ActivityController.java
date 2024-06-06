@@ -16,25 +16,34 @@ public class ActivityController {
     @Autowired
     private ActivityService service;
 
+
     @GetMapping("/all")
-    public ResponseEntity<List<Activity>> getAll() {
+    public ResponseEntity<List<ActivityDTO>> getAll() {
         List<Activity> activities = service.getAll();
-        return new ResponseEntity<>(activities, HttpStatus.OK);
+        List<ActivityDTO> activityDTOS = activities.stream().map(ActivityDTO::mapFromEntity).toList();
+        return new ResponseEntity<>(activityDTOS, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Activity> getById(@PathVariable Long id) {
-        return new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+    public ActivityDTO getById(@PathVariable Long id) {
+        Activity newActivity = service.getById(id);
+        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
+        return activityDTO;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Activity> add(@RequestBody Activity activity) {
-        return new ResponseEntity<>(service.add(activity), HttpStatus.CREATED);
+    public ActivityDTO add(@RequestBody Activity activity) {
+        Activity newActivity = service.add(activity);
+        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
+        return activityDTO;
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<Activity> update(@RequestBody Activity activity, @PathVariable Long id) {
-        return new ResponseEntity<>(service.update(activity, id), HttpStatus.OK);
+    public ActivityDTO update(@RequestBody Activity activity, @PathVariable Long id) {
+        Activity newActivity = service.update(activity, id);
+        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
+        return activityDTO;
+
     }
 
     @DeleteMapping("delete/{id}")
