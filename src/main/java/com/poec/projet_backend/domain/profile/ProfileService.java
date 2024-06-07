@@ -2,6 +2,7 @@ package com.poec.projet_backend.domain.profile;
 
 import com.poec.projet_backend.domain.booking.BookingRepository;
 import com.poec.projet_backend.domain.category.CategoryRepository;
+import com.poec.projet_backend.user_app.UserAppRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ public class ProfileService {
     private CategoryRepository categoryRepository;
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private UserAppRepository userAppRepository;
 
 
     public List<Profile> getAll() {
@@ -34,6 +37,7 @@ public class ProfileService {
         Profile newProfile = ProfileBackDTO.mapToEntity(profileBackDTO);
         newProfile.setCategories(categoryRepository.findAllById(profileBackDTO.categoryIds()));
         newProfile.setBookings(bookingRepository.findAllById(profileBackDTO.bookingIds()));
+        newProfile.setUser(userAppRepository.findById(profileBackDTO.userId()));
         return repository.save(newProfile);
     }
 
