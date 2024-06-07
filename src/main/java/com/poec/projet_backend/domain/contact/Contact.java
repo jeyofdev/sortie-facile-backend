@@ -21,4 +21,10 @@ public class Contact {
 
     @Column(name = "message", columnDefinition = "TEXT", nullable = false)
     private String message;
+
+    public Contact(String title, String email, String message) {
+        this.title = title;
+        this.email = email;
+        this.message = message;
+    }
 }

@@ -7,43 +7,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.poec.projet_backend.util.Route.*;
+
 @RestController
-@RequestMapping("/api/v1/category")
+@RequestMapping(BASE_URL + CATEGORY)
 @RequiredArgsConstructor
 public class CategoryController {
 
     @Autowired
     private CategoryService service;
 
-    @GetMapping("/all")
+    @GetMapping(ALL)
     public ResponseEntity<List<CategoryDTO>> getAll() {
         List<Category> categories = service.getAll();
         List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
         return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public CategoryDTO getById(@PathVariable Long id) {
+    @GetMapping(ID)
+    public ResponseEntity<CategoryDTO> getById(@PathVariable Long id) {
         Category newCategory = service.getById(id);
         CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
-        return categoryDTO;
+        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public CategoryDTO add(@RequestBody Category category) {
+    @PostMapping(ADD)
+    public ResponseEntity<CategoryDTO> add(@RequestBody Category category) {
         Category newCategory = service.add(category);
         CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
-        return categoryDTO;
+        return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{id}")
-    public CategoryDTO update(@RequestBody Category category, @PathVariable Long id) {
+    @PutMapping(UPDATE)
+    public ResponseEntity<CategoryDTO> update(@RequestBody Category category, @PathVariable Long id) {
         Category newCategory = service.update(category, id);
         CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
-        return categoryDTO;
+        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(DELETE)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

@@ -7,44 +7,47 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.poec.projet_backend.util.Route.*;
+
 @RestController
-@RequestMapping("/api/v1/profile")
+@RequestMapping(BASE_URL + PROFILE)
 @RequiredArgsConstructor
 public class ProfileController {
 
     @Autowired
     private ProfileService service;
 
-    @GetMapping("/all")
+@GetMapping(ALL)
     public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profiles = service.getAll();
         List<ProfileDTO> profileDTOS = profiles.stream().map(ProfileDTO::mapFromEntity).toList();
         return new ResponseEntity<>(profileDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ProfileDTO getById(@PathVariable Long id) {
+    @GetMapping(ID)
+    public ResponseEntity<ProfileDTO> getById(@PathVariable Long id) {
         Profile newProfile = service.getById(id);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return profileDTO;
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public ProfileDTO add(@RequestBody Profile profile) {
-        Profile newProfile = service.add(profile);
-        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return profileDTO;
+    @PostMapping(ADD)
+    public ResponseEntity<Profile> add(@RequestBody ProfileBackDTO profileBackDTO) {
+        Profile newProfile = service.add(profileBackDTO);
+        return new ResponseEntity<>(newProfile, HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{id}")
-    public ProfileDTO update(@RequestBody Profile profile, @PathVariable Long id) {
+    @PutMapping(UPDATE)
+    public ResponseEntity<ProfileDTO> update(@RequestBody Profile profile, @PathVariable Long id) {
         Profile newProfile = service.update(profile, id);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return profileDTO;
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(DELETE)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
 }
