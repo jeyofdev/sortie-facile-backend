@@ -25,7 +25,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String[] urlPublicList = {
-            "/api/v1/auth/all",
+            "/api/v1/auth/**",
             "/api/v1/activity/all",
             "/api/v1/activity/{id}",
             "/api/v1/category/all",
@@ -33,7 +33,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             "/api/v1/category/add",
             "/api/v1/contact/add",
             "/api/v1/profile/add",
-            "/api/v1/profile/all"
+            "/api/v1/profile/all",
+            "/api/v1/profile/{id}}",
+            "/api/v1/region/all"
     };
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
@@ -103,7 +105,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         /* Une fois le traitement terminé, je passe au filtre suivant */
         filterChain.doFilter(request, response);
-
     }
 }
 

@@ -2,6 +2,7 @@ package com.poec.projet_backend.domain.region;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poec.projet_backend.domain.activity.Activity;
+import com.poec.projet_backend.domain.department.Department;
 import com.poec.projet_backend.domain.profile.Profile;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,4 +30,7 @@ public class Region {
     @OneToMany(mappedBy = "region")
     @JsonIgnoreProperties("region")
     private List<Profile> profiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "region")
+    private List<Department> departments = new ArrayList<>();
 }

@@ -1,3 +1,4 @@
+USE sortie_facile;
 DROP TABLE IF EXISTS Department;
 DROP TABLE IF EXISTS Region;
 DROP TABLE IF EXISTS City;
