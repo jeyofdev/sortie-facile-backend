@@ -51,6 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
+
         System.out.println("resultat: " + request.getRequestURI());
 
 
