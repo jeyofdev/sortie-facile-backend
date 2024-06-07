@@ -19,8 +19,11 @@ public class Department {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "department_name", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name = "name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
+
+    @Column(name = "region_id", columnDefinition = "INT", nullable = false)
+    private Long region_id;
 
     @OneToMany(mappedBy = "department")
     private List<Activity> activities = new ArrayList<>();
