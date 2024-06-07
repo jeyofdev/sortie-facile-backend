@@ -7,43 +7,46 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.poec.projet_backend.util.Route.*;
+
 @RestController
-@RequestMapping("/api/v1/city")
+@RequestMapping(BASE_URL + CITY)
 @RequiredArgsConstructor
 public class CityController {
 
     @Autowired
     private CityService service;
 
-    @GetMapping("/all")
+    @GetMapping(ALL)
     public ResponseEntity<List<CityDTO>> getAll() {
         List<City> cities = service.getAll();
         List<CityDTO> cityDTOS = cities.stream().map(CityDTO::mapFromEntity).toList();
         return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public CityDTO getById(@PathVariable Long id) {
+    @GetMapping(ID)
+    public ResponseEntity<CityDTO> getById(@PathVariable Long id) {
         City newCity = service.getById(id);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
-        return cityDTO;
+        return new ResponseEntity<>(cityDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public CityDTO add(@RequestBody City city) {
+    @PostMapping(ADD)
+    public ResponseEntity<CityDTO> add(@RequestBody City city) {
         City newCity = service.add(city);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
-        return cityDTO;
+        return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{id}")
-    public CityDTO update(@RequestBody City city, @PathVariable Long id) {
+    @PutMapping(UPDATE)
+    public ResponseEntity<CityDTO> update(@RequestBody City city, @PathVariable Long id) {
         City newCity = service.update(city, id);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
-        return cityDTO;
+        return new ResponseEntity<>(cityDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(DELETE)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

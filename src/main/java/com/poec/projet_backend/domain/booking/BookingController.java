@@ -8,43 +8,45 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.poec.projet_backend.util.Route.*;
+
 @RestController
-@RequestMapping("/api/v1/booking")
+@RequestMapping(BASE_URL + BOOKING)
 @RequiredArgsConstructor
 public class BookingController {
 
     @Autowired
     private BookingService service;
 
-    @GetMapping("/all")
+    @GetMapping(ALL)
     public ResponseEntity<List<BookingDTO>> getAll() {
         List<Booking> bookings = service.getAll();
         List<BookingDTO> bookingDTOS = bookings.stream().map(BookingDTO::mapFromEntity).toList();
         return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public BookingDTO getById(@PathVariable Long id) {
+    @GetMapping(ID)
+    public ResponseEntity<BookingDTO> getById(@PathVariable Long id) {
         Booking newBooking = service.getById(id);
         BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
-        return bookingDTO;
+        return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public BookingDTO add(@RequestBody Booking booking) {
+    @PostMapping(ADD)
+    public ResponseEntity<BookingDTO> add(@RequestBody Booking booking) {
         Booking newBooking = service.add(booking);
         BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
-        return bookingDTO;
+        return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{id}")
-    public BookingDTO update(@RequestBody Booking booking, @PathVariable Long id) {
+    @PutMapping(UPDATE)
+    public ResponseEntity<BookingDTO> update(@RequestBody Booking booking, @PathVariable Long id) {
         Booking newBooking = service.update(booking, id);
         BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
-        return bookingDTO;
+        return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(DELETE)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

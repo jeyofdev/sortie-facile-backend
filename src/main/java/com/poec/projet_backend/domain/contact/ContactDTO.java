@@ -14,4 +14,11 @@ public record ContactDTO(
                 contact.getMessage()
         );
     }
+    public static Contact mapToEntity(ContactDTO contactDTO) {
+        return new Contact(
+                contactDTO.title(),
+                contactDTO.email(),
+                contactDTO.message()
+        );
+    }
 }
