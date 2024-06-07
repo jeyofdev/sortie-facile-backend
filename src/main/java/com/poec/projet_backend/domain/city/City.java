@@ -26,9 +26,6 @@ public class City {
     @Column(name = "name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
-//    @Column(name = "department_id", columnDefinition = "INT", nullable = false)
-//    private Long departmentId;
-
     @OneToMany(mappedBy = "city")
     private List<Activity> activities = new ArrayList<>();
 
