@@ -1,6 +1,7 @@
 package com.poec.projet_backend.domain.profile;
 
 import java.util.List;
+import java.util.Optional;
 
 public record ProfileBackDTO(
 
@@ -14,7 +15,8 @@ public record ProfileBackDTO(
         String phone,
         String dateOfBirth,
         List<Long> categoryIds,
-        List<Long> bookingIds
+        List<Long> bookingIds,
+        Optional<Long> userId
 
        ) {
     public static Profile mapToEntity(ProfileBackDTO profileBackDTO) {
