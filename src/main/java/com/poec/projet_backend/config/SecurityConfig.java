@@ -42,7 +42,7 @@ public class SecurityConfig {
             // Liste des routes protégées / non protégées
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers(
-                        "/api/v1/auth/all",
+                        "/api/v1/auth/a**",
                         "/api/v1/activity/all",
                         "/api/v1/activity/{id}",
                         "/api/v1/category/all",

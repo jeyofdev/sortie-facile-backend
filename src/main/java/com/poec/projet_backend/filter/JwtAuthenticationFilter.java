@@ -25,7 +25,7 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private String[] urlPublicList = {
-            "/api/v1/auth/all",
+            "/api/v1/auth/**",
             "/api/v1/activity/all",
             "/api/v1/activity/{id}",
             "/api/v1/category/all",
