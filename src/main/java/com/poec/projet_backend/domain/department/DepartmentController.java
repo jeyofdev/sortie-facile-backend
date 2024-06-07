@@ -8,43 +8,45 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.poec.projet_backend.util.Route.*;
+
 @RestController
-@RequestMapping("/api/v1/department")
+@RequestMapping(BASE_URL + DEPARTMENT)
 @RequiredArgsConstructor
 public class DepartmentController {
 
     @Autowired
     private DepartmentService service;
 
-    @GetMapping("/all")
+    @GetMapping(ALL)
     public ResponseEntity<List<DepartmentDTO>> getAll() {
         List<Department> departments = service.getAll();
         List<DepartmentDTO> departmentDTOS = departments.stream().map(DepartmentDTO::mapFromEntity).toList();
         return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public DepartmentDTO getById(@PathVariable Long id) {
+    @GetMapping(ID)
+    public ResponseEntity<DepartmentDTO> getById(@PathVariable Long id) {
         Department newDepartment = service.getById(id);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
-        return departmentDTO;
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
-    @PostMapping("/add")
-    public DepartmentDTO add(@RequestBody Department department) {
+    @PostMapping(ADD)
+    public ResponseEntity<DepartmentDTO> add(@RequestBody Department department) {
         Department newDepartment = service.add(department);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
-        return departmentDTO;
+        return new ResponseEntity<>(departmentDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{id}")
-    public DepartmentDTO update(@RequestBody Department department, @PathVariable Long id) {
+    @PutMapping(UPDATE)
+    public ResponseEntity<DepartmentDTO> update(@RequestBody Department department, @PathVariable Long id) {
         Department newDepartment = service.update(department, id);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
-        return departmentDTO;
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping(DELETE)
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }

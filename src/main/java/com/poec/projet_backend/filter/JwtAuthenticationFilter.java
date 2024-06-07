@@ -15,9 +15,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import com.poec.projet_backend.util.enums.CrudRoute;
-import com.poec.projet_backend.util.enums.DomainRoute;
-
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -27,12 +24,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private String[] urlPublicList = {"/api/v1/auth/all",
+    private String[] urlPublicList = {
+            "/api/v1/auth/all",
             "/api/v1/activity/all",
             "/api/v1/activity/{id}",
             "/api/v1/category/all",
             "/api/v1/category/{id}",
-            "/api/v1/contact/add"
+            "/api/v1/category/add",
+            "/api/v1/contact/add",
+            "/api/v1/profile/add",
+            "/api/v1/profile/all"
     };
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
@@ -50,18 +51,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String userEmail;
 
         List<String> publicList = Arrays.asList(this.urlPublicList);
-        System.out.println("tu peux pas test");
-        System.out.println(publicList);
-        System.out.println(request.getRequestURI());
-        System.out.println(publicList.contains(request.getRequestURI()));
+        System.out.println("on récupère la publicList ici: " + publicList);
+
         if (publicList.contains(request.getRequestURI())) {
-            System.out.println("on est ici");
+            System.out.println("chemin autorisé");
             filterChain.doFilter(request, response);
             return;
         }
-
-        System.out.println("resultat: " + request.getRequestURI());
-
 
         /* On vérifie si authHeader n'est pas null ET si la valeur de la clé "Authorization" commence par "Bearer " */
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

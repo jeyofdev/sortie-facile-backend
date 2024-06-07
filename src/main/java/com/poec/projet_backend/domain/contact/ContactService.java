@@ -24,7 +24,7 @@ public class ContactService {
     }
 
     public Contact add(Contact contact) {
-        System.out.println("contact " + contact);
+        System.out.println("contact " + contact.toString());
         return repository.save(contact);
     }
 
