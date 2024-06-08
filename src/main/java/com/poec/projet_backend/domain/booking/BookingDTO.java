@@ -7,7 +7,7 @@ import java.util.List;
 
 public record BookingDTO(
         Long id,
-        Date createdAt,
+        String createdAt,
         Long activityId,
         List<Long> profileIds
 ) {

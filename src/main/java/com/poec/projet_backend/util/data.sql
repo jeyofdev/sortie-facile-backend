@@ -18,9 +18,6 @@ INSERT INTO Region (id, name) VALUES
                                   (12, 'Pays de la Loire'),
                                   (13, 'Provence-Alpes-Côte d''Azur');
 
--- Création de la table Department
-
--- Insertion des données dans la table Department
 INSERT INTO Department (id, name, region_id) VALUES
                                                  (1, 'Ain', 1),
                                                  (2, 'Aisne', 7),
@@ -118,8 +115,6 @@ INSERT INTO Department (id, name, region_id) VALUES
                                                  (94, 'Val-de-Marne', 8),
                                                  (95, 'Val-d''Oise', 8);
 
--- Insertion des préfectures et sous-préfectures dans la table City
--- Insertion des préfectures et sous-préfectures dans la table City avec code postal
 INSERT INTO City(id, postal_code, name, department_id) VALUES
                                                            (1, 1000, 'Bourg-en-Bresse', 1), -- Ain
                                                            (2, 1300, 'Belley', 1),
