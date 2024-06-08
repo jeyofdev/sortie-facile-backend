@@ -27,8 +27,8 @@ public class Activity {
     @Column(name="activity_name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
-    @Column(name="activity_date", columnDefinition = "DATE", nullable = false)
-    private Date date;
+    @Column(name="activity_date", nullable = false)
+    private String date;
 
     @Column(name="activity_age", columnDefinition = "INT")
     private int age;
@@ -45,8 +45,8 @@ public class Activity {
     @Column(name="activity_nbGuest", columnDefinition = "INT")
     private int nbGuest;
 
-    @Column(name="activity_hour", columnDefinition = "TIMESTAMP", nullable = false)
-    private LocalTime hour;
+    @Column(name="activity_hour", nullable = false)
+    private String hour;
 
     @Column(name="activity_isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
     private boolean isVisible;
@@ -68,4 +68,16 @@ public class Activity {
 
     @ManyToMany(mappedBy = "activities")
     private List<Category> categories= new ArrayList<>();
+
+    public Activity(String name, String date, int age, String imgUrl, String link, String description, int nbGuest, String hour, boolean isVisible) {
+        this.name = name;
+        this.date = date;
+        this.age = age;
+        this.imgUrl = imgUrl;
+        this.link = link;
+        this.description = description;
+        this.nbGuest = nbGuest;
+        this.hour = hour;
+        this.isVisible = isVisible;
+    }
 }
