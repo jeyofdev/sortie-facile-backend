@@ -33,10 +33,10 @@ public class BookingController {
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<BookingDTO> add(@RequestBody Booking booking) {
-        Booking newBooking = service.add(booking);
-        BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
-        return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
+    public ResponseEntity<Booking> add(@RequestBody BookingFrontToBackDTO bookingFrontToBackDTO) {
+        Booking newBooking = service.add(bookingFrontToBackDTO);
+
+        return new ResponseEntity<>(newBooking, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)

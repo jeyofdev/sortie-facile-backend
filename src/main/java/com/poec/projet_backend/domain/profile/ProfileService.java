@@ -33,8 +33,8 @@ public class ProfileService {
                 );
     }
 
-    public Profile add(ProfileBackDTO profileBackDTO) {
-        Profile newProfile = ProfileBackDTO.mapToEntity(profileBackDTO);
+    public Profile add(ProfileFromFrontToBackDTO profileBackDTO) {
+        Profile newProfile = ProfileFromFrontToBackDTO.mapToEntity(profileBackDTO);
         newProfile.setCategories(categoryRepository.findAllById(profileBackDTO.categoryIds()));
         newProfile.setBookings(bookingRepository.findAllById(profileBackDTO.bookingIds()));
         newProfile.setUser(userAppRepository.findById(profileBackDTO.userId()));
