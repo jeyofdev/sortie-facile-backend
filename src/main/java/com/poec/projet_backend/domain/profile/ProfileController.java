@@ -33,7 +33,7 @@ public class ProfileController {
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<Profile> add(@RequestBody ProfileBackDTO profileBackDTO) {
+    public ResponseEntity<Profile> add(@RequestBody ProfileFromFrontToBackDTO profileBackDTO) {
         Profile newProfile = service.add(profileBackDTO);
         return new ResponseEntity<>(newProfile, HttpStatus.CREATED);
     }

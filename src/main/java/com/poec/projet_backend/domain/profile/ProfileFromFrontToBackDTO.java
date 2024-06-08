@@ -3,7 +3,7 @@ package com.poec.projet_backend.domain.profile;
 import java.util.List;
 import java.util.Optional;
 
-public record ProfileBackDTO(
+public record ProfileFromFrontToBackDTO(
 
         String firstname,
         String lastname,
@@ -19,7 +19,7 @@ public record ProfileBackDTO(
         Optional<Long> userId
 
        ) {
-    public static Profile mapToEntity(ProfileBackDTO profileBackDTO) {
+    public static Profile mapToEntity(ProfileFromFrontToBackDTO profileBackDTO) {
         return new Profile(
                 profileBackDTO.firstname(),
                 profileBackDTO.lastname(),

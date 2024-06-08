@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @RequiredArgsConstructor
@@ -21,7 +22,7 @@ public class Booking {
     private Long id;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
-    private Date createdAt;
+    private String createdAt;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "activity_id")
@@ -29,4 +30,8 @@ public class Booking {
 
     @ManyToMany(mappedBy = "bookings")
     private List<Profile> profiles = new ArrayList<>();
+
+    public Booking(String createdAt) {
+        this.createdAt = createdAt;
+    }
 }

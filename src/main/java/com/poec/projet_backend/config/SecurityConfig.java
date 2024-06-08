@@ -26,7 +26,6 @@ public class SecurityConfig {
     private final JwtAuthenticationErrors jwtAuthenticationErrors;
     private final AccessDeniedHandler accessDeniedHandler;
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
@@ -42,15 +41,19 @@ public class SecurityConfig {
             // Liste des routes protégées / non protégées
             .authorizeHttpRequests((requests) -> requests
                 .requestMatchers(
-                        "/api/v1/auth/a**",
-                        "/api/v1/activity/all",
-                        "/api/v1/activity/{id}",
-                        "/api/v1/category/all",
-                        "/api/v1/category/{id}",
+                        "/api/v1/**"
+//                        "/api/v1/auth/all",
+//                        "/api/v1/activity/all",
+//                        "/api/v1/activity/{id}",
+//                        "/api/v1/category/all",
+//                        "/api/v1/category/{id}",
                         //"/api/v1/category/add",
-                        "/api/v1/contact/add",
-                        "/api/v1/profile/add"
-                        //"/api/v1/profile/all"
+//                        "/api/v1/contact/add",
+//                        "/api/v1/profile/add",
+//                        "/api/v1/profile/all",
+//                        "/api/v1/profile/{id}",
+//                        "/api/v1/region/all",
+//                        "api/v1/booking/add"
                 ).permitAll()
                 .requestMatchers("/api/v1/demo/users-only").hasAnyRole(Role.USER.name()) /* ROLE_USER */
                 .requestMatchers("/api/v1/demo/admin-only").hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */

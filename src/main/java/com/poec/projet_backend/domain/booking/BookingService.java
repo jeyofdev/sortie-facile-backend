@@ -1,5 +1,7 @@
 package com.poec.projet_backend.domain.booking;
 
+import com.poec.projet_backend.domain.activity.ActivityRepository;
+import com.poec.projet_backend.domain.profile.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,10 @@ public class BookingService {
 
     @Autowired
     private BookingRepository repository;
+    @Autowired
+    private ActivityRepository activityRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public List<Booking> getAll() {
         return repository.findAll();
@@ -22,8 +28,11 @@ public class BookingService {
                 );
     }
 
-    public Booking add(Booking booking) {
-        return repository.save(booking);
+    public Booking add(BookingFrontToBackDTO bookingFrontToBackDTO) {
+        Booking newBooking = BookingFrontToBackDTO.mapToEntity(bookingFrontToBackDTO);
+        newBooking.setActivity(activityRepository.findById(bookingFrontToBackDTO.activityId()));
+        newBooking.setProfiles(profileRepository.findAllById(bookingFrontToBackDTO.profileIds()));
+        return repository.save(newBooking);
     }
 
     public Booking update(Booking booking, Long id) {

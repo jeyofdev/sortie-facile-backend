@@ -19,7 +19,7 @@ public record ProfileDTO(
 //        String dateOfBirth,
 //        List<Long> categoryIds,
 //        List<Long> bookingIds,
-//        Long userId,
+//        Long userId
 //        Long city,
 //        Long department,
 //        Long region
@@ -38,7 +38,7 @@ public record ProfileDTO(
 //                profile.getDateOfBirth(),
 //                profile.getCategories().stream().map(Category::getId).toList(),
 //                profile.getBookings().stream().map(Booking::getId).toList(),
-//                profile.getUser().getId(),
+//                profile.getUser().getId()
 //                profile.getCity().getId(),
 //                profile.getDepartment().getId(),
 //                profile.getRegion().getId()
