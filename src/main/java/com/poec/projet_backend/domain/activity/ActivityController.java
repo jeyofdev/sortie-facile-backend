@@ -34,10 +34,9 @@ public class ActivityController {
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<ActivityDTO> add(@RequestBody Activity activity) {
-        Activity newActivity = service.add(activity);
-        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
-        return new ResponseEntity<>(activityDTO, HttpStatus.CREATED);
+    public ResponseEntity<Activity> add(@RequestBody ActivityFrontToBackDTO activityFrontToBackDTO) {
+        Activity newActivity = service.add(activityFrontToBackDTO);
+        return new ResponseEntity<>(newActivity, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
