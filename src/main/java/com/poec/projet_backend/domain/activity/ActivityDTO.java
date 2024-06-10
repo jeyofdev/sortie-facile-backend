@@ -14,10 +14,10 @@ public record ActivityDTO(
         String description,
         int nbGuest,
         String hour,
-        boolean isVisible
-//        String city,
-//        String department,
-//        String region,
+        boolean isVisible,
+        Long cityId,
+        Long departmentId,
+        Long regionId
 //        List<Long> bookingIds,
 //        List<Long> categoryIds
 ) {
@@ -31,10 +31,10 @@ public record ActivityDTO(
             activity.getDescription(),
             activity.getNbGuest(),
             activity.getHour(),
-            activity.isVisible()
-//            activity.getCity().getName(),
-//            activity.getDepartment().getName(),
-//            activity.getRegion().getName(),
+            activity.isVisible(),
+            activity.getCity().getId(),
+            activity.getDepartment().getId(),
+            activity.getRegion().getId()
 //            activity.getBookings().stream().map(Booking::getId).toList(),
 //            activity.getCategories().stream().map(Category::getId).toList()
         );

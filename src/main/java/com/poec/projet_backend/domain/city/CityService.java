@@ -1,5 +1,7 @@
 package com.poec.projet_backend.domain.city;
 
+import com.poec.projet_backend.domain.department.Department;
+import com.poec.projet_backend.domain.department.DepartmentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ public class CityService {
 
     @Autowired
     private CityRepository repository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
     public List<City> getAll() {
         return repository.findAll();
@@ -22,7 +26,12 @@ public class CityService {
         );
     }
 
-    public City add(City city) {
+    public City add(City city, Long id) {
+        Department newDepartment = departmentRepository.findById(id)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(id + " not found")
+                );
+        city.setDepartment(newDepartment);
         return repository.save(city);
     }
 
