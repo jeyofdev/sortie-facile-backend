@@ -18,7 +18,6 @@ public class ActivityController {
     @Autowired
     private ActivityService service;
 
-
     @GetMapping(ALL)
     public ResponseEntity<List<ActivityDTO>> getAll() {
         List<Activity> activities = service.getAll();

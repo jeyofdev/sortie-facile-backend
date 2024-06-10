@@ -32,10 +32,14 @@ public class ProfileController {
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD)
-    public ResponseEntity<Profile> add(@RequestBody ProfileFromFrontToBackDTO profileBackDTO) {
-        Profile newProfile = service.add(profileBackDTO);
-        return new ResponseEntity<>(newProfile, HttpStatus.CREATED);
+    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}")
+    public ResponseEntity<ProfileDTO> add(@RequestBody Profile profile,
+                                          @PathVariable Long regionId,
+                                          @PathVariable Long departmentId,
+                                          @PathVariable Long cityId) {
+        Profile newProfile = service.add(profile, regionId, departmentId, cityId);
+        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
+        return new ResponseEntity<>(profileDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)

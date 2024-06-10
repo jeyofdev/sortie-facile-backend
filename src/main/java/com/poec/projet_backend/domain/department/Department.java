@@ -27,12 +27,8 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Activity> activities = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "department")
-//    private List<Profile> profiles = new ArrayList<>();
-
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "region_id")
-//    private Region region;
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Profile> profiles = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")

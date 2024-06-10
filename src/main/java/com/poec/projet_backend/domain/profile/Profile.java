@@ -1,6 +1,5 @@
 package com.poec.projet_backend.domain.profile;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.city.City;
@@ -12,7 +11,6 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -59,22 +57,17 @@ public class Profile {
     @OneToOne(mappedBy = "profile")
     private UserApp user;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "city_id")
-//    private City city;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
+    private City city;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "department_id")
-//    private Department department;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")
     private Region region;
-
-    public Profile(String firstname, String lastname) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
 
     public Profile(String firstname, String lastname, String streetNumber, String street, int postalCode, String description, String avatar, String phone, String dateOfBirth) {
         this.firstname = firstname;
