@@ -1,6 +1,10 @@
 package com.poec.projet_backend.domain.activity;
 
-import java.time.LocalTime;
+import com.poec.projet_backend.domain.booking.Booking;
+import com.poec.projet_backend.domain.city.City;
+import com.poec.projet_backend.domain.department.Department;
+import com.poec.projet_backend.domain.region.Region;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -14,10 +18,10 @@ public record ActivityFrontToBackDTO(
         int nbGuest,
         String hour,
         boolean isVisible,
-        Optional<Long> cityId,
-        Optional<Long> departmentId,
-        Optional<Long> regionId,
-        List<Long> bookingIds,
+//        City city,
+//        Department department,
+//        Region region,
+        List<Long> bookings,
         List<Long> categoryIds
 ) {
     public static Activity mapToEntity(ActivityFrontToBackDTO activityDTO) {

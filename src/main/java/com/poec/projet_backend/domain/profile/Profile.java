@@ -59,13 +59,13 @@ public class Profile {
     @OneToOne(mappedBy = "profile")
     private UserApp user;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id")
-    private City city;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "city_id")
+//    private City city;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "department_id")
-    private Department department;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "department_id")
+//    private Department department;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")

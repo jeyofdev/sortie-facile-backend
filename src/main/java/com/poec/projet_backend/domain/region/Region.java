@@ -23,14 +23,18 @@ public class Region {
     @Column(name = "name", columnDefinition = "VARCHAR(50)", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "region")
-    @JsonIgnoreProperties("region")
-    private List<Activity> activities = new ArrayList<>();
+//    @OneToMany(mappedBy = "region")
+//    @JsonIgnoreProperties("region")
+//    private List<Activity> activities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "region")
-    @JsonIgnoreProperties("region")
-    private List<Profile> profiles = new ArrayList<>();
+//    @OneToMany(mappedBy = "region")
+//    @JsonIgnoreProperties("region")
+//    private List<Profile> profiles = new ArrayList<>();
 
-    @OneToMany(mappedBy = "region")
+//    @OneToMany(mappedBy = "region")
+//    private List<Department> departments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("region")
     private List<Department> departments = new ArrayList<>();
 }
