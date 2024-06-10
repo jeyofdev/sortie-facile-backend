@@ -55,9 +55,9 @@ public class ProfileService {
         newProfile.setCategories(profile.getCategories());
         newProfile.setBookings(profile.getBookings());
         newProfile.setUser(profile.getUser());
-        newProfile.setCity(profile.getCity());
-        newProfile.setDepartment(profile.getDepartment());
-        newProfile.setRegion(profile.getRegion());
+//        newProfile.setCity(profile.getCity());
+//        newProfile.setDepartment(profile.getDepartment());
+//        newProfile.setRegion(profile.getRegion());
 
         return repository.save(newProfile);
     }

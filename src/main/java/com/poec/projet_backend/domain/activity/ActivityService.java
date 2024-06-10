@@ -40,11 +40,11 @@ public class ActivityService {
 
     public Activity add(ActivityFrontToBackDTO activityFrontToBackDTO) {
         Activity newActivity = ActivityFrontToBackDTO.mapToEntity(activityFrontToBackDTO);
-        newActivity.setCity(cityRepository.findById(activityFrontToBackDTO.cityId()));
-        newActivity.setDepartment(departmentRepository.findById(activityFrontToBackDTO.departmentId()));
-        newActivity.setRegion(regionRepository.findById(activityFrontToBackDTO.regionId()));
+//        newActivity.setCity(cityRepository.findById(activityFrontToBackDTO.cityId()));
+//        newActivity.setDepartment(departmentRepository.findById(activityFrontToBackDTO.departmentId()));
+//        newActivity.setRegion(regionRepository.findById(activityFrontToBackDTO.regionId()));
         newActivity.setCategories(categoryRepository.findAllById(activityFrontToBackDTO.categoryIds()));
-        newActivity.setBookings(bookingRepository.findAllById(activityFrontToBackDTO.bookingIds()));
+//        newActivity.setBookings(bookingRepository.findAllById(activityFrontToBackDTO.bookingIds()));
         return repository.save(newActivity);
     }
 
@@ -61,9 +61,9 @@ public class ActivityService {
         newActivity.setVisible(activity.isVisible());
         newActivity.setBookings(activity.getBookings());
         newActivity.setCategories(activity.getCategories());
-        newActivity.setCity(activity.getCity());
-        newActivity.setDepartment(activity.getDepartment());
-        newActivity.setRegion(activity.getRegion());
+//        newActivity.setCity(activity.getCity());
+//        newActivity.setDepartment(activity.getDepartment());
+//        newActivity.setRegion(activity.getRegion());
 
         return repository.save(newActivity);
     }
