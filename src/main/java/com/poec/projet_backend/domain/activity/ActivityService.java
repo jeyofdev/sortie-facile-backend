@@ -2,9 +2,11 @@ package com.poec.projet_backend.domain.activity;
 
 import com.poec.projet_backend.domain.booking.BookingRepository;
 import com.poec.projet_backend.domain.category.CategoryRepository;
+import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
 import com.poec.projet_backend.domain.department.Department;
 import com.poec.projet_backend.domain.department.DepartmentRepository;
+import com.poec.projet_backend.domain.region.Region;
 import com.poec.projet_backend.domain.region.RegionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,14 +40,23 @@ public class ActivityService {
                 );
     }
 
-    public Activity add(ActivityFrontToBackDTO activityFrontToBackDTO) {
-        Activity newActivity = ActivityFrontToBackDTO.mapToEntity(activityFrontToBackDTO);
-//        newActivity.setCity(cityRepository.findById(activityFrontToBackDTO.cityId()));
-//        newActivity.setDepartment(departmentRepository.findById(activityFrontToBackDTO.departmentId()));
-//        newActivity.setRegion(regionRepository.findById(activityFrontToBackDTO.regionId()));
-        newActivity.setCategories(categoryRepository.findAllById(activityFrontToBackDTO.categoryIds()));
-//        newActivity.setBookings(bookingRepository.findAllById(activityFrontToBackDTO.bookingIds()));
-        return repository.save(newActivity);
+    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId) {
+        Region newRegion = regionRepository.findById(regionId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(regionId + " not found")
+                );
+        Department newDepartment = departmentRepository.findById(departmentId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(departmentId + " not found")
+                );
+        City newCity = cityRepository.findById(cityId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(cityId + " not found")
+                );
+        activity.setRegion(newRegion);
+        activity.setDepartment(newDepartment);
+        activity.setCity(newCity);
+        return repository.save(activity);
     }
 
     public Activity update(Activity activity, Long id) {

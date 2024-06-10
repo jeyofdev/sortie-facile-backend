@@ -31,6 +31,7 @@ public class DepartmentService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(RegionId + " not found")
                 );
+
         department.setRegion(newRegion);
         return repository.save(department);
     }

@@ -26,8 +26,8 @@ public class City {
     @Column(name = "name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
-//    @OneToMany(mappedBy = "city")
-//    private List<Activity> activities = new ArrayList<>();
+    @OneToMany(mappedBy = "city")
+    private List<Activity> activities = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "city")
 //    private List<Profile> profiles = new ArrayList<>();

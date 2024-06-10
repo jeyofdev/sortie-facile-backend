@@ -24,8 +24,8 @@ public class Department {
     @Column(name = "name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
-//    @OneToMany(mappedBy = "department")
-//    private List<Activity> activities = new ArrayList<>();
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<Activity> activities = new ArrayList<>();
 
 //    @OneToMany(mappedBy = "department")
 //    private List<Profile> profiles = new ArrayList<>();

@@ -51,17 +51,17 @@ public class Activity {
     @Column(name="activity_isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
     private boolean isVisible;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "city_id")
-//    private City city;
-//
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "region_id")
-//    private Region region;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "city_id")
+    private City city;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "department_id")
-//    private Department department;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "region_id")
+    private Region region;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "department_id")
+    private Department department;
 
     @OneToMany(mappedBy = "activity")
     private List<Booking> bookings = new ArrayList<>();
