@@ -26,10 +26,10 @@ public class DepartmentService {
                 );
     }
 
-    public Department add(Department department, Long id) {
-        Region newRegion = regionRepository.findById(id)
+    public Department add(Department department, Long RegionId) {
+        Region newRegion = regionRepository.findById(RegionId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
+                        () -> new EntityNotFoundException(RegionId + " not found")
                 );
         department.setRegion(newRegion);
         return repository.save(department);

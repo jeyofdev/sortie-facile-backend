@@ -36,9 +36,8 @@ public class Department {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")
-    @JsonIgnoreProperties("departments")
     private Region region;
 
-//    @OneToMany(mappedBy = "department")
-//    private List<City> city = new ArrayList<>();
+    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    private List<City> cities = new ArrayList<>();
 }

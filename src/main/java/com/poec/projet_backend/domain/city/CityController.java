@@ -32,9 +32,9 @@ public class CityController {
         return new ResponseEntity<>(cityDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD)
-    public ResponseEntity<CityDTO> add(@RequestBody City city) {
-        City newCity = service.add(city);
+    @PostMapping(ADD + DEPARTMENT + ID)
+    public ResponseEntity<CityDTO> add(@RequestBody City city, @PathVariable Long id) {
+        City newCity = service.add(city, id);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
     }

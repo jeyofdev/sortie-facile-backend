@@ -7,14 +7,16 @@ import java.util.List;
 
 public record CityDTO(
         Long id,
-        String title
+        String name,
+        Long departmentId
 //        List<Long> activityIds,
 //        List<Long> profileIds
 ) {
     public static CityDTO mapFromEntity(City city) {
         return new CityDTO(
                 city.getId(),
-                city.getName()
+                city.getName(),
+                city.getDepartment().getId()
 //                city.getActivities().stream().map(Activity::getId).toList(),
 //                city.getProfiles().stream().map(Profile::getId).toList()
         );
