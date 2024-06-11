@@ -2,7 +2,6 @@ package com.poec.projet_backend.domain.booking;
 
 import com.poec.projet_backend.domain.profile.Profile;
 
-import java.util.Date;
 import java.util.List;
 
 public record BookingDTO(
