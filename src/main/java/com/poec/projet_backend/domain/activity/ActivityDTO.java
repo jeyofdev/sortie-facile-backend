@@ -6,6 +6,7 @@ import com.poec.projet_backend.domain.category.Category;
 import java.util.List;
 
 public record ActivityDTO(
+        Long id,
         String name,
         String date,
         int age,
@@ -23,6 +24,7 @@ public record ActivityDTO(
 ) {
     public static ActivityDTO mapFromEntity(Activity activity) {
         return new ActivityDTO(
+            activity.getId(),
             activity.getName(),
             activity.getDate(),
             activity.getAge(),

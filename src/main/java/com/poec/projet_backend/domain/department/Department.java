@@ -1,6 +1,5 @@
 package com.poec.projet_backend.domain.department;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poec.projet_backend.domain.activity.Activity;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.profile.Profile;
