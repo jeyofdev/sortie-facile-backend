@@ -2,6 +2,12 @@ package com.poec.projet_backend.domain.profile;
 
 import com.poec.projet_backend.domain.booking.BookingRepository;
 import com.poec.projet_backend.domain.category.CategoryRepository;
+import com.poec.projet_backend.domain.city.City;
+import com.poec.projet_backend.domain.city.CityRepository;
+import com.poec.projet_backend.domain.department.Department;
+import com.poec.projet_backend.domain.department.DepartmentRepository;
+import com.poec.projet_backend.domain.region.Region;
+import com.poec.projet_backend.domain.region.RegionRepository;
 import com.poec.projet_backend.user_app.UserAppRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +26,12 @@ public class ProfileService {
     private BookingRepository bookingRepository;
     @Autowired
     private UserAppRepository userAppRepository;
+    @Autowired
+    private CityRepository cityRepository;
+    @Autowired
+    private RegionRepository regionRepository;
+    @Autowired
+    private DepartmentRepository departmentRepository;
 
 
     public List<Profile> getAll() {
@@ -33,12 +45,23 @@ public class ProfileService {
                 );
     }
 
-    public Profile add(ProfileFromFrontToBackDTO profileBackDTO) {
-        Profile newProfile = ProfileFromFrontToBackDTO.mapToEntity(profileBackDTO);
-        newProfile.setCategories(categoryRepository.findAllById(profileBackDTO.categoryIds()));
-        newProfile.setBookings(bookingRepository.findAllById(profileBackDTO.bookingIds()));
-        newProfile.setUser(userAppRepository.findById(profileBackDTO.userId()));
-        return repository.save(newProfile);
+    public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId) {
+        Region newRegion = regionRepository.findById(regionId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(regionId + " not found")
+                );
+        Department newDepartment = departmentRepository.findById(departmentId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(departmentId + " not found")
+                );
+        City newCity = cityRepository.findById(cityId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(cityId + " not found")
+                );
+        profile.setRegion(newRegion);
+        profile.setDepartment(newDepartment);
+        profile.setCity(newCity);
+        return repository.save(profile);
     }
 
     public Profile update(Profile profile, Long id) {
@@ -55,9 +78,9 @@ public class ProfileService {
         newProfile.setCategories(profile.getCategories());
         newProfile.setBookings(profile.getBookings());
         newProfile.setUser(profile.getUser());
-        newProfile.setCity(profile.getCity());
-        newProfile.setDepartment(profile.getDepartment());
-        newProfile.setRegion(profile.getRegion());
+//        newProfile.setCity(profile.getCity());
+//        newProfile.setDepartment(profile.getDepartment());
+//        newProfile.setRegion(profile.getRegion());
 
         return repository.save(newProfile);
     }

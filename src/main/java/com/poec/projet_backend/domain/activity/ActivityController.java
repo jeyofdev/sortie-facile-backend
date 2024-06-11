@@ -18,7 +18,6 @@ public class ActivityController {
     @Autowired
     private ActivityService service;
 
-
     @GetMapping(ALL)
     public ResponseEntity<List<ActivityDTO>> getAll() {
         List<Activity> activities = service.getAll();
@@ -33,10 +32,14 @@ public class ActivityController {
         return new ResponseEntity<>(activityDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD)
-    public ResponseEntity<Activity> add(@RequestBody ActivityFrontToBackDTO activityFrontToBackDTO) {
-        Activity newActivity = service.add(activityFrontToBackDTO);
-        return new ResponseEntity<>(newActivity, HttpStatus.CREATED);
+    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}")
+    public ResponseEntity<ActivityDTO> add(@RequestBody Activity activity,
+                                           @PathVariable Long regionId,
+                                           @PathVariable Long departmentId,
+                                           @PathVariable Long cityId) {
+        Activity newActivity = service.add(activity, regionId, departmentId, cityId);
+        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
+        return new ResponseEntity<>(activityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)

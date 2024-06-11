@@ -1,5 +1,7 @@
 package com.poec.projet_backend.domain.department;
 
+import com.poec.projet_backend.domain.region.Region;
+import com.poec.projet_backend.domain.region.RegionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,8 @@ public class DepartmentService {
 
     @Autowired
     private DepartmentRepository repository;
+    @Autowired
+    private RegionRepository regionRepository;
 
     public List<Department> getAll() {
         return repository.findAll();
@@ -22,7 +26,13 @@ public class DepartmentService {
                 );
     }
 
-    public Department add(Department department) {
+    public Department add(Department department, Long RegionId) {
+        Region newRegion = regionRepository.findById(RegionId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(RegionId + " not found")
+                );
+
+        department.setRegion(newRegion);
         return repository.save(department);
     }
 

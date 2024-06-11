@@ -1,6 +1,5 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.city.City;
@@ -10,9 +9,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -80,4 +77,5 @@ public class Activity {
         this.hour = hour;
         this.isVisible = isVisible;
     }
+
 }
