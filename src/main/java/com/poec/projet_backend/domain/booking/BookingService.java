@@ -1,6 +1,8 @@
 package com.poec.projet_backend.domain.booking;
 
+import com.poec.projet_backend.domain.activity.Activity;
 import com.poec.projet_backend.domain.activity.ActivityRepository;
+import com.poec.projet_backend.domain.profile.Profile;
 import com.poec.projet_backend.domain.profile.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,18 +30,26 @@ public class BookingService {
                 );
     }
 
-    public Booking add(BookingFrontToBackDTO bookingFrontToBackDTO) {
-        Booking newBooking = BookingFrontToBackDTO.mapToEntity(bookingFrontToBackDTO);
-//        newBooking.setActivity(activityRepository.findById(bookingFrontToBackDTO.activityId()));
-        //newBooking.setProfiles(profileRepository.findAllById(bookingFrontToBackDTO.profileIds()));
-        return repository.save(newBooking);
+    public Booking add(Booking booking, Long activityId, Long profileId) {
+        Activity newActivity = activityRepository.findById(activityId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(activityId + " not found")
+                );
+        Profile newProfile = profileRepository.findById(profileId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(profileId + " not found")
+                );
+        booking.setActivity(newActivity);
+        booking.setProfile(newProfile);
+
+        return repository.save(booking);
     }
 
     public Booking update(Booking booking, Long id) {
         Booking newBooking = getById(id);
         newBooking.setCreatedAt(booking.getCreatedAt());
         newBooking.setActivity(booking.getActivity());
-        //newBooking.setProfiles(booking.getProfiles());
+        newBooking.setProfile(booking.getProfile());
 
         return repository.save(newBooking);
     }

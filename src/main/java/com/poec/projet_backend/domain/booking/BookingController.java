@@ -32,11 +32,13 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD)
-    public ResponseEntity<Booking> add(@RequestBody BookingFrontToBackDTO bookingFrontToBackDTO) {
-        Booking newBooking = service.add(bookingFrontToBackDTO);
-
-        return new ResponseEntity<>(newBooking, HttpStatus.CREATED);
+    @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{profileId}")
+    public ResponseEntity<BookingDTO> add(@RequestBody Booking booking,
+                                          @PathVariable Long activityId,
+                                          @PathVariable Long profileId) {
+        Booking newBooking = service.add(booking, activityId, profileId);
+        BookingDTO bookingDTO = BookingDTO.mapFromEntity(newBooking);
+        return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)

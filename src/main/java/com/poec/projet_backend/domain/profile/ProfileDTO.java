@@ -1,22 +1,28 @@
 package com.poec.projet_backend.domain.profile;
 
+import com.poec.projet_backend.domain.booking.Booking;
+import com.poec.projet_backend.domain.category.Category;
+
+import java.util.List;
+
 public record ProfileDTO(
         Long id,
         String firstname,
         String lastname,
         String streetNumber,
         String street,
-        int postalCode,
+        Long postalCode,
         String description,
         String avatar,
         String phone,
         String dateOfBirth,
-//        List<Long> categoryIds,
-//        List<Long> bookingIds,
-//        Long userId
+        Long userId,
         Long cityId,
         Long departmentId,
-        Long regionId
+        Long regionId,
+        List<Long> bookingIds,
+        List<Long> categoryIds
+
 ) {
     public static ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
@@ -30,9 +36,12 @@ public record ProfileDTO(
                 profile.getAvatar(),
                 profile.getPhone(),
                 profile.getDateOfBirth(),
+                profile.getUser().getId(),
                 profile.getCity().getId(),
                 profile.getDepartment().getId(),
-                profile.getRegion().getId()
+                profile.getRegion().getId(),
+                profile.getBookings().stream().map(Booking::getId).toList(),
+                profile.getCategories().stream().map(Category::getId).toList()
         );
     }
 }

@@ -1,5 +1,6 @@
 package com.poec.projet_backend.domain.profile;
 
+import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.booking.BookingRepository;
 import com.poec.projet_backend.domain.category.CategoryRepository;
 import com.poec.projet_backend.domain.city.City;
@@ -8,6 +9,7 @@ import com.poec.projet_backend.domain.department.Department;
 import com.poec.projet_backend.domain.department.DepartmentRepository;
 import com.poec.projet_backend.domain.region.Region;
 import com.poec.projet_backend.domain.region.RegionRepository;
+import com.poec.projet_backend.user_app.UserApp;
 import com.poec.projet_backend.user_app.UserAppRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +47,7 @@ public class ProfileService {
                 );
     }
 
-    public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId) {
+    public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId, Long userId) {
         Region newRegion = regionRepository.findById(regionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException(regionId + " not found")
@@ -58,9 +60,15 @@ public class ProfileService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(cityId + " not found")
                 );
+        UserApp newUser = userAppRepository.findById(userId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(userId + " not found")
+                );
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
+        profile.setUser(newUser);
+
         return repository.save(profile);
     }
 
@@ -76,11 +84,8 @@ public class ProfileService {
         newProfile.setPhone(profile.getPhone());
         newProfile.setDateOfBirth(profile.getDateOfBirth());
         newProfile.setCategories(profile.getCategories());
-        //newProfile.setBookings(profile.getBookings());
         newProfile.setUser(profile.getUser());
-//        newProfile.setCity(profile.getCity());
-//        newProfile.setDepartment(profile.getDepartment());
-//        newProfile.setRegion(profile.getRegion());
+
 
         return repository.save(newProfile);
     }

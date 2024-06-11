@@ -65,17 +65,4 @@ public class Activity {
 
     @ManyToMany(mappedBy = "activities")
     private List<Category> categories= new ArrayList<>();
-    
-//    public Activity(String name, String date, int age, String imgUrl, String link, String description, int nbGuest, String hour, boolean isVisible) {
-//        this.name = name;
-//        this.date = date;
-//        this.age = age;
-//        this.imgUrl = imgUrl;
-//        this.link = link;
-//        this.description = description;
-//        this.nbGuest = nbGuest;
-//        this.hour = hour;
-//        this.isVisible = isVisible;
-//    }
-
 }

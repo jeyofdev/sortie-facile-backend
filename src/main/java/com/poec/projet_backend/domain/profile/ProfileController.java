@@ -18,7 +18,7 @@ public class ProfileController {
     @Autowired
     private ProfileService service;
 
-@GetMapping(ALL)
+    @GetMapping(ALL)
     public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profiles = service.getAll();
         List<ProfileDTO> profileDTOS = profiles.stream().map(ProfileDTO::mapFromEntity).toList();
@@ -32,12 +32,14 @@ public class ProfileController {
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}")
+    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")
     public ResponseEntity<ProfileDTO> add(@RequestBody Profile profile,
                                           @PathVariable Long regionId,
                                           @PathVariable Long departmentId,
-                                          @PathVariable Long cityId) {
-        Profile newProfile = service.add(profile, regionId, departmentId, cityId);
+                                          @PathVariable Long cityId,
+                                          @PathVariable Long userId
+                                          ) {
+        Profile newProfile = service.add(profile, regionId, departmentId, cityId, userId);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
         return new ResponseEntity<>(profileDTO, HttpStatus.CREATED);
     }

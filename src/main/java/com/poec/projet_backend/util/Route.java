@@ -14,6 +14,7 @@ public class Route {
             "/api/v1/profile/add"
     );
     public static final String BASE_URL = "/api/v1";
+    public static final String USER = "/user";
     public static final String ACTIVITY = "/activity";
     public static final String BOOKING = "/booking";
     public static final String CATEGORY = "/category";

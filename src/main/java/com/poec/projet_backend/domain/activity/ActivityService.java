@@ -1,7 +1,5 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.poec.projet_backend.domain.booking.BookingRepository;
-import com.poec.projet_backend.domain.category.CategoryRepository;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
 import com.poec.projet_backend.domain.department.Department;
@@ -52,6 +50,7 @@ public class ActivityService {
         activity.setRegion(newRegion);
         activity.setDepartment(newDepartment);
         activity.setCity(newCity);
+
         return repository.save(activity);
     }
 
