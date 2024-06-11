@@ -29,7 +29,11 @@ public class RegionService {
 
     public Region update(Region region, Long id) {
         Region newRegion = getById(id);
+        System.out.println(newRegion.getName());
         newRegion.setName(region.getName());
+        newRegion.setDepartments(region.getDepartments());
+        newRegion.setActivities(region.getActivities());
+        newRegion.setProfiles(region.getProfiles());
 
         return repository.save(newRegion);
     }

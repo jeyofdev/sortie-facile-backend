@@ -19,9 +19,6 @@ public class City {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @Column(name = "postalCode", columnDefinition = "INT", nullable = false)
-//    private Long postalCode;
-
     @Column(name = "name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 

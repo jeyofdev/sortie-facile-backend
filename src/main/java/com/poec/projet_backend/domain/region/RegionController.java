@@ -1,5 +1,6 @@
 package com.poec.projet_backend.domain.region;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +41,7 @@ public class RegionController {
     }
 
     @PutMapping(UPDATE)
+    @Transactional
     public ResponseEntity<RegionDTO> update(@RequestBody Region region, @PathVariable Long id) {
         Region newRegion = service.update(region, id);
         RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
