@@ -1,10 +1,5 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.poec.projet_backend.domain.booking.Booking;
-import com.poec.projet_backend.domain.category.Category;
-
-import java.util.List;
-
 public record ActivityDTO(
         Long id,
         String name,
@@ -19,8 +14,6 @@ public record ActivityDTO(
         Long cityId,
         Long departmentId,
         Long regionId
-//        List<Long> bookingIds,
-//        List<Long> categoryIds
 ) {
     public static ActivityDTO mapFromEntity(Activity activity) {
         return new ActivityDTO(
@@ -37,8 +30,6 @@ public record ActivityDTO(
             activity.getCity().getId(),
             activity.getDepartment().getId(),
             activity.getRegion().getId()
-//            activity.getBookings().stream().map(Booking::getId).toList(),
-//            activity.getCategories().stream().map(Category::getId).toList()
         );
     }
 }

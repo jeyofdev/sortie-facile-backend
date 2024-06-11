@@ -30,8 +30,8 @@ public class BookingService {
 
     public Booking add(BookingFrontToBackDTO bookingFrontToBackDTO) {
         Booking newBooking = BookingFrontToBackDTO.mapToEntity(bookingFrontToBackDTO);
-        newBooking.setActivity(activityRepository.findById(bookingFrontToBackDTO.activityId()));
-        newBooking.setProfiles(profileRepository.findAllById(bookingFrontToBackDTO.profileIds()));
+//        newBooking.setActivity(activityRepository.findById(bookingFrontToBackDTO.activityId()));
+        //newBooking.setProfiles(profileRepository.findAllById(bookingFrontToBackDTO.profileIds()));
         return repository.save(newBooking);
     }
 
@@ -39,7 +39,7 @@ public class BookingService {
         Booking newBooking = getById(id);
         newBooking.setCreatedAt(booking.getCreatedAt());
         newBooking.setActivity(booking.getActivity());
-        newBooking.setProfiles(booking.getProfiles());
+        //newBooking.setProfiles(booking.getProfiles());
 
         return repository.save(newBooking);
     }

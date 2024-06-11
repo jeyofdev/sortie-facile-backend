@@ -24,10 +24,6 @@ public class ActivityService {
     private DepartmentRepository departmentRepository;
     @Autowired
     private RegionRepository regionRepository;
-    @Autowired
-    private BookingRepository bookingRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     public List<Activity> getAll() {
         return repository.findAll();
@@ -72,9 +68,6 @@ public class ActivityService {
         newActivity.setVisible(activity.isVisible());
         newActivity.setBookings(activity.getBookings());
         newActivity.setCategories(activity.getCategories());
-//        newActivity.setCity(activity.getCity());
-//        newActivity.setDepartment(activity.getDepartment());
-//        newActivity.setRegion(activity.getRegion());
 
         return repository.save(newActivity);
     }

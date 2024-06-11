@@ -1,10 +1,9 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.poec.projet_backend.domain.booking.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
-    Activity findById(Optional<Long> aLong);
+//    Activity findById(Optional<Long> aLong);
 }

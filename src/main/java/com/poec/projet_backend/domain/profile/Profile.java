@@ -51,11 +51,11 @@ public class Profile {
     @ManyToMany(mappedBy = "profiles")
     private List<Category> categories = new ArrayList<>();
 
-    @ManyToMany
-    private List<Booking> bookings = new ArrayList<>();
-
     @OneToOne(mappedBy = "profile")
     private UserApp user;
+
+    @OneToMany(mappedBy = "profile")
+    private List<Booking> bookings = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")

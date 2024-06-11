@@ -6,9 +6,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Data
 @RequiredArgsConstructor
 @Entity
@@ -25,9 +22,9 @@ public class Booking {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    @ManyToMany(mappedBy = "bookings")
-    private List<Profile> profiles = new ArrayList<>();
-
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
     public Booking(String createdAt) {
         this.createdAt = createdAt;
     }

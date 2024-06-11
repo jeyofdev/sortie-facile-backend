@@ -30,9 +30,6 @@ public record ProfileDTO(
                 profile.getAvatar(),
                 profile.getPhone(),
                 profile.getDateOfBirth(),
-//                profile.getCategories().stream().map(Category::getId).toList(),
-//                profile.getBookings().stream().map(Booking::getId).toList(),
-//                profile.getUser().getId()
                 profile.getCity().getId(),
                 profile.getDepartment().getId(),
                 profile.getRegion().getId()
