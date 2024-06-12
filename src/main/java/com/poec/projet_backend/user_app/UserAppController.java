@@ -31,9 +31,6 @@ public class UserAppController {
         } else {
             throw new AccessDeniedException("UserApp does not have the correct rights to access to this resource");
         }
-
-
-
     }
 
     @GetMapping("/all")
@@ -47,8 +44,4 @@ public class UserAppController {
 
         }
     }
-
-
-
-
 }

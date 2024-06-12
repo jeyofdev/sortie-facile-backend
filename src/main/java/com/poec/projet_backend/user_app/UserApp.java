@@ -35,11 +35,8 @@ public class UserApp implements UserDetails {
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("User")
     @JoinColumn(name = "profile_id")
     private Profile profile;
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

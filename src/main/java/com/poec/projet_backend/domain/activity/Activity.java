@@ -4,7 +4,9 @@ import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.department.Department;
+import com.poec.projet_backend.domain.profile.Profile;
 import com.poec.projet_backend.domain.region.Region;
+import com.poec.projet_backend.user_app.UserApp;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -60,10 +62,17 @@ public class Activity {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "booking_id")
-    private Booking booking;
+    @OneToMany(mappedBy = "activity")
+    private List<Booking> bookings = new ArrayList<>();
+
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "booking_id_id")
+//    private Booking booking;
 
     @ManyToMany(mappedBy = "activities")
     private List<Category> categories= new ArrayList<>();
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="profile_id")
+    private Profile profile;
 }

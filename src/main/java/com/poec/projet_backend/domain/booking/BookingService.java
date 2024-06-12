@@ -8,6 +8,7 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class BookingService {
@@ -30,15 +31,25 @@ public class BookingService {
                 );
     }
 
-    public Booking add(Booking booking) {
+    public Booking add(Booking booking, Long activityId, Long profileId) {
+        Activity newActivity = activityRepository.findById(activityId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(activityId + " not found")
+                );
+        Profile newProfile = profileRepository.findById(profileId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException(profileId + " not found")
+                );
+        booking.setActivity(newActivity);
+        booking.setProfile(newProfile);
         return repository.save(booking);
     }
 
     public Booking update(Booking booking, Long id) {
         Booking newBooking = getById(id);
         newBooking.setCreatedAt(booking.getCreatedAt());
-        newBooking.setActivities(booking.getActivities());
-        newBooking.setProfiles(booking.getProfiles());
+        newBooking.setActivity(booking.getActivity());
+        newBooking.setProfile(booking.getProfile());
 
         return repository.save(newBooking);
     }
