@@ -12,7 +12,6 @@ public record DepartmentDTO(
         Long regionId,
         List<Long> cityIds,
         List<Long> activityIds
-//        List<Long> profileIds
 ) {
     public static DepartmentDTO mapFromEntity(Department department) {
         return new DepartmentDTO(
@@ -21,7 +20,6 @@ public record DepartmentDTO(
                 department.getRegion().getId(),
                 department.getCities().stream().map(City::getId).toList(),
                 department.getActivities().stream().map(Activity::getId).toList()
-//                department.getProfiles().stream().map(Profile::getId).toList()
         );
     }
 }

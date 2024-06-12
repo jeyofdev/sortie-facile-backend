@@ -34,7 +34,7 @@ public class Profile {
     private String street;
 
     @Column(name = "zip_code", columnDefinition = "INT(5)", nullable = false)
-    private int postalCode;
+    private Long postalCode;
 
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
     private String description;
@@ -48,14 +48,17 @@ public class Profile {
     @Column(name = "dateOfBirth", nullable = false)
     private String dateOfBirth;
 
-    @ManyToMany(mappedBy = "profiles")
+    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
-
-    @ManyToMany
-    private List<Booking> bookings = new ArrayList<>();
 
     @OneToOne(mappedBy = "profile")
     private UserApp user;
+
+//    @OneToMany(mappedBy = "profile")
+//    private List<Booking> bookings = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")
@@ -68,18 +71,6 @@ public class Profile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")
     private Region region;
-
-    public Profile(String firstname, String lastname, String streetNumber, String street, int postalCode, String description, String avatar, String phone, String dateOfBirth) {
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.streetNumber = streetNumber;
-        this.street = street;
-        this.postalCode = postalCode;
-        this.description = description;
-        this.avatar = avatar;
-        this.phone = phone;
-        this.dateOfBirth = dateOfBirth;
-    }
 }
 
 

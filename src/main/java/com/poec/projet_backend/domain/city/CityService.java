@@ -26,10 +26,10 @@ public class CityService {
         );
     }
 
-    public City add(City city, Long id) {
-        Department newDepartment = departmentRepository.findById(id)
+    public City add(City city, Long departmentId) {
+        Department newDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
+                        () -> new EntityNotFoundException(departmentId + " not found")
                 );
         city.setDepartment(newDepartment);
         return repository.save(city);
@@ -38,8 +38,6 @@ public class CityService {
     public City update(City city, Long id) {
         City newCity = getById(id);
         newCity.setName(city.getName());
-//        newCity.setActivities(city.getActivities());
-//        newCity.setActivities(city.getActivities());
 
         return repository.save(newCity);
     }

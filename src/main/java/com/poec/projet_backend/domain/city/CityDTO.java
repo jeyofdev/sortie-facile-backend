@@ -18,7 +18,6 @@ public record CityDTO(
                 city.getName(),
                 city.getDepartment().getId(),
                 city.getActivities().stream().map(Activity::getId).toList()
-//                city.getProfiles().stream().map(Profile::getId).toList()
         );
     }
 }
