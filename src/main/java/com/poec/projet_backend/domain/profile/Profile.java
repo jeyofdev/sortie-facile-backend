@@ -1,5 +1,6 @@
 package com.poec.projet_backend.domain.profile;
 
+import com.poec.projet_backend.domain.activity.Activity;
 import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.city.City;
@@ -51,14 +52,17 @@ public class Profile {
     @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
-    @OneToOne(mappedBy = "profile")
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "profile")
     private UserApp user;
 
-//    @OneToMany(mappedBy = "profile")
-//    private List<Booking> bookings = new ArrayList<>();
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "booking_id")
-    private Booking booking;
+    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
+    private Activity activity;
+
+    @OneToMany(mappedBy = "profile")
+    private List<Booking> bookings = new ArrayList<>();
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "booking_id")
+//    private Booking booking;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")

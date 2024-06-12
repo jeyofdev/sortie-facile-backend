@@ -16,11 +16,10 @@ public record ProfileDTO(
         String avatar,
         String phone,
         String dateOfBirth,
-        Long userId,
         Long cityId,
         Long departmentId,
         Long regionId,
-        Long bookingId,
+        List<Long> bookingIds,
         List<Long> categoryIds
 
 ) {
@@ -36,11 +35,10 @@ public record ProfileDTO(
                 profile.getAvatar(),
                 profile.getPhone(),
                 profile.getDateOfBirth(),
-                profile.getUser().getId(),
                 profile.getCity().getId(),
                 profile.getDepartment().getId(),
                 profile.getRegion().getId(),
-                profile.getBooking().getId(),
+                profile.getBookings().stream().map(Booking::getId).toList(),
                 profile.getCategories().stream().map(Category::getId).toList()
 
         );

@@ -68,7 +68,9 @@ public class ProfileService {
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
         profile.setUser(newUser);
+        newUser.setProfile(profile);
 
+        userAppRepository.save(newUser);
         return repository.save(profile);
     }
 

@@ -6,6 +6,8 @@ import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
 import com.poec.projet_backend.domain.department.Department;
 import com.poec.projet_backend.domain.department.DepartmentRepository;
+import com.poec.projet_backend.domain.profile.Profile;
+import com.poec.projet_backend.domain.profile.ProfileRepository;
 import com.poec.projet_backend.domain.region.Region;
 import com.poec.projet_backend.domain.region.RegionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -26,6 +28,8 @@ public class ActivityService {
     private RegionRepository regionRepository;
     @Autowired
     private BookingRepository bookingRepository;
+    @Autowired
+    private ProfileRepository profileRepository;
 
     public List<Activity> getAll() {
         return repository.findAll();
@@ -54,7 +58,6 @@ public class ActivityService {
         activity.setRegion(newRegion);
         activity.setDepartment(newDepartment);
         activity.setCity(newCity);
-
 
         return repository.save(activity);
     }

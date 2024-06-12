@@ -1,11 +1,13 @@
 package com.poec.projet_backend.domain.booking;
 
+import com.poec.projet_backend.domain.activity.Activity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.poec.projet_backend.util.Route.*;
@@ -32,9 +34,12 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD)
-    public ResponseEntity<BookingDTO> add(@RequestBody Booking booking) {
-        Booking newBooking = service.add(booking);
+    @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{newProfile}")
+    public ResponseEntity<BookingDTO> add(@RequestBody Booking booking,
+                                          @PathVariable Long activityId,
+                                          @PathVariable Long profileId
+    ) {
+        Booking newBooking = service.add(booking, activityId, profileId);
         BookingDTO bookingDTO = BookingDTO.mapFromEntity(newBooking);
         return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
     }
