@@ -60,8 +60,9 @@ public class Activity {
     @JoinColumn(name = "department_id")
     private Department department;
 
-    @OneToMany(mappedBy = "activity")
-    private List<Booking> bookings = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
 
     @ManyToMany(mappedBy = "activities")
     private List<Category> categories= new ArrayList<>();

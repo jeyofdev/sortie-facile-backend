@@ -30,26 +30,15 @@ public class BookingService {
                 );
     }
 
-    public Booking add(Booking booking, Long activityId, Long profileId) {
-        Activity newActivity = activityRepository.findById(activityId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(activityId + " not found")
-                );
-        Profile newProfile = profileRepository.findById(profileId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(profileId + " not found")
-                );
-        booking.setActivity(newActivity);
-        booking.setProfile(newProfile);
-
+    public Booking add(Booking booking) {
         return repository.save(booking);
     }
 
     public Booking update(Booking booking, Long id) {
         Booking newBooking = getById(id);
         newBooking.setCreatedAt(booking.getCreatedAt());
-        newBooking.setActivity(booking.getActivity());
-        newBooking.setProfile(booking.getProfile());
+        newBooking.setActivities(booking.getActivities());
+        newBooking.setProfiles(booking.getProfiles());
 
         return repository.save(newBooking);
     }

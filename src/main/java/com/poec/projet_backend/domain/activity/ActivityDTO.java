@@ -13,6 +13,7 @@ public record ActivityDTO(
         boolean isVisible,
         Long cityId,
         Long departmentId,
+
         Long regionId
 ) {
     public static ActivityDTO mapFromEntity(Activity activity) {
@@ -30,6 +31,7 @@ public record ActivityDTO(
             activity.getCity().getId(),
             activity.getDepartment().getId(),
             activity.getRegion().getId()
+//            activity.getBooking().getId()
         );
     }
 }

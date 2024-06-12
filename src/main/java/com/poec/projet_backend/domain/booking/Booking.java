@@ -6,6 +6,9 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @RequiredArgsConstructor
 @Entity
@@ -15,16 +18,23 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", nullable = false)
+    @Column(name = "created_at", nullable = false)
     private String createdAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "activity_id")
+//    private Activity activity;
+//
+//    @ManyToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "profile_id")
+//    private Profile profile;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
-    private Profile profile;
+    @OneToMany(mappedBy = "booking")
+    private List<Activity> activities = new ArrayList<>();
+
+    @OneToMany(mappedBy = "booking")
+    private List<Profile> profiles = new ArrayList<>();
+
     public Booking(String createdAt) {
         this.createdAt = createdAt;
     }

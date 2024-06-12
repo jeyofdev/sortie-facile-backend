@@ -20,7 +20,7 @@ public record ProfileDTO(
         Long cityId,
         Long departmentId,
         Long regionId,
-        List<Long> bookingIds,
+        Long bookingId,
         List<Long> categoryIds
 
 ) {
@@ -40,8 +40,9 @@ public record ProfileDTO(
                 profile.getCity().getId(),
                 profile.getDepartment().getId(),
                 profile.getRegion().getId(),
-                profile.getBookings().stream().map(Booking::getId).toList(),
+                profile.getBooking().getId(),
                 profile.getCategories().stream().map(Category::getId).toList()
+
         );
     }
 }

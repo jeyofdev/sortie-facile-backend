@@ -48,14 +48,17 @@ public class Profile {
     @Column(name = "dateOfBirth", nullable = false)
     private String dateOfBirth;
 
-    @ManyToMany(mappedBy = "profiles")
+    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
     @OneToOne(mappedBy = "profile")
     private UserApp user;
 
-    @OneToMany(mappedBy = "profile")
-    private List<Booking> bookings = new ArrayList<>();
+//    @OneToMany(mappedBy = "profile")
+//    private List<Booking> bookings = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "booking_id")
+    private Booking booking;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")

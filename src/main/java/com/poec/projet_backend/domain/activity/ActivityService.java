@@ -1,5 +1,7 @@
 package com.poec.projet_backend.domain.activity;
 
+import com.poec.projet_backend.domain.booking.Booking;
+import com.poec.projet_backend.domain.booking.BookingRepository;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
 import com.poec.projet_backend.domain.department.Department;
@@ -22,6 +24,8 @@ public class ActivityService {
     private DepartmentRepository departmentRepository;
     @Autowired
     private RegionRepository regionRepository;
+    @Autowired
+    private BookingRepository bookingRepository;
 
     public List<Activity> getAll() {
         return repository.findAll();
@@ -51,6 +55,7 @@ public class ActivityService {
         activity.setDepartment(newDepartment);
         activity.setCity(newCity);
 
+
         return repository.save(activity);
     }
 
@@ -65,7 +70,7 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
-        newActivity.setBookings(activity.getBookings());
+
         newActivity.setCategories(activity.getCategories());
 
         return repository.save(newActivity);
