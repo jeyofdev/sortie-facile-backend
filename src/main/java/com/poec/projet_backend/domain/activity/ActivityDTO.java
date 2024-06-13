@@ -14,7 +14,6 @@ public record ActivityDTO(
         boolean isVisible
 ) {
 
-
     public static ActivityDTO mapFromEntity(Activity activity) {
         return new ActivityDTO(
             activity.getId(),

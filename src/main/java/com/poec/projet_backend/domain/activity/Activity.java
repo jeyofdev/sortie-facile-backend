@@ -64,12 +64,13 @@ public class Activity {
     @OneToMany(mappedBy = "activity")
     private List<Booking> bookings = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "activities")
-    private List<Category> categories= new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    private Category category;
 
-   @ManyToOne(cascade = CascadeType.ALL)
-   @JoinColumn(name = "profile_id")
-   private Profile profile;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     public Activity(String name, String date, int age, String imgUrl, String link, String description, int nbGuest, String hour, boolean isVisible) {
         this.name = name;

@@ -52,8 +52,8 @@ public class Profile {
     @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
-   @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
-   private List<Activity> activities;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
+    private List<Activity> activities;
 
     @OneToMany(mappedBy = "profile")
     private List<Booking> bookings = new ArrayList<>();
