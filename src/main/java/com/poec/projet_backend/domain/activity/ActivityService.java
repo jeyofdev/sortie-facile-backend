@@ -42,7 +42,7 @@ public class ActivityService {
                 );
     }
 
-    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId) {
+    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId) {
         Region newRegion = regionRepository.findById(regionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException(regionId + " not found")
@@ -55,9 +55,14 @@ public class ActivityService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(cityId + " not found")
                 );
+//        Profile newProfile = profileRepository.findById(profileId)
+//                .orElseThrow(
+//                        () -> new EntityNotFoundException(profileId + " not found")
+//                );
         activity.setRegion(newRegion);
         activity.setDepartment(newDepartment);
         activity.setCity(newCity);
+//        activity.setProfile(newProfile);
 
         return repository.save(activity);
     }
@@ -73,7 +78,6 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
-
         newActivity.setCategories(activity.getCategories());
 
         return repository.save(newActivity);

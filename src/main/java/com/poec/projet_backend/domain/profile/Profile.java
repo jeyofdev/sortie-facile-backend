@@ -55,14 +55,11 @@ public class Profile {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "profile")
     private UserApp user;
 
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private Activity activity;
+//    @OneToOne(cascade = CascadeType.ALL, mappedBy = "profile")
+//    private Activity activity;
 
     @OneToMany(mappedBy = "profile")
     private List<Booking> bookings = new ArrayList<>();
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "booking_id")
-//    private Booking booking;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")

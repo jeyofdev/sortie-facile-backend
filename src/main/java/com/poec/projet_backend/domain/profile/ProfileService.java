@@ -88,7 +88,6 @@ public class ProfileService {
         newProfile.setCategories(profile.getCategories());
         newProfile.setUser(profile.getUser());
 
-
         return repository.save(newProfile);
     }
 

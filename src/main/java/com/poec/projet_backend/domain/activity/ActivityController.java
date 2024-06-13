@@ -32,13 +32,14 @@ public class ActivityController {
         return new ResponseEntity<>(activityDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}")
+    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}")
     public ResponseEntity<ActivityDTO> add(@RequestBody Activity activity,
                                            @PathVariable Long regionId,
                                            @PathVariable Long departmentId,
-                                           @PathVariable Long cityId
+                                           @PathVariable Long cityId,
+                                           @PathVariable Long profileId
                                            ) {
-        Activity newActivity = service.add(activity, regionId, departmentId, cityId);
+        Activity newActivity = service.add(activity, regionId, departmentId, cityId, profileId);
         ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
         return new ResponseEntity<>(activityDTO, HttpStatus.CREATED);
     }
@@ -48,7 +49,6 @@ public class ActivityController {
         Activity newActivity = service.update(activity, id);
         ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
         return new ResponseEntity<>(activityDTO, HttpStatus.OK);
-
     }
 
     @DeleteMapping(DELETE)

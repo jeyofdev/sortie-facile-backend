@@ -65,14 +65,11 @@ public class Activity {
     @OneToMany(mappedBy = "activity")
     private List<Booking> bookings = new ArrayList<>();
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "booking_id_id")
-//    private Booking booking;
-
     @ManyToMany(mappedBy = "activities")
     private List<Category> categories= new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="profile_id")
-    private Profile profile;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name="profile_id")
+//    private Profile profile;
+
 }
