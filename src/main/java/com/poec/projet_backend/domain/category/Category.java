@@ -20,7 +20,7 @@ public class Category {
     @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    @OneToOne(mappedBy = "category", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "category")
     private Activity activity;
 
     @ManyToMany(cascade = CascadeType.ALL)

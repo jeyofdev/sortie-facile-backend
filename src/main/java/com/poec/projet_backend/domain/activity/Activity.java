@@ -65,7 +65,7 @@ public class Activity {
     private List<Booking> bookings = new ArrayList<>();
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @ManyToOne(cascade = CascadeType.ALL)

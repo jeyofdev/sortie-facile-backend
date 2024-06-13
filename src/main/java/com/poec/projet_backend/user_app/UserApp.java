@@ -31,7 +31,6 @@ public class UserApp implements UserDetails {
     private String email;
     @JsonIgnore
     private String password;
-
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
