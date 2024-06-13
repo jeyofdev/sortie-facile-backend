@@ -34,8 +34,7 @@ public class UserApp implements UserDetails {
 
     private String role;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
+    @OneToOne(cascade = {CascadeType.ALL}, mappedBy = "user")
     private Profile profile;
 
     @Override

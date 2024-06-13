@@ -58,10 +58,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        List<String> publicList = Arrays.asList(this.urlPublicList);
-        System.out.println("on récupère la publicList ici: " + publicList);
-
-        if (publicList.contains(request.getRequestURI())) {
+        String regex = "/api/v1/.*";
+        if (request.getRequestURI().matches(regex)) {
             System.out.println("chemin autorisé");
             filterChain.doFilter(request, response);
             return;

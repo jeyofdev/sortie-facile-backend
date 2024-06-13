@@ -33,15 +33,16 @@ public class ActivityController {
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}")
-    public ResponseEntity<ActivityDTO> add(@RequestBody Activity activity,
+    public ResponseEntity<ActivityDTO> add(@RequestBody ActivityDTO activityDTO,
                                            @PathVariable Long regionId,
                                            @PathVariable Long departmentId,
                                            @PathVariable Long cityId,
                                            @PathVariable Long profileId
                                            ) {
-        Activity newActivity = service.add(activity, regionId, departmentId, cityId, profileId);
-        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
-        return new ResponseEntity<>(activityDTO, HttpStatus.CREATED);
+        System.out.println("in the controller bb");
+        Activity newActivity = service.add(ActivityDTO.mapToEntity(activityDTO), regionId, departmentId, cityId, profileId);
+        ActivityDTO newActivityDTO = ActivityDTO.mapFromEntity(newActivity);
+        return new ResponseEntity<>(newActivityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
