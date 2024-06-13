@@ -59,7 +59,6 @@ public class ActivityService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
                 );
-        System.out.println("dans le service bb");
         activity.setRegion(existingRegion);
         activity.setDepartment(existingDepartment);
         activity.setCity(existingCity);
@@ -68,7 +67,6 @@ public class ActivityService {
 
         existingPofile.getActivities().add(activity);
         profileRepository.save(existingPofile);
-        System.out.println(savedActivity);
         return savedActivity;
     }
 

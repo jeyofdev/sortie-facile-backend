@@ -39,7 +39,6 @@ public class ActivityController {
                                            @PathVariable Long cityId,
                                            @PathVariable Long profileId
                                            ) {
-        System.out.println("in the controller bb");
         Activity newActivity = service.add(ActivityDTO.mapToEntity(activityDTO), regionId, departmentId, cityId, profileId);
         ActivityDTO newActivityDTO = ActivityDTO.mapFromEntity(newActivity);
         return new ResponseEntity<>(newActivityDTO, HttpStatus.CREATED);
