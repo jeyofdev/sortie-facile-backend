@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.poec.projet_backend.util.Route.*;
 
@@ -34,14 +35,14 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
-    @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{newProfile}")
-    public ResponseEntity<BookingDTO> add(@RequestBody Booking booking,
+    @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{profileId}")
+    public ResponseEntity<Map<String, String>> add(
                                           @PathVariable Long activityId,
                                           @PathVariable Long profileId
     ) {
-        Booking newBooking = service.add(booking, activityId, profileId);
-        BookingDTO bookingDTO = BookingDTO.mapFromEntity(newBooking);
-        return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
+        service.add(activityId, profileId);
+        Map<String, String> response = Map.of("message", "Booking created successfully");
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
