@@ -6,7 +6,6 @@ import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.department.Department;
 import com.poec.projet_backend.domain.profile.Profile;
 import com.poec.projet_backend.domain.region.Region;
-import com.poec.projet_backend.user_app.UserApp;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -71,7 +70,6 @@ public class Activity {
    @ManyToOne(cascade = CascadeType.ALL)
    @JoinColumn(name = "profile_id")
    private Profile profile;
-
 
     public Activity(String name, String date, int age, String imgUrl, String link, String description, int nbGuest, String hour, boolean isVisible) {
         this.name = name;

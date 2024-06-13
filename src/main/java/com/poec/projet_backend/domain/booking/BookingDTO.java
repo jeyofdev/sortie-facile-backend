@@ -5,7 +5,6 @@ public record BookingDTO(
         String createdAt,
         Long activityId,
         Long profileId
-
 ) {
     public static BookingDTO mapFromEntity(Booking booking) {
         return new BookingDTO(
