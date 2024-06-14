@@ -81,7 +81,7 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
-        newActivity.setCategory(activity.getCategory());
+        newActivity.setCategories(activity.getCategories());
 
         return repository.save(newActivity);
     }

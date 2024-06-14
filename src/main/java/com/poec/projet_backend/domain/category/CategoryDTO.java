@@ -8,6 +8,7 @@ public record CategoryDTO(
         return new CategoryDTO(
                 category.getId(),
                 category.getTitle()
+
         );
     }
 }

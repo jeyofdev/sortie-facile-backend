@@ -20,8 +20,10 @@ public class Category {
     @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "category")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "activity_id")
     private Activity activity;
+
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Profile> profiles = new ArrayList<>();
