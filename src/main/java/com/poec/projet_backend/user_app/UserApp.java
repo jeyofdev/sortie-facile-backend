@@ -28,7 +28,7 @@ public class UserApp implements UserDetails {
     private Long id;
 
     @Column(name = "username", columnDefinition = "VARCHAR(50)")
-    private String nickname;
+    private String username;
 
     @Column(name = "email", columnDefinition = "VARCHAR(100)")
     private String email;
