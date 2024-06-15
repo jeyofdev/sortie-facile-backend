@@ -16,7 +16,7 @@ public record UserAppDTO(
     public static UserAppDTO mapFromEntity(UserApp userApp) {
         return new UserAppDTO(
                 userApp.getId(),
-                userApp.getNickname(),
+                userApp.getUsername(),
                 userApp.getEmail(),
                 userApp.getRole(),
                 userApp.getProfile().getId()
