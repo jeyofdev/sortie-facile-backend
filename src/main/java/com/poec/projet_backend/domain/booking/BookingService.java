@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class BookingService {
@@ -31,15 +32,17 @@ public class BookingService {
                 );
     }
 
-    public Booking add(Booking booking, Long activityId, Long profileId) {
+    public Booking add(Long activityId, Long profileId) {
         Activity newActivity = activityRepository.findById(activityId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(activityId + " not found")
+                        () -> new EntityNotFoundException("Activity " + activityId + " not found")
                 );
         Profile newProfile = profileRepository.findById(profileId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(profileId + " not found")
+                        () -> new EntityNotFoundException("Profile " + profileId + " not found")
                 );
+        Booking booking = new Booking();
+        booking.setCreatedAt(new Date().toString());
         booking.setActivity(newActivity);
         booking.setProfile(newProfile);
         return repository.save(booking);

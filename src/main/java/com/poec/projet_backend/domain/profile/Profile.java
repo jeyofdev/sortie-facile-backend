@@ -52,17 +52,11 @@ public class Profile {
     @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
     private List<Category> categories = new ArrayList<>();
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "profile")
-    private UserApp user;
-
-    @OneToOne(mappedBy = "profile", cascade = CascadeType.ALL)
-    private Activity activity;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
+    private List<Activity> activities;
 
     @OneToMany(mappedBy = "profile")
     private List<Booking> bookings = new ArrayList<>();
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "booking_id")
-//    private Booking booking;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "city_id")
@@ -75,6 +69,10 @@ public class Profile {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "region_id")
     private Region region;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private UserApp user;
 }
 
 

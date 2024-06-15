@@ -42,24 +42,32 @@ public class ActivityService {
                 );
     }
 
-    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId) {
-        Region newRegion = regionRepository.findById(regionId)
+    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId) {
+        Region existingRegion = regionRepository.findById(regionId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(regionId + " not found")
+                        () -> new EntityNotFoundException("Région with id " + regionId + " not found")
                 );
-        Department newDepartment = departmentRepository.findById(departmentId)
+        Department existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(departmentId + " not found")
+                        () -> new EntityNotFoundException("Département with id " +  departmentId + " not found")
                 );
-        City newCity = cityRepository.findById(cityId)
+        City existingCity = cityRepository.findById(cityId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(cityId + " not found")
+                        () -> new EntityNotFoundException("Ville with id " +  cityId + " not found")
                 );
-        activity.setRegion(newRegion);
-        activity.setDepartment(newDepartment);
-        activity.setCity(newCity);
+        Profile existingPofile = profileRepository.findById(profileId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
+                );
+        activity.setRegion(existingRegion);
+        activity.setDepartment(existingDepartment);
+        activity.setCity(existingCity);
+        activity.setProfile(existingPofile);
+        Activity savedActivity = repository.save(activity);
 
-        return repository.save(activity);
+        existingPofile.getActivities().add(activity);
+        profileRepository.save(existingPofile);
+        return savedActivity;
     }
 
     public Activity update(Activity activity, Long id) {
@@ -73,7 +81,6 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
-
         newActivity.setCategories(activity.getCategories());
 
         return repository.save(newActivity);

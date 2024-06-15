@@ -6,7 +6,6 @@ import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.department.Department;
 import com.poec.projet_backend.domain.profile.Profile;
 import com.poec.projet_backend.domain.region.Region;
-import com.poec.projet_backend.user_app.UserApp;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -65,14 +64,22 @@ public class Activity {
     @OneToMany(mappedBy = "activity")
     private List<Booking> bookings = new ArrayList<>();
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "booking_id_id")
-//    private Booking booking;
+    @OneToMany(mappedBy = "activity")
+    private List<Category> categories = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "activities")
-    private List<Category> categories= new ArrayList<>();
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="profile_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_id")
     private Profile profile;
+
+    public Activity(String name, String date, int age, String imgUrl, String link, String description, int nbGuest, String hour, boolean isVisible) {
+        this.name = name;
+        this.date = date;
+        this.age = age;
+        this.imgUrl = imgUrl;
+        this.link = link;
+        this.description = description;
+        this.nbGuest = nbGuest;
+        this.hour = hour;
+        this.isVisible = isVisible;
+    }
 }

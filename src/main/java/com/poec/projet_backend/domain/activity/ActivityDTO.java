@@ -1,5 +1,6 @@
 package com.poec.projet_backend.domain.activity;
 
+
 public record ActivityDTO(
         Long id,
         String name,
@@ -10,12 +11,9 @@ public record ActivityDTO(
         String description,
         int nbGuest,
         String hour,
-        boolean isVisible,
-        Long cityId,
-        Long departmentId,
-        Long regionId,
-        Long profileId
+        boolean isVisible
 ) {
+
     public static ActivityDTO mapFromEntity(Activity activity) {
         return new ActivityDTO(
             activity.getId(),
@@ -27,11 +25,21 @@ public record ActivityDTO(
             activity.getDescription(),
             activity.getNbGuest(),
             activity.getHour(),
-            activity.isVisible(),
-            activity.getCity().getId(),
-            activity.getDepartment().getId(),
-            activity.getRegion().getId(),
-            activity.getProfile().getId()
+            activity.isVisible()
+        );
+    }
+
+    public static Activity mapToEntity(ActivityDTO activityDTO) {
+        return new Activity(
+            activityDTO.name(),
+            activityDTO.date(),
+            activityDTO.age(),
+            activityDTO.imgUrl(),
+            activityDTO.link(),
+            activityDTO.description(),
+            activityDTO.nbGuest(),
+            activityDTO.hour(),
+            activityDTO.isVisible()
         );
     }
 }

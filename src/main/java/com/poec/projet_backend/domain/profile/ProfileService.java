@@ -64,14 +64,14 @@ public class ProfileService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(userId + " not found")
                 );
+
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
         profile.setUser(newUser);
-        newUser.setProfile(profile);
 
-        userAppRepository.save(newUser);
         return repository.save(profile);
+
     }
 
     public Profile update(Profile profile, Long id) {
@@ -87,7 +87,6 @@ public class ProfileService {
         newProfile.setDateOfBirth(profile.getDateOfBirth());
         newProfile.setCategories(profile.getCategories());
         newProfile.setUser(profile.getUser());
-
 
         return repository.save(newProfile);
     }
