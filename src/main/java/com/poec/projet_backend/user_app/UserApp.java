@@ -26,14 +26,19 @@ public class UserApp implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
+
+    @Column(name = "username", columnDefinition = "VARCHAR(50)")
+    private String nickname;
+
+    @Column(name = "email", columnDefinition = "VARCHAR(100)")
     private String email;
+
     @JsonIgnore
     private String password;
     private String role;
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @JoinColumn(name = "profile_id")
     private Profile profile;
 
     @Override
