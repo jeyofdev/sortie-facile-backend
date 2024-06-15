@@ -32,6 +32,7 @@ public class ContactService {
         newContact.setMessage(contact.getMessage());
         newContact.setEmail(contact.getEmail());
         newContact.setTitle(contact.getTitle());
+        newContact.setRead(contact.isRead());
 
         return repository.save(newContact);
     }

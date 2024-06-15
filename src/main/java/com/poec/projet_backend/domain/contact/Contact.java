@@ -22,9 +22,13 @@ public class Contact {
     @Column(name = "message", columnDefinition = "TEXT", nullable = false)
     private String message;
 
-    public Contact(String title, String email, String message) {
+    @Column(name = "isRead", columnDefinition = "BOOLEAN", nullable = false)
+    private boolean isRead;
+
+    public Contact(String title, String email, String message, boolean isRead) {
         this.title = title;
         this.email = email;
         this.message = message;
+        this.isRead = isRead;
     }
 }
