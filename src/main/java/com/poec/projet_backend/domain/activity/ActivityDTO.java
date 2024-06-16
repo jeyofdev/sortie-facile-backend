@@ -12,6 +12,8 @@ public record ActivityDTO(
         int nbGuest,
         String hour,
         boolean isVisible,
+        Long regionId,
+        Long departmentId,
         Long cityId
 ) {
 
@@ -27,6 +29,8 @@ public record ActivityDTO(
                 activity.getNbGuest(),
                 activity.getHour(),
                 activity.isVisible(),
+                activity.getRegion().getId(),
+                activity.getDepartment().getId(),
                 activity.getCity().getId()
         );
     }
