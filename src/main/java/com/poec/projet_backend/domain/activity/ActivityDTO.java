@@ -11,35 +11,41 @@ public record ActivityDTO(
         String description,
         int nbGuest,
         String hour,
-        boolean isVisible
+        boolean isVisible,
+        Long regionId,
+        Long departmentId,
+        Long cityId
 ) {
 
     public static ActivityDTO mapFromEntity(Activity activity) {
         return new ActivityDTO(
-            activity.getId(),
-            activity.getName(),
-            activity.getDate(),
-            activity.getAge(),
-            activity.getImgUrl(),
-            activity.getLink(),
-            activity.getDescription(),
-            activity.getNbGuest(),
-            activity.getHour(),
-            activity.isVisible()
+                activity.getId(),
+                activity.getName(),
+                activity.getDate(),
+                activity.getAge(),
+                activity.getImgUrl(),
+                activity.getLink(),
+                activity.getDescription(),
+                activity.getNbGuest(),
+                activity.getHour(),
+                activity.isVisible(),
+                activity.getRegion().getId(),
+                activity.getDepartment().getId(),
+                activity.getCity().getId()
         );
     }
 
     public static Activity mapToEntity(ActivityDTO activityDTO) {
         return new Activity(
-            activityDTO.name(),
-            activityDTO.date(),
-            activityDTO.age(),
-            activityDTO.imgUrl(),
-            activityDTO.link(),
-            activityDTO.description(),
-            activityDTO.nbGuest(),
-            activityDTO.hour(),
-            activityDTO.isVisible()
+                activityDTO.name(),
+                activityDTO.date(),
+                activityDTO.age(),
+                activityDTO.imgUrl(),
+                activityDTO.link(),
+                activityDTO.description(),
+                activityDTO.nbGuest(),
+                activityDTO.hour(),
+                activityDTO.isVisible()
         );
     }
 }
