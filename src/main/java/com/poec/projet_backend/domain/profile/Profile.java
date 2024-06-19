@@ -28,13 +28,13 @@ public class Profile {
     @Column(name = "lastname", columnDefinition = "VARCHAR(100)", nullable = false)
     private String lastname;
 
-    @Column(name = "streetNumber", columnDefinition = "VARCHAR(100)")
+    @Column(name = "street_number", columnDefinition = "VARCHAR(100)")
     private String streetNumber;
 
     @Column(name = "street", columnDefinition = "VARCHAR(100)")
     private String street;
 
-    @Column(name = "zip_code", columnDefinition = "INT(5)", nullable = false)
+    @Column(name = "postal_code", columnDefinition = "INT(5)", nullable = false)
     private Long postalCode;
 
     @Column(name = "description", columnDefinition = "TEXT", nullable = false)
@@ -46,11 +46,11 @@ public class Profile {
     @Column(name = "phone", columnDefinition = "VARCHAR(14)")
     private String phone;
 
-    @Column(name = "dateOfBirth", nullable = false)
+    @Column(name = "date_of_birth", nullable = false)
     private String dateOfBirth;
 
-    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
-    private List<Category> categories = new ArrayList<>();
+//    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
+//    private List<Category> categories = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
     private List<Activity> activities;

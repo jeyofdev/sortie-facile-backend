@@ -30,8 +30,8 @@ public class CategoryService {
     public Category update(Category category, Long id) {
         Category newCategory = getById(id);
         newCategory.setTitle(category.getTitle());
-        newCategory.setActivity(category.getActivity());
-        newCategory.setProfiles(category.getProfiles());
+        //newCategory.setActivity(category.getActivity());
+//        newCategory.setProfiles(category.getProfiles());
 
         return repository.save(newCategory);
     }

@@ -22,31 +22,31 @@ public class Activity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="activity_name", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name="name", columnDefinition = "VARCHAR(100)", nullable = false)
     private String name;
 
-    @Column(name="activity_date", nullable = false)
+    @Column(name="date", nullable = false)
     private String date;
 
-    @Column(name="activity_age", columnDefinition = "INT")
+    @Column(name="age", columnDefinition = "INT")
     private int age;
 
-    @Column(name="activity_imgUrl", columnDefinition =  "VARCHAR(255)")
+    @Column(name="imgUrl", columnDefinition =  "VARCHAR(255)")
     private String imgUrl;
 
-    @Column(name="activity_link", columnDefinition = "VARCHAR(255)")
+    @Column(name="link", columnDefinition = "VARCHAR(255)")
     private String link;
 
-    @Column(name="activity_description", columnDefinition = "TEXT")
+    @Column(name="description", columnDefinition = "TEXT")
     private String description;
 
-    @Column(name="activity_nbGuest", columnDefinition = "INT")
+    @Column(name="nb_guest", columnDefinition = "INT")
     private int nbGuest;
 
-    @Column(name="activity_hour", nullable = false)
+    @Column(name="hour", nullable = false)
     private String hour;
 
-    @Column(name="activity_isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
+    @Column(name="isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
     private boolean isVisible;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -64,8 +64,9 @@ public class Activity {
     @OneToMany(mappedBy = "activity")
     private List<Booking> bookings = new ArrayList<>();
 
-    @OneToMany(mappedBy = "activity")
-    private List<Category> categories = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")

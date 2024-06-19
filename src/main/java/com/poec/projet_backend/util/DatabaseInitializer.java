@@ -2,8 +2,6 @@ package com.poec.projet_backend.util;
 
 import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.category.CategoryRepository;
-import com.poec.projet_backend.domain.region.Region;
-import com.poec.projet_backend.domain.region.RegionRepository;
 import com.poec.projet_backend.user_app.Role;
 import com.poec.projet_backend.user_app.UserApp;
 import com.poec.projet_backend.user_app.UserAppRepository;

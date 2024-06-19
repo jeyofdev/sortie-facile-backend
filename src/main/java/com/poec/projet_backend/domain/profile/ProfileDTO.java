@@ -20,7 +20,7 @@ public record ProfileDTO(
         Long departmentId,
         Long regionId,
         List<Long> bookingIds,
-        List<Long> categoryIds,
+//        List<Long> categoryIds,
         Long userId
 ) {
     public static ProfileDTO mapFromEntity(Profile profile) {
@@ -39,7 +39,7 @@ public record ProfileDTO(
                 profile.getDepartment().getId(),
                 profile.getRegion().getId(),
                 profile.getBookings().stream().map(Booking::getId).toList(),
-                profile.getCategories().stream().map(Category::getId).toList(),
+//                profile.getCategories().stream().map(Category::getId).toList(),
                 profile.getUser().getId()
         );
     }

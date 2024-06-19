@@ -2,6 +2,8 @@ package com.poec.projet_backend.domain.activity;
 
 import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.booking.BookingRepository;
+import com.poec.projet_backend.domain.category.Category;
+import com.poec.projet_backend.domain.category.CategoryRepository;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
 import com.poec.projet_backend.domain.department.Department;
@@ -27,7 +29,7 @@ public class ActivityService {
     @Autowired
     private RegionRepository regionRepository;
     @Autowired
-    private BookingRepository bookingRepository;
+    private CategoryRepository categoryRepository;
     @Autowired
     private ProfileRepository profileRepository;
 
@@ -42,7 +44,7 @@ public class ActivityService {
                 );
     }
 
-    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId) {
+    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId, Long categoryId) {
         Region existingRegion = regionRepository.findById(regionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Région with id " + regionId + " not found")
@@ -59,10 +61,15 @@ public class ActivityService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
                 );
+        Category existingCategory = categoryRepository.findById(categoryId)
+                .orElseThrow(
+                        () -> new EntityNotFoundException("Category with id " +  categoryId + " not found")
+                );
         activity.setRegion(existingRegion);
         activity.setDepartment(existingDepartment);
         activity.setCity(existingCity);
         activity.setProfile(existingPofile);
+        activity.setCategory(existingCategory);
         Activity savedActivity = repository.save(activity);
 
         existingPofile.getActivities().add(activity);
@@ -81,7 +88,7 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
-        newActivity.setCategories(activity.getCategories());
+//        newActivity.setCategories(activity.getCategories());
 
         return repository.save(newActivity);
     }
