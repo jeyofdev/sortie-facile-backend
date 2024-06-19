@@ -443,7 +443,7 @@ INSERT INTO City(id, postal_code, name, department_id) VALUES
                                                            (325, 91200, 'Étampes', 91),
                                                            (326, 91300, 'Palaiseau', 91);
 
-INSERT INTO user (username, email, password, role) VALUES
+INSERT INTO user (nickname, email, password, role) VALUES
                                                                  ('alice', 'alice@example.com', '$2a$10$x9quxoFdLN536mQwryatzOqg5CZAMcnOwlCkwfsOh.CH8VFeidQuS', 'ROLE_USER'),
                                                                  ('bob', 'bob@example.com', '$2a$10$7Q60D99vx4gov81.brxeQuLG0sjAMcYs3R7QePsyKEfzCqdtIkhCm', 'ROLE_USER'),
                                                                  ('claire', 'claire@example.com', '$2a$10$vF3ZUn.zz39nE/wkcquige5cYC1HOPph/WjRSWim6PHZH4WSZCnKW', 'ROLE_USER'),

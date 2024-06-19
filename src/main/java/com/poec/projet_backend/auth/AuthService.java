@@ -30,7 +30,7 @@ public class AuthService {
 
         if (!repository.findByEmail(request.getEmail()).isPresent()) {
             var user = UserApp.builder()
-                    .username(request.getUsername())
+                    .nickname(request.getUsername())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role("ROLE_" + request.getRequiredRole())
@@ -76,7 +76,7 @@ public class AuthService {
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("role", user.getRole());
             extraClaims.put("id", user.getId());
-            extraClaims.put("username", user.getUsername());
+            extraClaims.put("nickname", user.getNickname());
 
             /* On génère le token avec le rôle */
             String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), user);

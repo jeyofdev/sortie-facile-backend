@@ -27,8 +27,8 @@ public class UserApp implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "username", columnDefinition = "VARCHAR(50)")
-    private String username;
+    @Column(name = "nickname", columnDefinition = "VARCHAR(50)")
+    private String nickname;
 
     @Column(name = "email", columnDefinition = "VARCHAR(100)")
     private String email;
