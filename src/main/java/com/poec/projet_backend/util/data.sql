@@ -443,7 +443,7 @@ INSERT INTO City(id, postal_code, name, department_id) VALUES
                                                            (325, 91200, 'Étampes', 91),
                                                            (326, 91300, 'Palaiseau', 91);
 
-INSERT INTO user (username, email, password, role) VALUES
+INSERT INTO user (nickname, email, password, role) VALUES
                                                                  ('alice', 'alice@example.com', '$2a$10$x9quxoFdLN536mQwryatzOqg5CZAMcnOwlCkwfsOh.CH8VFeidQuS', 'ROLE_USER'),
                                                                  ('bob', 'bob@example.com', '$2a$10$7Q60D99vx4gov81.brxeQuLG0sjAMcYs3R7QePsyKEfzCqdtIkhCm', 'ROLE_USER'),
                                                                  ('claire', 'claire@example.com', '$2a$10$vF3ZUn.zz39nE/wkcquige5cYC1HOPph/WjRSWim6PHZH4WSZCnKW', 'ROLE_USER'),
@@ -459,22 +459,22 @@ INSERT INTO profile (firstname, lastname, street_number, street, postal_code, de
                                                                                                                                                     ('David', 'Moreau', '8', 'Rue de la Paix', 75002, 'Chef cuisinier', 'https://example.com/avatar4.jpg', '5566778899', '1990-07-30', 2, 75, 104, 6),
                                                                                                                                                     ('Emma', 'Giraud', '25', 'Rue de Rennes', 75006, 'Photographe', 'https://example.com/avatar5.jpg', '6677889900', '1995-02-28', 2, 75, 105, 7);
 
-INSERT INTO category (title) values
-                                 ('Plein air'),
-                                 ('Sport'),
-                                 ('Gastronomie'),
-                                 ('Jeux de société'),
-                                 ('Culture'),
-                                 ('Pour les enfants'),
-                                 ('Artistique'),
-                                 ('Bien-être'),
-                                 ('Aventure'),
-                                 ('Technologie'),
-                                 ('Sciences'),
-                                 ('Ecologie'),
-                                 ('Festif'),
-                                 ('Loisirs créatifs'),
-                                 ('Aquatique');
+INSERT INTO category (title, img_url) values
+                                 ('Plein air', "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnR8ZW58MHx8MHx8fDA%3D"),
+                                 ('Sport',"https://images.unsplash.com/photo-1604061986761-d9d0cc41b0d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8VGFibGUlMjBCYXNzZXxlbnwwfHwwfHx8MA%3D%3D"),
+                                 ('Gastronomie',"https://plus.unsplash.com/premium_photo-1661407582641-9ce38a3c8402?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2FuYXAlQzMlQTl8ZW58MHx8MHx8fDA%3D"),
+                                 ('Jeux de société',"https://plus.unsplash.com/premium_photo-1684711741945-3f75f80db991?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fEJ1cmVhdXxlbnwwfHwwfHx8MA%3D%3D"),
+                                 ('Culture',"https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJtb2lyZXxlbnwwfHwwfHx8MA%3D%3D"),
+                                 ('Pour les enfants',"https://images.unsplash.com/photo-1572734389279-e4fa423ca9db?q=80&w=3684&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ),
+                                 ('Artistique', "https://images.unsplash.com/photo-1526040652367-ac003a0475fe?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
+                                 ('Bien-être', "https://images.unsplash.com/photo-1522790478022-8eb1742bf506?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFRhcGlzJTIwZGUlMjBTb2x8ZW58MHx8MHx8fDA%3D"),
+                                 ('Aventure', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
+                                 ('Technologie', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
+                                 ('Sciences', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
+                                 ('Ecologie', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
+                                 ('Festif', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
+                                 ('Loisirs créatifs', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
+                                 ('Aquatique', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww");
 
 INSERT INTO activity (name, date, age, img_url, link, description, nb_guest, hour, is_visible, region_id, department_id, city_id, profile_id, category_id) VALUES
     ('Tu Quoque', '2024-06-30', 5, 'https://arangur.net/univers/images/allraces.jpg', 'http://example.com/tuquoque', 'Nicolas vous fera vivre une aventure fantastique remplie de monstres et de trésors enfouis au fin-fond des catacombes en compagnie de Nélia l elfe roublard et Sylvain le gnome alchimiste', 25, '11:00', true, 10, 35, 50, 5, 4),
