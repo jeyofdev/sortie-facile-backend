@@ -85,7 +85,7 @@ public class ProfileService {
         newProfile.setAvatar(profile.getAvatar());
         newProfile.setPhone(profile.getPhone());
         newProfile.setDateOfBirth(profile.getDateOfBirth());
-        newProfile.setCategories(profile.getCategories());
+//        newProfile.setCategories(profile.getCategories());
         newProfile.setUser(profile.getUser());
 
         return repository.save(newProfile);
