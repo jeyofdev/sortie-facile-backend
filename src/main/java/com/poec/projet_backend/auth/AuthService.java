@@ -76,6 +76,7 @@ public class AuthService {
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("role", user.getRole());
             extraClaims.put("id", user.getId());
+            extraClaims.put("username", user.getUsername());
 
             /* On génère le token avec le rôle */
             String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), user);
