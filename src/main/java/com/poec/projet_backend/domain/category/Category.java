@@ -20,11 +20,9 @@ public class Category {
     @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
+    @OneToMany(mappedBy = "category")
+    private List<Activity> activities = new ArrayList<>();
 
-
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Profile> profiles = new ArrayList<>();
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    private List<Profile> profiles = new ArrayList<>();
 }
