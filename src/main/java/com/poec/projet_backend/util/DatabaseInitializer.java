@@ -28,7 +28,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             this.createUsers();
         }
 
-        this.createCategories();
+        //this.createCategories();
     }
 
     private void createAdmin() {
