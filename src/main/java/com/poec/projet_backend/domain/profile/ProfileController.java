@@ -38,7 +38,7 @@ public class ProfileController {
                                           @PathVariable Long departmentId,
                                           @PathVariable Long cityId,
                                           @PathVariable Long userId
-                                          ) {
+    ) {
         Profile newProfile = service.add(profile, regionId, departmentId, cityId, userId);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
         return new ResponseEntity<>(profileDTO, HttpStatus.CREATED);
@@ -50,10 +50,6 @@ public class ProfileController {
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
-
-    @DeleteMapping(DELETE)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
-    }
-
 }
+
+

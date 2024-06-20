@@ -18,11 +18,11 @@ public class Booking {
     @Column(name = "created_at", nullable = false)
     private String createdAt;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "profile_id")
     private Profile profile;
 

@@ -1,16 +1,18 @@
 package com.poec.projet_backend.domain.activity;
 
 
+import java.util.Date;
+
 public record ActivityDTO(
         Long id,
         String name,
-        String date,
+        Date date,
         int age,
         String imgUrl,
         String link,
         String description,
         int nbGuest,
-        String hour,
+//        String hour,
         boolean isVisible,
         Long regionId,
         Long departmentId,
@@ -28,7 +30,7 @@ public record ActivityDTO(
                 activity.getLink(),
                 activity.getDescription(),
                 activity.getNbGuest(),
-                activity.getHour(),
+//                activity.getHour(),
                 activity.isVisible(),
                 activity.getRegion().getId(),
                 activity.getDepartment().getId(),
@@ -46,7 +48,7 @@ public record ActivityDTO(
                 activityDTO.link(),
                 activityDTO.description(),
                 activityDTO.nbGuest(),
-                activityDTO.hour(),
+//                activityDTO.hour(),
                 activityDTO.isVisible()
         );
     }

@@ -1,7 +1,5 @@
 package com.poec.projet_backend.domain.activity;
 
-import com.poec.projet_backend.domain.booking.Booking;
-import com.poec.projet_backend.domain.booking.BookingRepository;
 import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.category.CategoryRepository;
 import com.poec.projet_backend.domain.city.City;
@@ -57,7 +55,7 @@ public class ActivityService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Ville with id " +  cityId + " not found")
                 );
-        Profile existingPofile = profileRepository.findById(profileId)
+        Profile existingProfile = profileRepository.findById(profileId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
                 );
@@ -68,12 +66,12 @@ public class ActivityService {
         activity.setRegion(existingRegion);
         activity.setDepartment(existingDepartment);
         activity.setCity(existingCity);
-        activity.setProfile(existingPofile);
+        activity.setProfile(existingProfile);
         activity.setCategory(existingCategory);
         Activity savedActivity = repository.save(activity);
 
-        existingPofile.getActivities().add(activity);
-        profileRepository.save(existingPofile);
+        existingProfile.getActivities().add(activity);
+        profileRepository.save(existingProfile);
         return savedActivity;
     }
 
@@ -86,9 +84,7 @@ public class ActivityService {
         newActivity.setLink(activity.getLink());
         newActivity.setDescription(activity.getDescription());
         newActivity.setNbGuest(activity.getNbGuest());
-        newActivity.setHour(activity.getHour());
         newActivity.setVisible(activity.isVisible());
-//        newActivity.setCategories(activity.getCategories());
 
         return repository.save(newActivity);
     }

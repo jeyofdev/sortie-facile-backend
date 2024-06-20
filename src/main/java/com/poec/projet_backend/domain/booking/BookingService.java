@@ -6,6 +6,8 @@ import com.poec.projet_backend.domain.profile.Profile;
 import com.poec.projet_backend.domain.profile.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,7 +59,9 @@ public class BookingService {
         return repository.save(newBooking);
     }
 
-    public void delete(Long id) {
+    public ResponseEntity<Void> delete(Long id) {
         repository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }
