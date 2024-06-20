@@ -609,3 +609,15 @@ INSERT INTO booking (created_at, profile_id, activity_id) VALUES
     ('18/06/2024', 3, 8),
     ('19/06/2024', 4, 9),
     ('20/06/2024', 5, 10);
+
+INSERT INTO testimonial (user, title, message, note) VALUES
+                                                  ('alice123', 'Super pour se faire des amis', 'Grâce à cette appli, j''ai rencontré des gens formidables lors de randonnées en montagne. Je recommande vivement !', 5),
+                                                  ('bob456', 'Très convivial', 'Les sorties organisées sont toujours conviviales. J''ai adoré la sortie surf que j''ai faite.', 4),
+                                                  ('charlie789', 'Incontournable pour les activités sociales', 'L''application est incontournable pour quiconque veut se faire de nouveaux amis.', 5),
+                                                  ('diana101', 'Top pour les événements', 'Les événements proposés, comme les soirées jeux de société, sont toujours amusants et bien organisés.', 5),
+                                                  ('eric202', 'Efficace et amusant', 'Une manière très amusante de rencontrer des gens et de partager des moments agréables.', 4),
+                                                  ('frank303', 'Superbe expérience', 'Chaque activité, comme les balades en montagne, a été une opportunité fantastique de faire des rencontres. Très satisfait.', 5),
+                                                  ('grace404', 'Très enrichissant', 'Les activités sont variées et enrichissantes, j''ai fait des rencontres précieuses.', 5),
+                                                  ('hannah505', 'Application géniale', 'Cette application est géniale pour ceux qui cherchent à se faire de nouveaux amis.', 5),
+                                                  ('ian606', 'Bonnes rencontres', 'J''ai rencontré plusieurs personnes sympathiques lors des sorties organisées.', 4),
+                                                  ('julie707', 'Exceptionnel pour les activités', 'Un outil exceptionnel pour participer à des activités sociales et rencontrer des gens. Je suis très satisfaite.', 5);
