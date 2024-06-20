@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -26,7 +27,7 @@ public class Activity {
     private String name;
 
     @Column(name="date", nullable = false)
-    private String date;
+    private Date date;
 
     @Column(name="age", columnDefinition = "INT")
     private int age;
@@ -43,8 +44,8 @@ public class Activity {
     @Column(name="nb_guest", columnDefinition = "INT")
     private int nbGuest;
 
-    @Column(name="hour", nullable = false)
-    private String hour;
+//    @Column(name="hour", nullable = false)
+//    private String hour;
 
     @Column(name="isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
     private boolean isVisible;
@@ -72,7 +73,7 @@ public class Activity {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    public Activity(String name, String date, int age, String imgUrl, String link, String description, int nbGuest, String hour, boolean isVisible) {
+    public Activity(String name, Date date, int age, String imgUrl, String link, String description, int nbGuest, boolean isVisible) {
         this.name = name;
         this.date = date;
         this.age = age;
@@ -80,7 +81,7 @@ public class Activity {
         this.link = link;
         this.description = description;
         this.nbGuest = nbGuest;
-        this.hour = hour;
+//        this.hour = hour;
         this.isVisible = isVisible;
     }
 }

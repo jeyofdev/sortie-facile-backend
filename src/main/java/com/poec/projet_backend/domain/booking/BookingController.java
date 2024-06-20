@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -48,13 +49,14 @@ public class BookingController {
     @PutMapping(UPDATE)
     public ResponseEntity<BookingDTO> update(@RequestBody Booking booking, @PathVariable Long id) {
         Booking newBooking = service.update(booking, id);
-        BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
+        BookingDTO bookingDTO = BookingDTO.mapFromEntity(newBooking);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         service.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
