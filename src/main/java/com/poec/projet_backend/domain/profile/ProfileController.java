@@ -45,7 +45,9 @@ public class ProfileController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ProfileDTO> update(@RequestBody Profile profile, @PathVariable Long id) {
+    public ResponseEntity<ProfileDTO> update(@RequestBody Profile profile,
+                                             @PathVariable Long id
+                                             ) {
         Profile newProfile = service.update(profile, id);
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);

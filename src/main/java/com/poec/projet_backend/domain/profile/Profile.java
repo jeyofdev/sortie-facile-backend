@@ -49,8 +49,8 @@ public class Profile {
     @Column(name = "date_of_birth", nullable = false)
     private String dateOfBirth;
 
-//    @ManyToMany(mappedBy = "profiles", cascade = CascadeType.ALL)
-//    private List<Category> categories = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private List<Category> categories = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
     private List<Activity> activities;
