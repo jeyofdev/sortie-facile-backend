@@ -16,12 +16,12 @@ public record ProfileDTO(
         String avatar,
         String phone,
         String dateOfBirth,
-        Long cityId,
-        Long departmentId,
-        Long regionId,
+        String cityName,
+        String departmentName,
+        String regionName,
         List<Long> bookingIds,
-//        List<Long> categoryIds,
-        Long userId
+        List<Long> categoryIds
+//        Long userId
 ) {
     public static ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
@@ -35,12 +35,12 @@ public record ProfileDTO(
                 profile.getAvatar(),
                 profile.getPhone(),
                 profile.getDateOfBirth(),
-                profile.getCity().getId(),
-                profile.getDepartment().getId(),
-                profile.getRegion().getId(),
+                profile.getCity().getName(),
+                profile.getDepartment().getName(),
+                profile.getRegion().getName(),
                 profile.getBookings().stream().map(Booking::getId).toList(),
-//                profile.getCategories().stream().map(Category::getId).toList(),
-                profile.getUser().getId()
+                profile.getCategories().stream().map(Category::getId).toList()
+//                profile.getUser().getId()
         );
     }
 }

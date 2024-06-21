@@ -37,7 +37,7 @@ public class UserApp implements UserDetails {
     private String password;
     private String role;
 
-    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
+    @OneToOne(mappedBy = "user")
     @JoinColumn(name = "profile_id")
     private Profile profile;
 

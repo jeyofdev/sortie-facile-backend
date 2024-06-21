@@ -460,24 +460,23 @@ INSERT INTO profile (firstname, lastname, street_number, street, postal_code, de
                                                                                                                                                     ('Emma', 'Giraud', '25', 'Rue de Rennes', 75006, 'Photographe', 'https://example.com/avatar5.jpg', '6677889900', '1995-02-28', 2, 75, 105, 7);
 
 INSERT INTO category (title, img_url) values
-                                 ('Plein air', "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnR8ZW58MHx8MHx8fDA%3D"),
-                                 ('Sport',"https://images.unsplash.com/photo-1604061986761-d9d0cc41b0d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8VGFibGUlMjBCYXNzZXxlbnwwfHwwfHx8MA%3D%3D"),
-                                 ('Gastronomie',"https://plus.unsplash.com/premium_photo-1661407582641-9ce38a3c8402?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2FuYXAlQzMlQTl8ZW58MHx8MHx8fDA%3D"),
-                                 ('Jeux de société',"https://plus.unsplash.com/premium_photo-1684711741945-3f75f80db991?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fEJ1cmVhdXxlbnwwfHwwfHx8MA%3D%3D"),
-                                 ('Culture',"https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJtb2lyZXxlbnwwfHwwfHx8MA%3D%3D"),
-                                 ('Pour les enfants',"https://images.unsplash.com/photo-1572734389279-e4fa423ca9db?q=80&w=3684&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" ),
-                                 ('Artistique', "https://images.unsplash.com/photo-1526040652367-ac003a0475fe?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
-                                 ('Bien-être', "https://images.unsplash.com/photo-1522790478022-8eb1742bf506?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fFRhcGlzJTIwZGUlMjBTb2x8ZW58MHx8MHx8fDA%3D"),
-                                 ('Aventure', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
-                                 ('Technologie', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
-                                 ('Sciences', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
-                                 ('Ecologie', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
-                                 ('Festif', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
-                                 ('Loisirs créatifs', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww"),
-                                 ('Aquatique', "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww");
+                                 ('Plein air', "https://www.laccastor.com/wp-content/uploads/2016/05/PleinAir-Culture.png"),
+                                 ('Sport',"https://img.freepik.com/photos-gratuite/outils-sport_53876-138077.jpg"),
+                                 ('Gastronomie',"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT02_7OsqfFEgL7ico4U5RWD8lEjvJs-Lj26Q&s"),
+                                 ('Jeux de société',"https://gentlemanmoderne.com/wp-content/uploads/2019/07/meilleur-jeux-de-societe-famille-amis-adulte-originaux-qui-change.jpeg"),
+                                 ('Culture',"https://www.montpellier3m.fr/sites/default/files/styles/echelle_1920/public/musee.png"),
+                                 ('Pour les enfants',"https://cache.magicmaman.com/data/photo/w800_c18/4b/enfants-samusent2.jpg" ),
+                                 ('Artistique', "https://www.biotyfullbox.fr/cosmetique-bio/wp-content/uploads/shutterstock_1997770595.jpg"),
+                                 ('Bien-être', "https://cdn.sortiraparis.com/images/80/94880/795396-le-salon-zen-2022-cinq-jours-autour-du-bien-etre-a-l-espace-champerret.jpg"),
+                                 ('Aventure', "https://www.exoticca.com/fr/blog/wp-content/uploads/2018/10/Pourquoi-le-tourisme-d-aventure-est-il-en-plein-essor.jpg"),
+                                 ('Technologie', "https://www.zdnet.fr/wp-content/uploads/zdnet/2024/02/technologie-1.jpg"),
+                                 ('Sciences', "https://www.agenda-fm.co.uk/wp-content/uploads/2023/05/The-Life-Sciences-Laboratory-A-Place-of-Discovery.jpg"),
+                                 ('Ecologie', "https://sciencespoenvironnement.fr/wp-content/uploads/2020/09/ecologie.jpg"),
+                                 ('Festif', "https://img.freepik.com/photos-gratuite/bokeh-background-parfait-pour-canva_1361-4071.jpg"),
+                                 ('Loisirs créatifs', "https://medias.latelierdelucie.fr/WebArbo/blocs/28-accessoires-loisirs-creatifs.jpg"),
+                                 ('Aquatique', "https://www.parc-attraction-loisirs.fr/wp/files/2016/07/parc-aquatique-france-sud-aqualand-splashworld-center-parcs.jpg");
 
 INSERT INTO activity (name, date, age, img_url, link, description, nb_guest, is_visible, region_id, department_id, city_id, profile_id, category_id) VALUES
-    ('Tu Quoque', '2024-06-19T14:30:00', 5, 'https://arangur.net/univers/images/allraces.jpg', 'http://example.com/tuquoque', 'Nicolas vous fera vivre une aventure fantastique remplie de monstres et de trésors enfouis au fin-fond des catacombes en compagnie de Nélia l elfe roublard et Sylvain le gnome alchimiste', 25, true, 10, 35, 50, 5, 4),
     ('Randonnée en montagne', '2024-06-26T09:30:00', 25, 'https://www.randonnee-hotels.com/wp-content/uploads/2024/03/activites-1920x768.jpg', 'https://example.com/randonnee', 'Une belle randonnée en montagne.', 10, true, 5, 45, 100, 1, 1),
     ('Cours de cuisine', '2024-06-22T16:30:00', 30, 'https://cdn-blog.superprof.com/blog_fr/wp-content/uploads/2016/12/cours-cuisine-atelier-des-chef.jpg.webp', 'https://example.com/cuisine', 'Apprenez à cuisiner des plats délicieux.', 8, true, 2, 50, 120, 2, 3),
     ('Session de yoga', '2024-07-06T17:40:00', 22, 'https://teambooking.fr/wp-content/uploads/2024/01/session-yoga-idf-team-building-1-1.webp', 'https://example.com/yoga', 'Relaxez-vous avec une session de yoga.', 12, true, 3, 60, 130, 3, 8),
@@ -496,7 +495,8 @@ INSERT INTO activity (name, date, age, img_url, link, description, nb_guest, is_
     ('Spectacle de théâtre', '2024-07-17T21:00:00', 27, 'https://www.gagny.fr/wp-content/uploads/2016/07/TMG-2.jpg', 'https://example.com/theatre', 'Profitez d''un spectacle de théâtre.', 50, true, 6, 75, 140, 3, 5),
     ('Cours de jardinage', '2024-07-18T14:00:00', 31, 'https://static.wixstatic.com/media/b1d928_508c199792024a7f8215e838ac93b59e~mv2.jpg/v1/fill/w_640,h_682,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/b1d928_508c199792024a7f8215e838ac93b59e~mv2.jpg', 'https://example.com/jardinage', 'Apprenez les bases du jardinage.', 20, true, 7, 85, 150, 6, 1),
     ('Atelier de bricolage', '2024-07-19T14:00:00', 30, 'https://www.batiref.fr/blog/wp-content/uploads/2015/11/letablisienne-1210x400.jpg', 'https://example.com/bricolage', 'Apprenez à bricoler comme un pro.', 15, true, 8, 95, 160, 6, 14),
-    ('Balade en bateau', '2024-07-20T09:30:00', 25, 'https://www.touraineloirevalley.com/wp-content/uploads/wpetourisme/boutavant-03.jpg', 'https://example.com/bateau', 'Profitez d''une balade en bateau.', 8, true, 9, 85, 140, 4, 15);
+    ('Balade en bateau', '2024-07-20T09:30:00', 25, 'https://www.touraineloirevalley.com/wp-content/uploads/wpetourisme/boutavant-03.jpg', 'https://example.com/bateau', 'Profitez d''une balade en bateau.', 8, true, 9, 85, 140, 4, 15),
+    ('Tu Quoque', '2024-06-19T14:30:00', 5, 'https://arangur.net/univers/images/allraces.jpg', 'http://example.com/tuquoque', 'Nicolas vous fera vivre une aventure fantastique remplie de monstres et de trésors enfouis au fin-fond des catacombes en compagnie de Nélia l elfe roublard et Sylvain le gnome alchimiste', 25, true, 10, 35, 50, 5, 4);
 
 INSERT INTO booking (created_at, profile_id, activity_id) VALUES
     ('01/06/2024', 1, 1),
@@ -621,3 +621,35 @@ INSERT INTO testimonial (user, title, message, note) VALUES
                                                   ('hannah505', 'Application géniale', 'Cette application est géniale pour ceux qui cherchent à se faire de nouveaux amis.', 5),
                                                   ('ian606', 'Bonnes rencontres', 'J''ai rencontré plusieurs personnes sympathiques lors des sorties organisées.', 4),
                                                   ('julie707', 'Exceptionnel pour les activités', 'Un outil exceptionnel pour participer à des activités sociales et rencontrer des gens. Je suis très satisfaite.', 5);
+
+INSERT INTO profile_categories (profiles_id, categories_id) VALUES
+    (6, 12),
+    (4, 3),
+(4, 9),
+(3, 10),
+(2, 2),
+(2, 5),
+(2, 11),
+(1, 12),
+(7, 1),
+(4, 2),
+(3, 3),
+(5, 6),
+(4, 8),
+(4, 14),
+(5, 3),
+(1, 2),
+(1, 11),
+(2, 10),
+(1, 14),
+(2, 13),
+(6, 13),
+(7, 6),
+(3, 2),
+(5, 11),
+(5, 14),
+(2, 3),
+(2, 12),
+(7, 2),
+(7, 5),
+(7, 11);

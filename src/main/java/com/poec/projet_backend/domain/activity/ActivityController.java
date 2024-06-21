@@ -49,6 +49,7 @@ public class ActivityController {
     public ResponseEntity<ActivityDTO> update(@RequestBody Activity activity, @PathVariable Long id) {
         Activity newActivity = service.update(activity, id);
         ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
+        System.out.println(activityDTO.isVisible());
         return new ResponseEntity<>(activityDTO, HttpStatus.OK);
     }
 

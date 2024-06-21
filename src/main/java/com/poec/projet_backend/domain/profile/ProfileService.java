@@ -2,6 +2,7 @@ package com.poec.projet_backend.domain.profile;
 
 import com.poec.projet_backend.domain.booking.Booking;
 import com.poec.projet_backend.domain.booking.BookingRepository;
+import com.poec.projet_backend.domain.category.Category;
 import com.poec.projet_backend.domain.category.CategoryRepository;
 import com.poec.projet_backend.domain.city.City;
 import com.poec.projet_backend.domain.city.CityRepository;
@@ -64,7 +65,6 @@ public class ProfileService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(userId + " not found")
                 );
-
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
@@ -85,7 +85,6 @@ public class ProfileService {
         newProfile.setAvatar(profile.getAvatar());
         newProfile.setPhone(profile.getPhone());
         newProfile.setDateOfBirth(profile.getDateOfBirth());
-//        newProfile.setCategories(profile.getCategories());
         newProfile.setUser(profile.getUser());
 
         return repository.save(newProfile);
