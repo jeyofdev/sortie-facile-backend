@@ -32,6 +32,6 @@ public class Category {
     @JoinColumn(name = "activity_id")
     private Activity activity;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "categories")
     private List<Profile> profiles = new ArrayList<>();
 }

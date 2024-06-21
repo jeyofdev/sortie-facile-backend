@@ -84,4 +84,25 @@ public class Activity {
 //        this.hour = hour;
         this.isVisible = isVisible;
     }
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", date=" + date +
+                ", age=" + age +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", link='" + link + '\'' +
+                ", description='" + description + '\'' +
+                ", nbGuest=" + nbGuest +
+                ", isVisible=" + isVisible +
+                ", city=" + city +
+                ", region=" + region +
+                ", department=" + department +
+                ", bookings=" + bookings +
+                ", category=" + category +
+                ", profile=" + profile +
+                '}';
+    }
 }

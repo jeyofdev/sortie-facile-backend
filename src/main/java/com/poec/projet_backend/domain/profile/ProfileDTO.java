@@ -20,8 +20,8 @@ public record ProfileDTO(
         String departmentName,
         String regionName,
         List<Long> bookingIds,
-//        List<Long> categoryIds,
-        Long userId
+        List<Long> categoryIds
+//        Long userId
 ) {
     public static ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
@@ -39,8 +39,8 @@ public record ProfileDTO(
                 profile.getDepartment().getName(),
                 profile.getRegion().getName(),
                 profile.getBookings().stream().map(Booking::getId).toList(),
-//                profile.getCategories().stream().map(Category::getId).toList(),
-                profile.getUser().getId()
+                profile.getCategories().stream().map(Category::getId).toList()
+//                profile.getUser().getId()
         );
     }
 }
