@@ -1,5 +1,6 @@
 package com.poec.projet_backend.domain.category;
 
+import com.poec.projet_backend.domain.activity.Activity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,4 +53,8 @@ public class CategoryController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
-}
+
+
+
+    }
+
