@@ -92,4 +92,10 @@ public class ActivityService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public int countBookingsByActivityId(Long activityId) {
+        return repository.countBookingsByActivityId(activityId);
+    }
+
+
 }

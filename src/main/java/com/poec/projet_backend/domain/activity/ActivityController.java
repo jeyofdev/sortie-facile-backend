@@ -57,4 +57,12 @@ public class ActivityController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+
+    @GetMapping("/{activityId}/countBookings")
+    public ResponseEntity<Integer> countBookingsForActivity(@PathVariable Long activityId) {
+        int count = service.countBookingsByActivityId(activityId);
+        return ResponseEntity.ok(count);
+    }
+
 }
