@@ -81,7 +81,6 @@ public class Activity {
         this.link = link;
         this.description = description;
         this.nbGuest = nbGuest;
-//        this.hour = hour;
         this.isVisible = isVisible;
     }
 
