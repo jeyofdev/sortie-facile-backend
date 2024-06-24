@@ -10,7 +10,6 @@ public record CityDTO(
         String name,
         Long departmentId,
         List<Long> activityIds
-//        List<Long> profileIds
 ) {
     public static CityDTO mapFromEntity(City city) {
         return new CityDTO(

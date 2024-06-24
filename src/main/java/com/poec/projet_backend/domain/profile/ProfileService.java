@@ -93,4 +93,12 @@ public class ProfileService {
     public void delete(Long id) {
         repository.deleteById(id);
     }
+
+    public Profile updateCategoryInProfile(Long profileId, List<Long> categoryIds) {
+        Profile newProfile = getById(profileId);
+        List<Category> categories = categoryRepository.findAllById(categoryIds);
+
+        newProfile.setCategories(categories);
+        return repository.save(newProfile);
+    }
 }
