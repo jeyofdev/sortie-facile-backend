@@ -1,5 +1,6 @@
 package com.poec.projet_backend.domain.profile;
 
+import com.poec.projet_backend.domain.category.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,6 +53,16 @@ public class ProfileController {
         ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
         return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
+
+    @PutMapping(UPDATE + "/categories")
+    public ResponseEntity<ProfileUpdateCategoriesDTO> updateCategoryInProfile(@RequestBody ProfileUpdateCategoriesDTO profileUpdateCategoriesDTO,
+                                                              @PathVariable Long id) {
+        Profile newProfile = service.updateCategoryInProfile(id, profileUpdateCategoriesDTO.categoryIds());
+        ProfileUpdateCategoriesDTO newProfileUpdated = ProfileUpdateCategoriesDTO.mapFromEntity(newProfile);
+        return new ResponseEntity<>(newProfileUpdated, HttpStatus.OK);
+    }
+
+
 }
 
 

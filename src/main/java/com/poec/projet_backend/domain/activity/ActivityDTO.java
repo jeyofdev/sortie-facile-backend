@@ -46,7 +46,6 @@ public record ActivityDTO(
                 activityDTO.link(),
                 activityDTO.description(),
                 activityDTO.nbGuest(),
-//                activityDTO.hour(),
                 activityDTO.isVisible()
         );
     }
