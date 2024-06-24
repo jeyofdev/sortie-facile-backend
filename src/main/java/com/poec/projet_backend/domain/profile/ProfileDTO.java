@@ -21,7 +21,6 @@ public record ProfileDTO(
         String regionName,
         List<Long> bookingIds,
         List<Long> categoryIds
-//        Long userId
 ) {
     public static ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
@@ -40,7 +39,6 @@ public record ProfileDTO(
                 profile.getRegion().getName(),
                 profile.getBookings().stream().map(Booking::getId).toList(),
                 profile.getCategories().stream().map(Category::getId).toList()
-//                profile.getUser().getId()
         );
     }
 }
