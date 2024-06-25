@@ -30,17 +30,18 @@ public class AuthService {
 
         if (!repository.findByEmail(request.getEmail()).isPresent()) {
             var user = UserApp.builder()
-                    .firstname(request.getFirstname())
-                    .lastname(request.getLastname())
+                    .nickname(request.getUsername())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
-                    .role("ROLE_" + Role.USER)
+                    .role("ROLE_" + request.getRequiredRole())
                     .build();
 
             repository.save(user);
 
             Map<String, String> body = new HashMap<>();
             body.put("message", "Account successfully created as user");
+            body.put("userId", String.valueOf(user.getId()));
+
             return body;
 
         } else {
@@ -74,6 +75,8 @@ public class AuthService {
             /* On extrait le rôle de l'utilisateur */
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("role", user.getRole());
+            extraClaims.put("id", user.getId());
+            extraClaims.put("nickname", user.getNickname());
 
             /* On génère le token avec le rôle */
             String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), user);

@@ -53,6 +53,11 @@ public class GlobalExceptionHandler {
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundExceptio(EntityNotFoundException ex) {
+        return handleException(ex, HttpStatus.NOT_FOUND);
+    }
+
 
 }
 

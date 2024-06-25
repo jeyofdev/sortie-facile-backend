@@ -17,11 +17,32 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+    private String[] urlPublicList = {
+//            "/api/v1/auth/**",
+            "/api/v1/**",
+//            "/api/v1/activity/**",
+//            "/api/v1/booking/**",
+//            "/api/v1/category/**",
+//            "/api/v1/city/**",
+//            "/api/v1/activity/all",
+//            "/api/v1/activity/{id}",
+//            "/api/v1/category/all",
+//            "/api/v1/category/{id}",
+//            "/api/v1/category/add",
+//            "/api/v1/contact/add",
+//            "/api/v1/profile/add",
+//            "/api/v1/profile/all",
+//            "/api/v1/profile/{id}}",
+//            "/api/v1/region/all",
+//            "api/v1/booking/add"
+    };
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -37,12 +58,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
+        String regex = "/api/v1/.*";
+        if (request.getRequestURI().matches(regex)) {
+            System.out.println("chemin autorisé");
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         /* On vérifie si authHeader n'est pas null ET si la valeur de la clé "Authorization" commence par "Bearer " */
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             request.setAttribute("no_jwt_provided", "No JWT provided");
             filterChain.doFilter(request, response);
-
-
             return;
         }
 
@@ -83,7 +109,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         /* Une fois le traitement terminé, je passe au filtre suivant */
         filterChain.doFilter(request, response);
-
     }
 }
 

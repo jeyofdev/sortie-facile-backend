@@ -1,6 +1,8 @@
 package com.poec.projet_backend.user_app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.poec.projet_backend.domain.profile.Profile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -24,13 +26,20 @@ public class UserApp implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String firstname;
-    private String lastname;
+
+    @Column(name = "nickname", columnDefinition = "VARCHAR(50)")
+    private String nickname;
+
+    @Column(name = "email", columnDefinition = "VARCHAR(100)")
     private String email;
+
     @JsonIgnore
     private String password;
-
     private String role;
+
+    @OneToOne(mappedBy = "user")
+    @JoinColumn(name = "profile_id")
+    private Profile profile;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
