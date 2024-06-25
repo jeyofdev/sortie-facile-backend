@@ -44,9 +44,9 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private void createUsers() {
         UserApp user1 = UserApp.builder()
-                .nickname("user1")
-                .email("user1@user1.com")
-                .password(passwordEncoder.encode("user1"))
+                .nickname("paul33DuMedoc")
+                .email("paul-33@gmail.com")
+                .password(passwordEncoder.encode("paul33"))
                 .role("ROLE_" + Role.USER)
                 .build();
 
