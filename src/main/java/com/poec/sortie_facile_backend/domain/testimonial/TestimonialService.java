@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.testimonial;
+package com.poec.sortie_facile_backend.domain.testimonial;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

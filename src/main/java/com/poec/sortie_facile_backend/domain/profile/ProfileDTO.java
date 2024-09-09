@@ -1,7 +1,7 @@
-package com.poec.projet_backend.domain.profile;
+package com.poec.sortie_facile_backend.domain.profile;
 
-import com.poec.projet_backend.domain.booking.Booking;
-import com.poec.projet_backend.domain.category.Category;
+import com.poec.sortie_facile_backend.domain.booking.Booking;
+import com.poec.sortie_facile_backend.domain.category.Category;
 
 import java.util.List;
 

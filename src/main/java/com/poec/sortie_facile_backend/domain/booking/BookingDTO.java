@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.booking;
+package com.poec.sortie_facile_backend.domain.booking;
 
 public record BookingDTO(
         Long id,

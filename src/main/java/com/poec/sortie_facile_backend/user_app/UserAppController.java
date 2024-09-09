@@ -1,7 +1,5 @@
-package com.poec.projet_backend.user_app;
+package com.poec.sortie_facile_backend.user_app;
 
-import com.poec.projet_backend.domain.activity.Activity;
-import com.poec.projet_backend.domain.activity.ActivityDTO;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.poec.projet_backend.util.Route.*;
+import static com.poec.sortie_facile_backend.util.Route.*;
 
 @RestController
 @RequestMapping("/api/v1/users")

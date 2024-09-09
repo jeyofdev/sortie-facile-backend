@@ -1,4 +1,4 @@
-package com.poec.projet_backend.auth;
+package com.poec.sortie_facile_backend.auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;

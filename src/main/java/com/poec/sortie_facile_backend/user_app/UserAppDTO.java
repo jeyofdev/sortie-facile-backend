@@ -1,9 +1,4 @@
-package com.poec.projet_backend.user_app;
-
-import com.poec.projet_backend.domain.profile.Profile;
-import com.poec.projet_backend.domain.profile.ProfileDTO;
-
-import java.util.List;
+package com.poec.sortie_facile_backend.user_app;
 
 public record UserAppDTO(
         Long id,

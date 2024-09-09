@@ -1,4 +1,4 @@
-package com.poec.projet_backend.util;
+package com.poec.sortie_facile_backend.util;
 
 import java.util.Arrays;
 import java.util.List;

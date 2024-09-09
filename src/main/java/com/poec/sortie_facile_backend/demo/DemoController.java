@@ -1,4 +1,4 @@
-package com.poec.projet_backend.demo;
+package com.poec.sortie_facile_backend.demo;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

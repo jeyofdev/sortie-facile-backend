@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.activity;
+package com.poec.sortie_facile_backend.domain.activity;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.poec.projet_backend.util.Route.*;
+import static com.poec.sortie_facile_backend.util.Route.*;
 
 @RestController
 @RequestMapping(BASE_URL + ACTIVITY)

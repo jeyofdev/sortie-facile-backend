@@ -1,6 +1,5 @@
-package com.poec.projet_backend.domain.profile;
+package com.poec.sortie_facile_backend.domain.profile;
 
-import com.poec.projet_backend.domain.category.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.poec.projet_backend.util.Route.*;
+import static com.poec.sortie_facile_backend.util.Route.*;
 
 @RestController
 @RequestMapping(BASE_URL + PROFILE)

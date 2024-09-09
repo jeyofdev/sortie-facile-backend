@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.activity;
+package com.poec.sortie_facile_backend.domain.activity;
 
 
 import java.util.Date;

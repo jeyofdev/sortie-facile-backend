@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.booking;
+package com.poec.sortie_facile_backend.domain.booking;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

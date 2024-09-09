@@ -1,10 +1,10 @@
-package com.poec.projet_backend.util;
+package com.poec.sortie_facile_backend.util;
 
-import com.poec.projet_backend.domain.category.Category;
-import com.poec.projet_backend.domain.category.CategoryRepository;
-import com.poec.projet_backend.user_app.Role;
-import com.poec.projet_backend.user_app.UserApp;
-import com.poec.projet_backend.user_app.UserAppRepository;
+import com.poec.sortie_facile_backend.domain.category.Category;
+import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
+import com.poec.sortie_facile_backend.user_app.Role;
+import com.poec.sortie_facile_backend.user_app.UserApp;
+import com.poec.sortie_facile_backend.user_app.UserAppRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;

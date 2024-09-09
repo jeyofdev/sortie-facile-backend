@@ -1,4 +1,4 @@
-package com.poec.projet_backend.config;
+package com.poec.sortie_facile_backend.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

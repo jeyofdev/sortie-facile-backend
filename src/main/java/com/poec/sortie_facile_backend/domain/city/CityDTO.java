@@ -1,7 +1,6 @@
-package com.poec.projet_backend.domain.city;
+package com.poec.sortie_facile_backend.domain.city;
 
-import com.poec.projet_backend.domain.activity.Activity;
-import com.poec.projet_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.activity.Activity;
 
 import java.util.List;
 

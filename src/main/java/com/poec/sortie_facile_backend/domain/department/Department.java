@@ -1,9 +1,9 @@
-package com.poec.projet_backend.domain.department;
+package com.poec.sortie_facile_backend.domain.department;
 
-import com.poec.projet_backend.domain.activity.Activity;
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.profile.Profile;
-import com.poec.projet_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.activity.Activity;
+import com.poec.sortie_facile_backend.domain.city.City;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.region.Region;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;

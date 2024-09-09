@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.city;
+package com.poec.sortie_facile_backend.domain.city;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

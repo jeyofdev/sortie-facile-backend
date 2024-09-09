@@ -1,4 +1,4 @@
-package com.poec.projet_backend.user_app;
+package com.poec.sortie_facile_backend.user_app;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

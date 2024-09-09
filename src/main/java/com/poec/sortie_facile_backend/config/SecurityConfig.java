@@ -1,7 +1,7 @@
-package com.poec.projet_backend.config;
+package com.poec.sortie_facile_backend.config;
 
-import com.poec.projet_backend.filter.JwtAuthenticationFilter;
-import com.poec.projet_backend.user_app.Role;
+import com.poec.sortie_facile_backend.filter.JwtAuthenticationFilter;
+import com.poec.sortie_facile_backend.user_app.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,8 +12,6 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
-
-import static com.poec.projet_backend.util.Route.authorizedPaths;
 
 
 @Configuration

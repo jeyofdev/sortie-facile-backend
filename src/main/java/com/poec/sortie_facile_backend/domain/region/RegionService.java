@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.region;
+package com.poec.sortie_facile_backend.domain.region;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;

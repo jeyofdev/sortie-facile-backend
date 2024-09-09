@@ -1,8 +1,7 @@
-package com.poec.projet_backend.user_app;
+package com.poec.sortie_facile_backend.user_app;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.poec.projet_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

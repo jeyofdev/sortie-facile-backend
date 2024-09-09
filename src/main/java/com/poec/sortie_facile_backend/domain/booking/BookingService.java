@@ -1,9 +1,9 @@
-package com.poec.projet_backend.domain.booking;
+package com.poec.sortie_facile_backend.domain.booking;
 
-import com.poec.projet_backend.domain.activity.Activity;
-import com.poec.projet_backend.domain.activity.ActivityRepository;
-import com.poec.projet_backend.domain.profile.Profile;
-import com.poec.projet_backend.domain.profile.ProfileRepository;
+import com.poec.sortie_facile_backend.domain.activity.Activity;
+import com.poec.sortie_facile_backend.domain.activity.ActivityRepository;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.profile.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

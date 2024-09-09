@@ -1,6 +1,6 @@
-package com.poec.projet_backend.filter;
+package com.poec.sortie_facile_backend.filter;
 
-import com.poec.projet_backend.util.JwtService;
+import com.poec.sortie_facile_backend.util.JwtService;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -17,8 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

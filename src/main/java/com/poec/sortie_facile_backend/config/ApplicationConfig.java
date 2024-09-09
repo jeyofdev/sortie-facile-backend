@@ -1,6 +1,6 @@
-package com.poec.projet_backend.config;
+package com.poec.sortie_facile_backend.config;
 
-import com.poec.projet_backend.user_app.UserAppRepository;
+import com.poec.sortie_facile_backend.user_app.UserAppRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;

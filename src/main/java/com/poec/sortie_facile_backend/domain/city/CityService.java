@@ -1,7 +1,7 @@
-package com.poec.projet_backend.domain.city;
+package com.poec.sortie_facile_backend.domain.city;
 
-import com.poec.projet_backend.domain.department.Department;
-import com.poec.projet_backend.domain.department.DepartmentRepository;
+import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

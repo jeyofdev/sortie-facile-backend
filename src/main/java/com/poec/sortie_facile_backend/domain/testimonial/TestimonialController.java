@@ -1,7 +1,5 @@
-package com.poec.projet_backend.domain.testimonial;
+package com.poec.sortie_facile_backend.domain.testimonial;
 
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.city.CityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.poec.projet_backend.util.Route.ALL;
-import static com.poec.projet_backend.util.Route.BASE_URL;
+import static com.poec.sortie_facile_backend.util.Route.ALL;
+import static com.poec.sortie_facile_backend.util.Route.BASE_URL;
 
 @RestController
 @RequestMapping(BASE_URL + "/testimonial")

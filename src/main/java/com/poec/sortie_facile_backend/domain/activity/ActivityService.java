@@ -1,15 +1,15 @@
-package com.poec.projet_backend.domain.activity;
+package com.poec.sortie_facile_backend.domain.activity;
 
-import com.poec.projet_backend.domain.category.Category;
-import com.poec.projet_backend.domain.category.CategoryRepository;
-import com.poec.projet_backend.domain.city.City;
-import com.poec.projet_backend.domain.city.CityRepository;
-import com.poec.projet_backend.domain.department.Department;
-import com.poec.projet_backend.domain.department.DepartmentRepository;
-import com.poec.projet_backend.domain.profile.Profile;
-import com.poec.projet_backend.domain.profile.ProfileRepository;
-import com.poec.projet_backend.domain.region.Region;
-import com.poec.projet_backend.domain.region.RegionRepository;
+import com.poec.sortie_facile_backend.domain.category.Category;
+import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
+import com.poec.sortie_facile_backend.domain.city.City;
+import com.poec.sortie_facile_backend.domain.city.CityRepository;
+import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.profile.ProfileRepository;
+import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.region.RegionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

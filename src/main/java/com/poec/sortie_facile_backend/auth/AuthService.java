@@ -1,10 +1,9 @@
-package com.poec.projet_backend.auth;
+package com.poec.sortie_facile_backend.auth;
 
-import com.poec.projet_backend.exceptions.UsernameAlreadyTakenException;
-import com.poec.projet_backend.user_app.Role;
-import com.poec.projet_backend.user_app.UserApp;
-import com.poec.projet_backend.user_app.UserAppRepository;
-import com.poec.projet_backend.util.JwtService;
+import com.poec.sortie_facile_backend.exceptions.UsernameAlreadyTakenException;
+import com.poec.sortie_facile_backend.user_app.UserApp;
+import com.poec.sortie_facile_backend.user_app.UserAppRepository;
+import com.poec.sortie_facile_backend.util.JwtService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

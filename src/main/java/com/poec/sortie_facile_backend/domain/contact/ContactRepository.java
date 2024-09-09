@@ -1,4 +1,4 @@
-package com.poec.projet_backend.domain.contact;
+package com.poec.sortie_facile_backend.domain.contact;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
