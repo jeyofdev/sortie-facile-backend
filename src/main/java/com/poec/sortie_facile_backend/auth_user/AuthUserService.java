@@ -1,6 +1,8 @@
 package com.poec.sortie_facile_backend.auth_user;
 
 import com.poec.sortie_facile_backend.core.interfaces.IAuthUserService;
+import com.poec.sortie_facile_backend.exceptions.NotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +33,7 @@ public class AuthUserService implements IAuthUserService {
 
         if (username.equals(email) || roles.equals("[ROLE_ADMIN]")) {
             return authUserRepository.findByEmail(email)
-                    .orElseThrow(() -> new RuntimeException("email " + email +" not found"));
+                    .orElseThrow(() -> new NotFoundException("email " + email +" not found"));
         } else {
             throw new AccessDeniedException("User does not have the correct rights to access to this resource");
         }
@@ -40,7 +42,7 @@ public class AuthUserService implements IAuthUserService {
     @Override
     public AuthUserDTO findUserById(Long id) {
         AuthUser user = authUserRepository.findById(id).orElseThrow(
-                () -> new RuntimeException("User with id " + id + " not found")
+                () -> new EntityNotFoundException("User with id " + id + " not found")
         );
 
         return AuthUserDTO.mapFromEntity(user);

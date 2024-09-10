@@ -31,34 +31,34 @@ public class GlobalExceptionHandler {
                 .body(response);
     }
 
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNotFoundException(NotFoundException ex) {
+        return handleException(ex, HttpStatus.NOT_FOUND);
+    }
+
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
-        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
     public ResponseEntity<Map<String, String>> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException ex) {
-        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException ex) {
-        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException ex) {
-        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleEntityNotFoundException(EntityNotFoundException ex) {
-        System.out.println("handleEntityNotFoundExceptio");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
