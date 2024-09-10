@@ -1,43 +1,27 @@
 package com.poec.sortie_facile_backend.domain.contact;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class ContactService {
+public class ContactService extends AbstractDomainService<Contact> {
+    private final ContactRepository contactRepository;
 
     @Autowired
-    private ContactRepository repository;
-
-    public List<Contact> getAll() {
-        return repository.findAll();
+    public ContactService(ContactRepository contactRepository) {
+        super(contactRepository, "contact");
+        this.contactRepository = contactRepository;
     }
 
-    public Contact getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
-    }
-
-    public Contact add(Contact contact) {
-        return repository.save(contact);
-    }
-
-    public Contact update(Contact contact, Long id) {
-        Contact newContact = getById(id);
+    @Override
+    public Contact updateById(Contact contact, Long contactId) {
+        Contact newContact = findById(contactId);
         newContact.setMessage(contact.getMessage());
         newContact.setEmail(contact.getEmail());
         newContact.setTitle(contact.getTitle());
         newContact.setRead(contact.isRead());
 
-        return repository.save(newContact);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
+        return contactRepository.save(newContact);
     }
 }

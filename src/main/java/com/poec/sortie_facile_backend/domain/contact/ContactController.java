@@ -20,16 +20,16 @@ public class ContactController {
 
     @GetMapping(ALL)
     public ResponseEntity<List<ContactDTO>> getAll() {
-        List<Contact> contacts = service.getAll();
+        List<Contact> contacts = service.findAll();
         List<ContactDTO> contactDTOS = contacts.stream().map(ContactDTO::mapFromEntity).toList();
         return new ResponseEntity<>(contactDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<ContactDTO> getById(@PathVariable Long id) {
-        Contact newContact = service.getById(id);
+        Contact newContact = service.findById(id);
         ContactDTO contactDTO = ContactDTO.mapFromEntity(newContact);
-        return new ResponseEntity<>(contactDTO, HttpStatus.OK);
+        return new ResponseEntity<>(contactDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD)
@@ -41,13 +41,14 @@ public class ContactController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<ContactDTO> update(@RequestBody Contact contact, @PathVariable Long id) {
-        Contact newContact = service.update(contact, id);
+        Contact newContact = service.updateById(contact, id);
         ContactDTO contactDTO = ContactDTO.mapFromEntity(newContact);
         return new ResponseEntity<>(contactDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

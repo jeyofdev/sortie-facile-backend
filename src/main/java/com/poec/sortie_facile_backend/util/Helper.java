@@ -13,4 +13,17 @@ public class Helper {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return formatter.format(new Date());
     }
+
+    /**
+     * Capitalize the first letter of a string
+     *
+     * @return String
+     */
+    public static String capitalize(String str) {
+        if (str == null || str.isEmpty()) {
+            return str;
+        }
+
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
 }
