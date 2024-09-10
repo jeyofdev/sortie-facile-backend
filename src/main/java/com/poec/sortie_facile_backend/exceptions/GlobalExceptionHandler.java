@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.exceptions;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -33,29 +34,37 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UsernameNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
+        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(UsernameAlreadyTakenException.class)
     public ResponseEntity<Map<String, String>> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException ex) {
+        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException ex) {
+        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException ex) {
+        System.out.println("handleAccessDeniedException");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEntityNotFoundExceptio(EntityNotFoundException ex) {
+    public ResponseEntity<Map<String, String>> handleEntityNotFoundException(EntityNotFoundException ex) {
+        System.out.println("handleEntityNotFoundExceptio");
         return handleException(ex, HttpStatus.NOT_FOUND);
     }
 
-
+    @ExceptionHandler
+    public ResponseEntity<Map<String, String>> handleException(Exception exception) {
+        return handleException(exception, HttpStatus.BAD_REQUEST);
+    }
 }
 

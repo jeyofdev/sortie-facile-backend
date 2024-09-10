@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.user_app;
+package com.poec.sortie_facile_backend.auth_user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface UserAppRepository extends JpaRepository<UserApp, Long> {
-    Optional<UserApp> findByEmail(String email);
-    UserApp findById(Optional<Long> aLong);
+public interface AuthUserRepository extends JpaRepository<AuthUser, Long> {
+    Optional<AuthUser> findByEmail(String email);
+    Optional<AuthUser> findById(Long id);
 }

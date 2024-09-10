@@ -22,7 +22,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private String[] urlPublicList = {
+    /*private String[] urlPublicList = {
 //            "/api/v1/auth/**",
             "/api/v1/**",
 //            "/api/v1/activity/**",
@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 //            "/api/v1/profile/{id}}",
 //            "/api/v1/region/all",
 //            "api/v1/booking/add"
-    };
+    };*/
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -56,16 +56,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String jwt;
         final String userEmail;
 
-        String regex = "/api/v1/.*";
+        /*String regex = "/api/v1/.*";
         if (request.getRequestURI().matches(regex)) {
             System.out.println("chemin autorisé");
             filterChain.doFilter(request, response);
             return;
-        }
+        }*/
 
         /* On vérifie si authHeader n'est pas null ET si la valeur de la clé "Authorization" commence par "Bearer " */
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             request.setAttribute("no_jwt_provided", "No JWT provided");
+            System.out.println(request.getAttribute("no_jwt_provided"));
             filterChain.doFilter(request, response);
             return;
         }
@@ -103,6 +104,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (error instanceof MalformedJwtException) {
                 request.setAttribute("malformed_exception", error.getMessage());
             }
+
+            System.out.println("ErrorErrorError: " + error.getMessage());
         }
 
         /* Une fois le traitement terminé, je passe au filtre suivant */

@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.auth;
+package com.poec.sortie_facile_backend.auth.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

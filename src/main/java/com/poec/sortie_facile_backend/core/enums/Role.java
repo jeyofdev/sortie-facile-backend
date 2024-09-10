@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.user_app;
+package com.poec.sortie_facile_backend.core.enums;
 
 public enum Role {
     ADMIN,

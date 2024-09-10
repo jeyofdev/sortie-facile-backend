@@ -21,7 +21,6 @@ public class
 JwtAuthenticationErrors implements AuthenticationEntryPoint {
 
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-
         if (response.getStatus() == HttpStatus.UNAUTHORIZED.value()) {
             response.setContentType(APPLICATION_JSON_VALUE);
             response.setHeader("error", exception.getMessage());
@@ -41,6 +40,7 @@ JwtAuthenticationErrors implements AuthenticationEntryPoint {
                 error.put("error_message", "");
             }
             if (request.getAttribute("no_jwt_provided") != null) {
+                System.out.println("HELLLLLLLLLLO");
                 error.put("no_jwt_provided", "true");
                 error.put("error_message", "No JWT provided.");
             }

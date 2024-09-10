@@ -1,6 +1,6 @@
 package com.poec.sortie_facile_backend.config;
 
-import com.poec.sortie_facile_backend.user_app.UserAppRepository;
+import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 @ComponentScan
 public class ApplicationConfig {
 
-    private final UserAppRepository repository;
+    private final AuthUserRepository repository;
 
     // @Bean permet de déclarer un bean.
     // C'est un objet géré par Spring

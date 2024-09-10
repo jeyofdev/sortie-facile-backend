@@ -1,6 +1,6 @@
-package com.poec.sortie_facile_backend.user_app;
+package com.poec.sortie_facile_backend.auth_user;
 
-public record UserAppDTO(
+public record AuthUserDTO(
         Long id,
         String nickname,
         String email,
@@ -8,13 +8,13 @@ public record UserAppDTO(
         Long profileId
 
 ) {
-    public static UserAppDTO mapFromEntity(UserApp userApp) {
-        return new UserAppDTO(
-                userApp.getId(),
-                userApp.getUsername(),
-                userApp.getEmail(),
-                userApp.getRole(),
-                userApp.getProfile().getId()
+    public static AuthUserDTO mapFromEntity(AuthUser authUser) {
+        return new AuthUserDTO(
+                authUser.getId(),
+                authUser.getUsername(),
+                authUser.getEmail(),
+                authUser.getRole(),
+                authUser.getProfile().getId()
         );
     }
 }

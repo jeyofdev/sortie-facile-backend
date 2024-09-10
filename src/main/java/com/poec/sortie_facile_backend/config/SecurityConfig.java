@@ -1,10 +1,11 @@
 package com.poec.sortie_facile_backend.config;
 
 import com.poec.sortie_facile_backend.filter.JwtAuthenticationFilter;
-import com.poec.sortie_facile_backend.user_app.Role;
+import com.poec.sortie_facile_backend.core.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +39,12 @@ public class SecurityConfig {
 
             // Liste des routes protégées / non protégées
             .authorizeHttpRequests((requests) -> requests
-                .requestMatchers(
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/v1/demo/all").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
+                    .requestMatchers(HttpMethod.GET, "/api/v1/demo/admins-only").hasRole(Role.ADMIN.name())
+                    .requestMatchers(HttpMethod.GET, "/api/v1/demo/users-only").hasRole(Role.USER.name())
+
+                /*.requestMatchers(
                         "/api/v1/**"
 //                        "/api/v1/auth/all",
 //                        "/api/v1/activity/all",
@@ -52,9 +58,8 @@ public class SecurityConfig {
 //                        "/api/v1/profile/{id}",
 //                        "/api/v1/region/all",
 //                        "api/v1/booking/add"
-                ).permitAll()
-                .requestMatchers("/api/v1/demo/users-only").hasAnyRole(Role.USER.name()) /* ROLE_USER */
-                .requestMatchers("/api/v1/demo/admin-only").hasAnyRole(Role.ADMIN.name()) /* ROLE_ADMIN */
+                ).permitAll()*/
+
                 .anyRequest().authenticated()
             )
 
