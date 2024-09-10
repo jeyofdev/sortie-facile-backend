@@ -1,6 +1,8 @@
-package com.poec.sortie_facile_backend.config;
+package com.poec.sortie_facile_backend.security.config;
 
-import com.poec.sortie_facile_backend.filter.JwtAuthenticationFilter;
+import com.poec.sortie_facile_backend.security.handler.AccessDeniedHandler;
+import com.poec.sortie_facile_backend.exceptions.JwtAuthenticationErrors;
+import com.poec.sortie_facile_backend.security.filter.JwtAuthenticationFilter;
 import com.poec.sortie_facile_backend.core.enums.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +16,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
-
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -27,52 +28,40 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
-        // On configure les règles de sécurité de Spring Security
         http
-            // On délègue la configuration de CORS à notre propre implémentation
+            //use the CORS configuration of our implementation
             .cors(cors -> cors.configure(http))
-            // On désactive la gestion des sessions par Spring Security : pas utile avec un JWT
+
+            // disable session management
             .sessionManagement(session -> session .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            // Il n'y a pas de sessions car l'application est en STATELESS : pas besoin de CSRF
+
+            // disable CSRF
             .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).ignoringRequestMatchers("/**").disable())
 
             // Liste des routes protégées / non protégées
             .authorizeHttpRequests((requests) -> requests
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/all").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/admins-only").hasRole(Role.ADMIN.name())
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/users-only").hasRole(Role.USER.name())
 
-                /*.requestMatchers(
-                        "/api/v1/**"
-//                        "/api/v1/auth/all",
-//                        "/api/v1/activity/all",
-//                        "/api/v1/activity/{id}",
-//                        "/api/v1/category/all",
-//                        "/api/v1/category/{id}",
-                        //"/api/v1/category/add",
-//                        "/api/v1/contact/add",
-//                        "/api/v1/profile/add",
-//                        "/api/v1/profile/all",
-//                        "/api/v1/profile/{id}",
-//                        "/api/v1/region/all",
-//                        "api/v1/booking/add"
-                ).permitAll()*/
+                    .requestMatchers(HttpMethod.GET, "/api/v1/users/**").hasRole(Role.ADMIN.name())
 
-                .anyRequest().authenticated()
+                    .anyRequest().authenticated()
             )
 
-            // On configure les erreurs d'authentification
+            // authentication errors
             .exceptionHandling((exception) ->  exception
                     .authenticationEntryPoint(jwtAuthenticationErrors)
                     .accessDeniedHandler(accessDeniedHandler)
             )
 
-            // On précise quel Provider d'authentification utiliser
+            // specify the authentication provider used
             .authenticationProvider(authenticationProvider)
 
-            // On ajoute notre filtre de vérification du JWT avant le filtre de vérification des identifiants
+            // add the JWT authentication filter
+            // before the UsernamePasswordAuthenticationFilter
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
             return http.build();

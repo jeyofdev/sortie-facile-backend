@@ -6,7 +6,7 @@ import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
 import com.poec.sortie_facile_backend.exceptions.UsernameAlreadyTakenException;
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
-import com.poec.sortie_facile_backend.util.JwtService;
+import com.poec.sortie_facile_backend.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
