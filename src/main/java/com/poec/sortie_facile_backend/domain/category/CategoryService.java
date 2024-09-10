@@ -1,42 +1,25 @@
 package com.poec.sortie_facile_backend.domain.category;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class CategoryService {
+public class CategoryService extends AbstractDomainService<Category> {
+
+    private final CategoryRepository categoryRepository;
 
     @Autowired
-    private CategoryRepository repository;
-
-    public List<Category> getAll() {
-        return repository.findAll();
+    public CategoryService(CategoryRepository categoryRepository) {
+        super(categoryRepository, "category");
+        this.categoryRepository = categoryRepository;
     }
 
-    public Category getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
-    }
-
-    public Category add(Category category) {
-        return repository.save(category);
-    }
-
-    public Category update(Category category, Long id) {
-        Category newCategory = getById(id);
+    @Override
+    public Category updateById(Category category, Long categoryId) {
+        Category newCategory = findById(categoryId);
         newCategory.setTitle(category.getTitle());
 
-        return repository.save(newCategory);
+        return categoryRepository.save(newCategory);
     }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
-    }
-
-
 }

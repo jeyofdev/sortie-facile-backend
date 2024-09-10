@@ -16,44 +16,39 @@ import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 public class CategoryController {
 
     @Autowired
-    private CategoryService service;
+    private CategoryService categoryService;
 
     @GetMapping(ALL)
     public ResponseEntity<List<CategoryDTO>> getAll() {
-        List<Category> categories = service.getAll();
+        List<Category> categories = categoryService.findAll();
         List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
         return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<CategoryDTO> getById(@PathVariable Long id) {
-        Category newCategory = service.getById(id);
+        Category newCategory = categoryService.findById(id);
         CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
-        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
+        return new ResponseEntity<>(categoryDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD)
     public ResponseEntity<CategoryDTO> add(@RequestBody Category category) {
-        Category newCategory = service.add(category);
+        Category newCategory = categoryService.add(category);
         CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
         return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
     public ResponseEntity<CategoryDTO> update(@RequestBody Category category, @PathVariable Long id) {
-        Category newCategory = service.update(category, id);
+        Category newCategory = categoryService.updateById(category, id);
         CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
         return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
     }
 
-
-
     @DeleteMapping(DELETE)
     public void delete(@PathVariable Long id) {
-        service.delete(id);
+        categoryService.deleteById(id);
     }
-
-
-
-    }
+}
 

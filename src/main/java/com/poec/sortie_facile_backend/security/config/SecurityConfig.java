@@ -42,7 +42,14 @@ public class SecurityConfig {
             .authorizeHttpRequests((requests) -> requests
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
 
-                    .requestMatchers("/api/v1/contact/**", "/api/v1/region/**", "/api/v1/department/**", "/api/v1/city/**").permitAll()
+                    .requestMatchers(
+                            "/api/v1/contact/**",
+                            "/api/v1/region/**",
+                            "/api/v1/department/**",
+                            "/api/v1/city/**",
+                            "/api/v1/city/**",
+                            "/api/v1/category/**")
+                    .permitAll()
 
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/all").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/admins-only").hasRole(Role.ADMIN.name())
