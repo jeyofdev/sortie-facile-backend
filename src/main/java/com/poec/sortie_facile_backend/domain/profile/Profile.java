@@ -6,7 +6,7 @@ import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.region.Region;
-import com.poec.sortie_facile_backend.user_app.UserApp;
+import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -72,7 +72,7 @@ public class Profile {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private UserApp user;
+    private AuthUser user;
 }
 
 

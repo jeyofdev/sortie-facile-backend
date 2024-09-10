@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static com.poec.sortie_facile_backend.util.Route.ALL;
-import static com.poec.sortie_facile_backend.util.Route.BASE_URL;
+import static com.poec.sortie_facile_backend.core.constants.RouteConstants.ALL;
+import static com.poec.sortie_facile_backend.core.constants.RouteConstants.BASE_URL;
 
 @RestController
 @RequestMapping(BASE_URL + "/testimonial")

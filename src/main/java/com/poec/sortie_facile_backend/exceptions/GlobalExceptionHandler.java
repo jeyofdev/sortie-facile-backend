@@ -1,6 +1,9 @@
 package com.poec.sortie_facile_backend.exceptions;
 
+import com.poec.sortie_facile_backend.exceptions.model.ErrorResponse;
+import com.poec.sortie_facile_backend.util.Helper;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -15,12 +18,55 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // Cette classe centralise la gestion des exceptions de l'application afin de les renvoyer côté front
-    // La gestion des exceptions liées au JWT sont elles gérées par le JwtAuthenticationErrors
-    // Car les exceptions liées au JWT sont gérées par Spring Security et non par l'application elle-même
-    // Et que les exceptions levées dans les filtres de Spring Security ne sont pas interceptées par cette classe
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.NOT_FOUND, request);
+    }
 
-    // Helper
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleEntityNotFoundException(EntityNotFoundException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(UsernameAlreadyTakenException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<ErrorResponse> handleBadCredentialsException(BadCredentialsException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<Map<String, String>> handleException(Exception exception) {
+        return handleException(exception, HttpStatus.BAD_REQUEST);
+    }
+
+    private ResponseEntity<ErrorResponse> handleException(Exception exception, HttpStatus status, HttpServletRequest request) {
+        exception.printStackTrace();
+
+        ErrorResponse errorResponse = new ErrorResponse();
+
+        errorResponse.setMessage(exception.getMessage());
+        errorResponse.setStatus(status.value());
+        errorResponse.setExceptionName(exception.getClass().getSimpleName());
+        errorResponse.setDate(Helper.simpleDateFormat());
+        errorResponse.setPath(request.getRequestURI());
+
+        return new ResponseEntity<>(errorResponse, status);
+    }
+
     private ResponseEntity<Map<String, String>> handleException(Exception ex, HttpStatus status) {
         Map<String, String> response = new HashMap<>();
         String errorMessage = ex.getMessage();
@@ -29,33 +75,5 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status)
                 .body(response);
     }
-
-
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleUsernameNotFoundException(UsernameNotFoundException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(UsernameAlreadyTakenException.class)
-    public ResponseEntity<Map<String, String>> handleUsernameAlreadyTakenException(UsernameAlreadyTakenException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<Map<String, String>> handleBadCredentialsException(BadCredentialsException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<Map<String, String>> handleAccessDeniedException(AccessDeniedException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<Map<String, String>> handleEntityNotFoundExceptio(EntityNotFoundException ex) {
-        return handleException(ex, HttpStatus.NOT_FOUND);
-    }
-
-
 }
 

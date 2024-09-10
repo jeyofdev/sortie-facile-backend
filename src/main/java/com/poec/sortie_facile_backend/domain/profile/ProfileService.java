@@ -9,8 +9,8 @@ import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.domain.region.RegionRepository;
-import com.poec.sortie_facile_backend.user_app.UserApp;
-import com.poec.sortie_facile_backend.user_app.UserAppRepository;
+import com.poec.sortie_facile_backend.auth_user.AuthUser;
+import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +27,7 @@ public class ProfileService {
     @Autowired
     private BookingRepository bookingRepository;
     @Autowired
-    private UserAppRepository userAppRepository;
+    private AuthUserRepository authUserRepository;
     @Autowired
     private CityRepository cityRepository;
     @Autowired
@@ -60,7 +60,7 @@ public class ProfileService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(cityId + " not found")
                 );
-        UserApp newUser = userAppRepository.findById(userId)
+        AuthUser newUser = authUserRepository.findById(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException(userId + " not found")
                 );

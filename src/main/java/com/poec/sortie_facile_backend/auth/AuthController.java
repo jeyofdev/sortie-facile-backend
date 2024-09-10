@@ -1,7 +1,10 @@
 package com.poec.sortie_facile_backend.auth;
 
-import jakarta.servlet.http.HttpServletRequest;
+import com.poec.sortie_facile_backend.auth.model.LoginRequest;
+import com.poec.sortie_facile_backend.auth.model.AuthResponse;
+import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +21,14 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest request, HttpServletRequest httpRequest) throws Exception {
-        return ResponseEntity.ok(service.register(request, httpRequest));
+    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest request) {
+        Map<String, String> registerResponse = service.register(request);
+        return new ResponseEntity<>(registerResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest request, HttpServletRequest httpRequest) {
-        AuthResponse authenticationResponse = service.authenticate(request, httpRequest);
-        return ResponseEntity.ok(authenticationResponse);
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest request) {
+        AuthResponse authenticationResponse = service.login(request);
+        return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 }

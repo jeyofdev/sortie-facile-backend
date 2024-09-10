@@ -2,9 +2,9 @@ package com.poec.sortie_facile_backend.util;
 
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
-import com.poec.sortie_facile_backend.user_app.Role;
-import com.poec.sortie_facile_backend.user_app.UserApp;
-import com.poec.sortie_facile_backend.user_app.UserAppRepository;
+import com.poec.sortie_facile_backend.core.enums.Role;
+import com.poec.sortie_facile_backend.auth_user.AuthUser;
+import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,13 +17,13 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class DatabaseInitializer implements CommandLineRunner {
 
-    private final UserAppRepository userAppRepository;
+    private final AuthUserRepository authUserRepository;
     private final CategoryRepository categoryRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
-        if (this.userAppRepository.findByEmail("admin@admin.com").isEmpty()) {
+        if (this.authUserRepository.findByEmail("admin@admin.com").isEmpty()) {
             this.createAdmin();
             this.createUsers();
         }
@@ -32,25 +32,25 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createAdmin() {
-        UserApp admin = UserApp.builder()
+        AuthUser admin = AuthUser.builder()
                 .nickname("admin")
                 .email("admin@admin.com")
                 .password(passwordEncoder.encode("admin"))
                 .role("ROLE_" + Role.ADMIN)
                 .build();
 
-        this.userAppRepository.save(admin);
+        this.authUserRepository.save(admin);
     }
 
     private void createUsers() {
-        UserApp user1 = UserApp.builder()
-                .nickname("paul33DuMedoc")
-                .email("paul-33@gmail.com")
-                .password(passwordEncoder.encode("paul33"))
+        AuthUser user1 = AuthUser.builder()
+                .nickname("user")
+                .email("user@user.com")
+                .password(passwordEncoder.encode("user"))
                 .role("ROLE_" + Role.USER)
                 .build();
 
-        this.userAppRepository.save(user1);
+        this.authUserRepository.save(user1);
     }
 
     private void createCategories() {

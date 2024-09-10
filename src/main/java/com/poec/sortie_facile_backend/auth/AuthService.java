@@ -1,10 +1,13 @@
 package com.poec.sortie_facile_backend.auth;
 
+import com.poec.sortie_facile_backend.auth.model.LoginRequest;
+import com.poec.sortie_facile_backend.auth.model.AuthResponse;
+import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
+import com.poec.sortie_facile_backend.core.interfaces.IAuthService;
 import com.poec.sortie_facile_backend.exceptions.UsernameAlreadyTakenException;
-import com.poec.sortie_facile_backend.user_app.UserApp;
-import com.poec.sortie_facile_backend.user_app.UserAppRepository;
-import com.poec.sortie_facile_backend.util.JwtService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.poec.sortie_facile_backend.auth_user.AuthUser;
+import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
+import com.poec.sortie_facile_backend.security.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -18,17 +21,18 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements IAuthService {
 
-    private final UserAppRepository repository;
+    private final AuthUserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public Map<String, String> register(RegisterRequest request, HttpServletRequest httpRequest) throws UsernameAlreadyTakenException {
+    @Override
+    public Map<String, String> register(RegisterRequest request) throws UsernameAlreadyTakenException {
 
-        if (!repository.findByEmail(request.getEmail()).isPresent()) {
-            var user = UserApp.builder()
+        if (repository.findByEmail(request.getEmail()).isEmpty()) {
+            var user = AuthUser.builder()
                     .nickname(request.getUsername())
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
@@ -37,6 +41,7 @@ public class AuthService {
 
             repository.save(user);
 
+            // response to client
             Map<String, String> body = new HashMap<>();
             body.put("message", "Account successfully created as user");
             body.put("userId", String.valueOf(user.getId()));
@@ -46,18 +51,14 @@ public class AuthService {
         } else {
             throw new UsernameAlreadyTakenException("Username already taken");
         }
-
     }
 
-    public AuthResponse authenticate(AuthRequest request, HttpServletRequest httpRequest) {
+    @Override
+    public AuthResponse login(LoginRequest request) {
 
-
-        /* Permet de comparer le pwd reçu de la request reçue avec le pwd haché de la BDD.
-         * La méthode authenticate() permet surtout de garantir que les informations d'identification sont exactes
-         * Permet de transmettre au contexte de Spring l'utilisateur qui a été trouvé.
-         *  Cela permet de l'utiliser pour autoriser/refuser l'accès aux ressources protégées
-         * S'il n'est pas trouvé, une erreur est levée et la méthode s'arrête.
-         */
+        // check credentials
+        // if the user was found
+        // check that the user is authorized to access protected resources
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -66,18 +67,17 @@ public class AuthService {
                     )
             );
 
-            /* Si tout va bien et que les informations sont OK, on peut récupérer l'utilisateur */
-            /* La méthode findByEmail retourne un type Optionnel. Il faut donc ajouter une gestion d'exception avec "orElseThrow" */
-            UserApp user = repository.findByEmail(request.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("User not found in DB"));
+            // get user by email
+            AuthUser user = repository.findByEmail(request.getEmail())
+                    .orElseThrow(() -> new UsernameNotFoundException("User not found in Database"));
 
-            /* On extrait le rôle de l'utilisateur */
+            // extract user infos
             Map<String, Object> extraClaims = new HashMap<>();
             extraClaims.put("role", user.getRole());
             extraClaims.put("id", user.getId());
             extraClaims.put("nickname", user.getNickname());
 
-            /* On génère le token avec le rôle */
+            // generate token with role
             String jwtToken = jwtService.generateToken(new HashMap<>(extraClaims), user);
             return AuthResponse.builder()
                     .token(jwtToken)
@@ -87,6 +87,5 @@ public class AuthService {
         } catch (BadCredentialsException ex) {
             throw new BadCredentialsException("Bad credentials");
         }
-
     }
 }

@@ -1,18 +1,6 @@
-package com.poec.sortie_facile_backend.util;
+package com.poec.sortie_facile_backend.core.constants;
 
-import java.util.Arrays;
-import java.util.List;
-
-public class Route {
-    public static List<String> authorizedPaths = Arrays.asList(
-            "/api/v1/auth/all",
-            "/api/v1/activity/all",
-            "/api/v1/activity/{id}",
-            "/api/v1/category/all",
-            "/api/v1/category/{id}",
-            "/api/v1/contact/add",
-            "/api/v1/profile/add"
-    );
+public class RouteConstants {
     public static final String BASE_URL = "/api/v1";
     public static final String USER = "/user";
     public static final String ACTIVITY = "/activity";
@@ -28,5 +16,4 @@ public class Route {
     public static final String DELETE = "/delete/{id}";
     public static final String ID = "/{id}";
     public static final String UPDATE = "/update/{id}";
-
 }

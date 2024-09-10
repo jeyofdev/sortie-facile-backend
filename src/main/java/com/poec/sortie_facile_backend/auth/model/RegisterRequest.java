@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.auth;
+package com.poec.sortie_facile_backend.auth.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthRequest {
+public class RegisterRequest {
     private String email;
     private String password;
+    private String requiredRole;
+    private String username;
 }

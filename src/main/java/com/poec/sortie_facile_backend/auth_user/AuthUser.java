@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.user_app;
+package com.poec.sortie_facile_backend.auth_user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
@@ -20,10 +20,11 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
-public class UserApp implements UserDetails {
+public class AuthUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", columnDefinition = "BIGINT")
     private Long id;
 
     @Column(name = "nickname", columnDefinition = "VARCHAR(50)")
@@ -33,7 +34,11 @@ public class UserApp implements UserDetails {
     private String email;
 
     @JsonIgnore
+    @Column(name = "password", columnDefinition = "VARCHAR(255)")
     private String password;
+
+    @JsonIgnore
+    @Column(name = "role", columnDefinition = "VARCHAR(20)")
     private String role;
 
     @OneToOne(mappedBy = "user")
