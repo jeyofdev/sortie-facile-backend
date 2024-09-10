@@ -17,38 +17,39 @@ import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 public class DepartmentController {
 
     @Autowired
-    private DepartmentService service;
+    private DepartmentService departmentService;
 
     @GetMapping(ALL)
     public ResponseEntity<List<DepartmentDTO>> getAll() {
-        List<Department> departments = service.getAll();
+        List<Department> departments = departmentService.findAll();
         List<DepartmentDTO> departmentDTOS = departments.stream().map(DepartmentDTO::mapFromEntity).collect(Collectors.toList());
         return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<DepartmentDTO> getById(@PathVariable Long id) {
-        Department newDepartment = service.getById(id);
+        Department newDepartment = departmentService.findById(id);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
-        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
+        return new ResponseEntity<>(departmentDTO, HttpStatus.FOUND);
     }
 
-    @PostMapping(ADD + REGION + ID) // api/v1/department/add/region/{id}
+    @PostMapping(ADD + REGION + ID)
     public ResponseEntity<DepartmentDTO> add(@RequestBody Department department, @PathVariable Long id) {
-        Department newDepartment = service.add(department, id);
+        Department newDepartment = departmentService.addWithRegion(department, id);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
         return new ResponseEntity<>(departmentDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
     public ResponseEntity<DepartmentDTO> update(@RequestBody Department department, @PathVariable Long id) {
-        Department newDepartment = service.update(department, id);
+        Department newDepartment = departmentService.updateById(department, id);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
         return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        departmentService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

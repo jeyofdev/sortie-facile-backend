@@ -1,49 +1,41 @@
 package com.poec.sortie_facile_backend.domain.department;
 
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.domain.region.RegionRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
-public class DepartmentService {
+public class DepartmentService extends AbstractDomainService<Department> {
+
+    private final DepartmentRepository departmentRepository;
+    private final RegionRepository regionRepository;
 
     @Autowired
-    private DepartmentRepository repository;
-    @Autowired
-    private RegionRepository regionRepository;
-
-    public List<Department> getAll() {
-        return repository.findAll();
+    public DepartmentService(DepartmentRepository departmentRepository, RegionRepository regionRepository) {
+        super(departmentRepository, "department");
+        this.departmentRepository = departmentRepository;
+        this.regionRepository = regionRepository;
     }
 
-    public Department getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
-    }
-
-    public Department add(Department department, Long RegionId) {
+    public Department addWithRegion(Department department, Long RegionId) {
         Region newRegion = regionRepository.findById(RegionId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(RegionId + " not found")
+                        () -> new EntityNotFoundException("Region with id " + RegionId + " not found")
                 );
 
         department.setRegion(newRegion);
-        return repository.save(department);
+
+        return departmentRepository.save(department);
     }
 
-    public Department update(Department department, Long id) {
-        Department newDepartment = getById(id);
+    @Override
+    public Department updateById(Department department, Long departmentId) {
+        Department newDepartment = findById(departmentId);
         newDepartment.setName(department.getName());
 
-        return repository.save(newDepartment);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
+        return departmentRepository.save(newDepartment);
     }
 }

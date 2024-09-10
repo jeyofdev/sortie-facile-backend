@@ -16,38 +16,39 @@ import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 public class CityController {
 
     @Autowired
-    private CityService service;
+    private CityService cityService;
 
     @GetMapping(ALL)
     public ResponseEntity<List<CityDTO>> getAll() {
-        List<City> cities = service.getAll();
+        List<City> cities = cityService.findAll();
         List<CityDTO> cityDTOS = cities.stream().map(CityDTO::mapFromEntity).toList();
         return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<CityDTO> getById(@PathVariable Long id) {
-        City newCity = service.getById(id);
+        City newCity = cityService.findById(id);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
-        return new ResponseEntity<>(cityDTO, HttpStatus.OK);
+        return new ResponseEntity<>(cityDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")
     public ResponseEntity<CityDTO> add(@RequestBody City city, @PathVariable Long departmentId) {
-        City newCity = service.add(city, departmentId);
+        City newCity = cityService.addWithDepartment(city, departmentId);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
     public ResponseEntity<CityDTO> update(@RequestBody City city, @PathVariable Long id) {
-        City newCity = service.update(city, id);
+        City newCity = cityService.updateById(city, id);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return new ResponseEntity<>(cityDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        cityService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

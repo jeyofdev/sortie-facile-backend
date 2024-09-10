@@ -1,44 +1,33 @@
 package com.poec.sortie_facile_backend.domain.region;
 
-import jakarta.persistence.EntityNotFoundException;
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
-public class RegionService {
+public class RegionService  extends AbstractDomainService<Region> {
+
+    private final RegionRepository regionRepository;
 
     @Autowired
-    private RegionRepository repository;
-
-    public List<Region> getAll() {
-        return repository.findAll();
+    public RegionService(RegionRepository regionRepository) {
+        super(regionRepository, "region");
+        this.regionRepository = regionRepository;
     }
 
-    public Region getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
-    }
-
-    public Region add(Region region) {
-        return repository.save(region);
-    }
-
-    public Region update(Region region, Long id) {
-        Region newRegion = getById(id);
+    @Override
+    public Region updateById(Region region, Long regionId) {
+        Region newRegion = findById(regionId);
         System.out.println(newRegion.getName());
         newRegion.setName(region.getName());
         newRegion.setDepartments(region.getDepartments());
         newRegion.setActivities(region.getActivities());
         newRegion.setProfiles(region.getProfiles());
 
-        return repository.save(newRegion);
+        return regionRepository.save(newRegion);
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+        regionRepository.deleteById(id);
     }
 }
