@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.poec.sortie_facile_backend.util.Route.*;
+import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 
 @RestController
 @RequestMapping(BASE_URL + DEPARTMENT)
