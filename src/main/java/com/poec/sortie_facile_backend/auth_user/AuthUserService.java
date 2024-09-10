@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.auth_user;
 
+import com.poec.sortie_facile_backend.core.interfaces.IAuthUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,9 +10,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AuthUserService {
+public class AuthUserService implements IAuthUserService {
     private final AuthUserRepository authUserRepository;
 
+    @Override
     public List<AuthUser> findAll() throws AccessDeniedException {
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
 
@@ -22,6 +24,7 @@ public class AuthUserService {
         }
     }
 
+    @Override
     public AuthUser findUserByEmail(String email) {
         String username  = SecurityContextHolder.getContext().getAuthentication().getName();
         String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
@@ -34,6 +37,7 @@ public class AuthUserService {
         }
     }
 
+    @Override
     public AuthUserDTO findUserById(Long id) {
         AuthUser user = authUserRepository.findById(id).orElseThrow(
                 () -> new RuntimeException("User with id " + id + " not found")

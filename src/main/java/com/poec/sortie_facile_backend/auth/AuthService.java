@@ -3,6 +3,7 @@ package com.poec.sortie_facile_backend.auth;
 import com.poec.sortie_facile_backend.auth.model.LoginRequest;
 import com.poec.sortie_facile_backend.auth.model.AuthResponse;
 import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
+import com.poec.sortie_facile_backend.core.interfaces.IAuthService;
 import com.poec.sortie_facile_backend.exceptions.UsernameAlreadyTakenException;
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
@@ -20,13 +21,14 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements IAuthService {
 
     private final AuthUserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
+    @Override
     public Map<String, String> register(RegisterRequest request) throws UsernameAlreadyTakenException {
 
         if (repository.findByEmail(request.getEmail()).isEmpty()) {
@@ -51,7 +53,8 @@ public class AuthService {
         }
     }
 
-    public AuthResponse authenticate(LoginRequest request) {
+    @Override
+    public AuthResponse login(LoginRequest request) {
 
         // check credentials
         // if the user was found

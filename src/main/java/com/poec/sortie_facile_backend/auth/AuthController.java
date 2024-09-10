@@ -3,7 +3,6 @@ package com.poec.sortie_facile_backend.auth;
 import com.poec.sortie_facile_backend.auth.model.LoginRequest;
 import com.poec.sortie_facile_backend.auth.model.AuthResponse;
 import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +28,7 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        AuthResponse authenticationResponse = service.authenticate(request);
+        AuthResponse authenticationResponse = service.login(request);
         return new ResponseEntity<>(authenticationResponse, HttpStatus.OK);
     }
 }
