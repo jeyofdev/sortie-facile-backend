@@ -28,16 +28,16 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
     }
 
     @Override
-    public Activity mapToEntity(SaveActivityDTO saveCategoryDTO) {
+    public Activity mapToEntity(SaveActivityDTO saveActivityDTO) {
         return new Activity(
-                saveCategoryDTO.name(),
-                saveCategoryDTO.date(),
-                saveCategoryDTO.age(),
-                saveCategoryDTO.imgUrl(),
-                saveCategoryDTO.link(),
-                saveCategoryDTO.description(),
-                saveCategoryDTO.nbGuest(),
-                saveCategoryDTO.isVisible()
+                saveActivityDTO.name(),
+                saveActivityDTO.date(),
+                saveActivityDTO.age(),
+                saveActivityDTO.imgUrl(),
+                saveActivityDTO.link(),
+                saveActivityDTO.description(),
+                saveActivityDTO.nbGuest(),
+                saveActivityDTO.isVisible()
         );
     }
 }

@@ -1,5 +1,7 @@
 package com.poec.sortie_facile_backend.domain.category;
 
+import com.poec.sortie_facile_backend.domain.category.dto.CategoryDTO;
+import com.poec.sortie_facile_backend.domain.category.dto.SaveCategoryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,32 +20,42 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private CategoryMapper categoryMapper;
+
+
     @GetMapping(ALL)
     public ResponseEntity<List<CategoryDTO>> getAll() {
-        List<Category> categories = categoryService.findAll();
-        List<CategoryDTO> categoryDTOS = categories.stream().map(CategoryDTO::mapFromEntity).toList();
+        List<Category> categoryList = categoryService.findAll();
+        List<CategoryDTO> categoryDTOS = categoryList.stream().map(categoryMapper::mapFromEntity).toList();
+
         return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
-    public ResponseEntity<CategoryDTO> getById(@PathVariable Long id) {
-        Category newCategory = categoryService.findById(id);
-        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
+    public ResponseEntity<CategoryDTO> getById(@PathVariable("id") Long categoryId) {
+        Category category = categoryService.findById(categoryId);
+        CategoryDTO categoryDTO = categoryMapper.mapFromEntity(category);
+
         return new ResponseEntity<>(categoryDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<CategoryDTO> add(@RequestBody Category category) {
+    public ResponseEntity<CategoryDTO> add(@RequestBody SaveCategoryDTO saveCategoryDTO) {
+        Category category = categoryMapper.mapToEntity(saveCategoryDTO);
         Category newCategory = categoryService.add(category);
-        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
-        return new ResponseEntity<>(categoryDTO, HttpStatus.CREATED);
+        CategoryDTO newCategoryDTO = categoryMapper.mapFromEntity(newCategory);
+
+        return new ResponseEntity<>(newCategoryDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<CategoryDTO> update(@RequestBody Category category, @PathVariable Long id) {
-        Category newCategory = categoryService.updateById(category, id);
-        CategoryDTO categoryDTO = CategoryDTO.mapFromEntity(newCategory);
-        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
+    public ResponseEntity<CategoryDTO> update(@RequestBody SaveCategoryDTO saveCategoryDTO, @PathVariable("id") Long categoryId) {
+        Category category = categoryMapper.mapToEntity(saveCategoryDTO);
+        Category updatedCategory = categoryService.updateById(category, categoryId);
+        CategoryDTO updatedCategoryDTO = categoryMapper.mapFromEntity(updatedCategory);
+
+        return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)

@@ -34,4 +34,9 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories")
     private List<Profile> profiles = new ArrayList<>();
+
+    public Category(String title, String imgUrl) {
+        this.title = title;
+        this.imgUrl = imgUrl;
+    }
 }

@@ -1,12 +1,12 @@
 package com.poec.sortie_facile_backend.domain.booking;
 
-public record BookingDTO(
-        Long id,
-        String createdAt,
-        Long activityId,
-        Long profileId
-) {
-    public static BookingDTO mapFromEntity(Booking booking) {
+import com.poec.sortie_facile_backend.domain.booking.dto.BookingDTO;
+import org.springframework.stereotype.Service;
+
+@Service
+public class BookingMapper {
+
+    public BookingDTO mapFromEntity(Booking booking) {
         return new BookingDTO(
                 booking.getId(),
                 booking.getCreatedAt(),

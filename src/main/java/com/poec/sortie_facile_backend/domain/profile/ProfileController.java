@@ -1,5 +1,8 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
+import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
+import com.poec.sortie_facile_backend.domain.profile.dto.ProfileUpdateCategoriesDTO;
+import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,46 +21,60 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
+    @Autowired
+    private ProfileMapper profileMapper;
+
     @GetMapping(ALL)
     public ResponseEntity<List<ProfileDTO>> getAll() {
-        List<Profile> profiles = profileService.findAll();
-        List<ProfileDTO> profileDTOS = profiles.stream().map(ProfileDTO::mapFromEntity).toList();
+        List<Profile> profileList = profileService.findAll();
+        List<ProfileDTO> profileDTOS = profileList.stream().map(profileMapper::mapFromEntity).toList();
+
         return new ResponseEntity<>(profileDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
-    public ResponseEntity<ProfileDTO> getById(@PathVariable Long id) {
-        Profile newProfile = profileService.findById(id);
-        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
+    public ResponseEntity<ProfileDTO> getById(@PathVariable("id") Long profileId) {
+        Profile profile = profileService.findById(profileId);
+        ProfileDTO profileDTO = profileMapper.mapFromEntity(profile);
+
+        return new ResponseEntity<>(profileDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")
-    public ResponseEntity<ProfileDTO> add(@RequestBody Profile profile,
-                                          @PathVariable Long regionId,
-                                          @PathVariable Long departmentId,
-                                          @PathVariable Long cityId,
-                                          @PathVariable Long userId
+    public ResponseEntity<ProfileDTO> add(
+            @RequestBody SaveProfileDTO saveProfileDTO,
+            @PathVariable Long regionId,
+            @PathVariable Long departmentId,
+            @PathVariable Long cityId,
+            @PathVariable Long userId
     ) {
-        Profile newProfile = profileService.add(profile, regionId, departmentId, cityId, userId);
-        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return new ResponseEntity<>(profileDTO, HttpStatus.CREATED);
+        Profile activity = profileMapper.mapToEntity(saveProfileDTO);
+        Profile newProfile = profileService.add(activity, regionId, departmentId, cityId, userId);
+        ProfileDTO newProfileDTO = profileMapper.mapFromEntity(newProfile);
+
+        return new ResponseEntity<>(newProfileDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ProfileDTO> update(@RequestBody Profile profile,
-                                             @PathVariable Long id
-                                             ) {
-        Profile newProfile = profileService.updateById(profile, id);
-        ProfileDTO profileDTO = ProfileDTO.mapFromEntity(newProfile);
-        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
+    public ResponseEntity<ProfileDTO> update(
+            @RequestBody SaveProfileDTO saveProfileDTO,
+            @PathVariable("id") Long profileId
+    ) {
+        Profile profile = profileMapper.mapToEntity(saveProfileDTO);
+        Profile updatedProfile = profileService.updateById(profile, profileId);
+        ProfileDTO updatedProfileDTO = profileMapper.mapFromEntity(updatedProfile);
+
+        return new ResponseEntity<>(updatedProfileDTO, HttpStatus.OK);
     }
 
     @PutMapping(UPDATE + "/categories")
-    public ResponseEntity<ProfileUpdateCategoriesDTO> updateCategoryInProfile(@RequestBody ProfileUpdateCategoriesDTO profileUpdateCategoriesDTO,
-                                                              @PathVariable Long id) {
+    public ResponseEntity<ProfileUpdateCategoriesDTO> updateCategoryInProfile(
+            @RequestBody ProfileUpdateCategoriesDTO profileUpdateCategoriesDTO,
+            @PathVariable Long id
+    ) {
         Profile newProfile = profileService.updateCategoryInProfile(id, profileUpdateCategoriesDTO.categoryIds());
-        ProfileUpdateCategoriesDTO newProfileUpdated = ProfileUpdateCategoriesDTO.mapFromEntity(newProfile);
+        ProfileUpdateCategoriesDTO newProfileUpdated = profileMapper.mapFromEntityCategory(newProfile);
+
         return new ResponseEntity<>(newProfileUpdated, HttpStatus.OK);
     }
 }
