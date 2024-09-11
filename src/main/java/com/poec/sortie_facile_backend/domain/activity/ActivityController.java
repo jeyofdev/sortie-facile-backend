@@ -1,5 +1,7 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
+import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
+import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,50 +20,59 @@ public class ActivityController {
     @Autowired
     private ActivityService activityService;
 
+    @Autowired
+    private ActivityMapper activityMapper;
+
     @GetMapping(ALL)
     public ResponseEntity<List<ActivityDTO>> getAll() {
-        List<Activity> activities = activityService.findAll();
-        List<ActivityDTO> activityDTOS = activities.stream().map(ActivityDTO::mapFromEntity).toList();
+        List<Activity> activityList = activityService.findAll();
+        List<ActivityDTO> activityDTOS = activityList.stream().map(activityMapper::mapFromEntity).toList();
+
         return new ResponseEntity<>(activityDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
-    public ResponseEntity<ActivityDTO> getById(@PathVariable Long id) {
-        Activity newActivity = activityService.findById(id);
-        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
-        return new ResponseEntity<>(activityDTO, HttpStatus.OK);
+    public ResponseEntity<ActivityDTO> getById(@PathVariable("id") Long activityId) {
+        Activity activity = activityService.findById(activityId);
+        ActivityDTO activityDTO = activityMapper.mapFromEntity(activity);
+
+        return new ResponseEntity<>(activityDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}" + CATEGORY + "/{categoryId}")
-    public ResponseEntity<ActivityDTO> add(@RequestBody ActivityDTO activityDTO,
-                                           @PathVariable Long regionId,
-                                           @PathVariable Long departmentId,
-                                           @PathVariable Long cityId,
-                                           @PathVariable Long profileId,
-                                           @PathVariable Long categoryId
-                                           ) {
-        Activity newActivity = activityService.add(ActivityDTO.mapToEntity(activityDTO), regionId, departmentId, cityId, profileId, categoryId);
-        ActivityDTO newActivityDTO = ActivityDTO.mapFromEntity(newActivity);
+    public ResponseEntity<ActivityDTO> add(
+            @RequestBody SaveActivityDTO saveActivityDTO,
+            @PathVariable("regionId") Long regionId,
+            @PathVariable("departmentId") Long departmentId,
+            @PathVariable("cityId") Long cityId,
+            @PathVariable("profileId") Long profileId,
+            @PathVariable("categoryId") Long categoryId
+    ) {
+        Activity activity = activityMapper.mapToEntity(saveActivityDTO);
+        Activity newActivity = activityService.add(activity, regionId, departmentId, cityId, profileId, categoryId);
+        ActivityDTO newActivityDTO = activityMapper.mapFromEntity(newActivity);
+
         return new ResponseEntity<>(newActivityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ActivityDTO> updateById(@RequestBody Activity activity, @PathVariable Long id) {
-        Activity newActivity = activityService.updateById(activity, id);
-        ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
-        System.out.println(activityDTO.isVisible());
-        return new ResponseEntity<>(activityDTO, HttpStatus.OK);
+    public ResponseEntity<ActivityDTO> updateById(@RequestBody SaveActivityDTO saveActivityDTO, @PathVariable("id") Long activityId) {
+        Activity activity = activityMapper.mapToEntity(saveActivityDTO);
+        Activity updatedActivity = activityService.updateById(activity, activityId);
+        ActivityDTO updatedActivityDTO = activityMapper.mapFromEntity(updatedActivity);
+
+        return new ResponseEntity<>(updatedActivityDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        activityService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long activityId) {
+        activityService.deleteById(activityId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("/{activityId}/countBookings")
-    public ResponseEntity<Integer> countBookingsForActivity(@PathVariable Long activityId) {
+    public ResponseEntity<Integer> countBookingsForActivity(@PathVariable("activityId") Long activityId) {
         int count = activityService.countBookingsByActivityId(activityId);
-        return ResponseEntity.ok(count);
+        return new ResponseEntity<>(count, HttpStatus.OK);
     }
 }
