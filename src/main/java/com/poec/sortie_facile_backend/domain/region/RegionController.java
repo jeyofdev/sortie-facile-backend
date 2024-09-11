@@ -51,6 +51,6 @@ public class RegionController {
     @DeleteMapping(DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         regionService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

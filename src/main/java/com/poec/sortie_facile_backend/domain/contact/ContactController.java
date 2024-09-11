@@ -49,6 +49,6 @@ public class ContactController {
     @DeleteMapping(DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         contactService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

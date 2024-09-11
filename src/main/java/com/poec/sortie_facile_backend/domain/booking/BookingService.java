@@ -1,36 +1,28 @@
 package com.poec.sortie_facile_backend.domain.booking;
 
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.activity.ActivityRepository;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import com.poec.sortie_facile_backend.domain.profile.ProfileRepository;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.List;
+
 @Service
-public class BookingService {
+public class BookingService extends AbstractDomainService<Booking> {
 
-    @Autowired
-    private BookingRepository repository;
-    @Autowired
-    private ActivityRepository activityRepository;
-    @Autowired
-    private ProfileRepository profileRepository;
+    private final BookingRepository bookingRepository;
+    private final ActivityRepository activityRepository;
+    private final ProfileRepository profileRepository;
 
-    public List<Booking> getAll() {
-        return repository.findAll();
-    }
+    public BookingService(BookingRepository bookingRepository, ActivityRepository activityRepository, ProfileRepository profileRepository) {
+        super(bookingRepository, "booking");
 
-    public Booking getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
+        this.bookingRepository = bookingRepository;
+        this.activityRepository = activityRepository;
+        this.profileRepository = profileRepository;
     }
 
     public Booking add(Long activityId, Long profileId) {
@@ -42,25 +34,22 @@ public class BookingService {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile " + profileId + " not found")
                 );
+
         Booking booking = new Booking();
         booking.setCreatedAt(new Date().toString());
         booking.setActivity(newActivity);
         booking.setProfile(newProfile);
-        return repository.save(booking);
+        return bookingRepository.save(booking);
     }
 
-    public Booking update(Booking booking, Long id) {
-        Booking newBooking = getById(id);
+    @Override
+    public Booking updateById(Booking booking, Long bookingId) {
+        Booking newBooking = findById(bookingId);
+
         newBooking.setCreatedAt(booking.getCreatedAt());
         newBooking.setActivity(booking.getActivity());
         newBooking.setProfile(booking.getProfile());
 
-        return repository.save(newBooking);
+        return bookingRepository.save(newBooking);
     }
-
-    public ResponseEntity<Void> delete(Long id) {
-        repository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
 }

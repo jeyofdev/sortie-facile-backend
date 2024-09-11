@@ -16,18 +16,18 @@ import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 public class ActivityController {
 
     @Autowired
-    private ActivityService service;
+    private ActivityService activityService;
 
     @GetMapping(ALL)
     public ResponseEntity<List<ActivityDTO>> getAll() {
-        List<Activity> activities = service.getAll();
+        List<Activity> activities = activityService.findAll();
         List<ActivityDTO> activityDTOS = activities.stream().map(ActivityDTO::mapFromEntity).toList();
         return new ResponseEntity<>(activityDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<ActivityDTO> getById(@PathVariable Long id) {
-        Activity newActivity = service.getById(id);
+        Activity newActivity = activityService.findById(id);
         ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
         return new ResponseEntity<>(activityDTO, HttpStatus.OK);
     }
@@ -40,29 +40,28 @@ public class ActivityController {
                                            @PathVariable Long profileId,
                                            @PathVariable Long categoryId
                                            ) {
-        Activity newActivity = service.add(ActivityDTO.mapToEntity(activityDTO), regionId, departmentId, cityId, profileId, categoryId);
+        Activity newActivity = activityService.add(ActivityDTO.mapToEntity(activityDTO), regionId, departmentId, cityId, profileId, categoryId);
         ActivityDTO newActivityDTO = ActivityDTO.mapFromEntity(newActivity);
         return new ResponseEntity<>(newActivityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ActivityDTO> update(@RequestBody Activity activity, @PathVariable Long id) {
-        Activity newActivity = service.update(activity, id);
+    public ResponseEntity<ActivityDTO> updateById(@RequestBody Activity activity, @PathVariable Long id) {
+        Activity newActivity = activityService.updateById(activity, id);
         ActivityDTO activityDTO = ActivityDTO.mapFromEntity(newActivity);
         System.out.println(activityDTO.isVisible());
         return new ResponseEntity<>(activityDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        activityService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 
     @GetMapping("/{activityId}/countBookings")
     public ResponseEntity<Integer> countBookingsForActivity(@PathVariable Long activityId) {
-        int count = service.countBookingsByActivityId(activityId);
+        int count = activityService.countBookingsByActivityId(activityId);
         return ResponseEntity.ok(count);
     }
-
 }

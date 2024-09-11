@@ -35,7 +35,7 @@ public class DepartmentController {
 
     @PostMapping(ADD + REGION + ID)
     public ResponseEntity<DepartmentDTO> add(@RequestBody Department department, @PathVariable Long id) {
-        Department newDepartment = departmentService.addWithRegion(department, id);
+        Department newDepartment = departmentService.add(department, id);
         DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
         return new ResponseEntity<>(departmentDTO, HttpStatus.CREATED);
     }
@@ -50,6 +50,6 @@ public class DepartmentController {
     @DeleteMapping(DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         departmentService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

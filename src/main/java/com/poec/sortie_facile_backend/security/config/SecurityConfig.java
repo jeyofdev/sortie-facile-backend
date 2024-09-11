@@ -48,7 +48,10 @@ public class SecurityConfig {
                             "/api/v1/department/**",
                             "/api/v1/city/**",
                             "/api/v1/city/**",
-                            "/api/v1/category/**")
+                            "/api/v1/category/**",
+                            "/api/v1/activity/**",
+                            "/api/v1/profile/**",
+                            "api/v1/booking/**")
                     .permitAll()
 
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/all").hasAnyRole(Role.ADMIN.name(), Role.USER.name())

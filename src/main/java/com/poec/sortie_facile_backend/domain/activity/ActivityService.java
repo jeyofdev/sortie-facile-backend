@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
@@ -14,46 +15,40 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 @Service
-public class ActivityService {
+public class ActivityService extends AbstractDomainService<Activity> {
+
+    private final ActivityRepository activityRepository;
+    private final CityRepository cityRepository;
+    private final DepartmentRepository departmentRepository;
+    private final RegionRepository regionRepository;
+    private final CategoryRepository categoryRepository;
+    private final ProfileRepository profileRepository;
 
     @Autowired
-    private ActivityRepository repository;
-    @Autowired
-    private CityRepository cityRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-    @Autowired
-    private RegionRepository regionRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private ProfileRepository profileRepository;
+    public ActivityService(ActivityRepository activityRepository, CityRepository cityRepository, DepartmentRepository departmentRepository, RegionRepository regionRepository, CategoryRepository categoryRepository, ProfileRepository profileRepository) {
+        super(activityRepository, "activity");
 
-    public List<Activity> getAll() {
-        return repository.findAll();
-    }
-
-    public Activity getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
+        this.activityRepository = activityRepository;
+        this.cityRepository = cityRepository;
+        this.departmentRepository = departmentRepository;
+        this.regionRepository = regionRepository;
+        this.categoryRepository = categoryRepository;
+        this.profileRepository = profileRepository;
     }
 
     public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId, Long categoryId) {
         Region existingRegion = regionRepository.findById(regionId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Région with id " + regionId + " not found")
+                        () -> new EntityNotFoundException("Region with id " + regionId + " not found")
                 );
         Department existingDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Département with id " +  departmentId + " not found")
+                        () -> new EntityNotFoundException("Department with id " +  departmentId + " not found")
                 );
         City existingCity = cityRepository.findById(cityId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Ville with id " +  cityId + " not found")
+                        () -> new EntityNotFoundException("City with id " +  cityId + " not found")
                 );
         Profile existingProfile = profileRepository.findById(profileId)
                 .orElseThrow(
@@ -68,15 +63,18 @@ public class ActivityService {
         activity.setCity(existingCity);
         activity.setProfile(existingProfile);
         activity.setCategory(existingCategory);
-        Activity savedActivity = repository.save(activity);
+        Activity savedActivity = activityRepository.save(activity);
 
         existingProfile.getActivities().add(activity);
         profileRepository.save(existingProfile);
+        
         return savedActivity;
     }
 
-    public Activity update(Activity activity, Long id) {
-        Activity newActivity = getById(id);
+    @Override
+    public Activity updateById(Activity activity, Long activityId) {
+        Activity newActivity = findById(activityId);
+
         newActivity.setName(activity.getName());
         newActivity.setDate(activity.getDate());
         newActivity.setAge(activity.getAge());
@@ -86,16 +84,10 @@ public class ActivityService {
         newActivity.setNbGuest(activity.getNbGuest());
         newActivity.setVisible(activity.isVisible());
 
-        return repository.save(newActivity);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
+        return activityRepository.save(newActivity);
     }
 
     public int countBookingsByActivityId(Long activityId) {
-        return repository.countBookingsByActivityId(activityId);
+        return activityRepository.countBookingsByActivityId(activityId);
     }
-
-
 }

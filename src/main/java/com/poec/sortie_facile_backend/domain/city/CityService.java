@@ -20,7 +20,7 @@ public class CityService extends AbstractDomainService<City> {
         this.departmentRepository = departmentRepository;
     }
 
-    public City addWithDepartment(City city, Long departmentId) {
+    public City add(City city, Long departmentId) {
         Department newDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Department with id " + departmentId + " not found")

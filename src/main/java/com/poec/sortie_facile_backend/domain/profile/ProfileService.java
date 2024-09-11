@@ -1,6 +1,6 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
-import com.poec.sortie_facile_backend.domain.booking.BookingRepository;
+import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
@@ -18,33 +18,24 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProfileService {
+public class ProfileService extends AbstractDomainService<Profile> {
+
+    private final ProfileRepository profileRepository;
+    private final CategoryRepository categoryRepository;
+    private final AuthUserRepository authUserRepository;
+    private final CityRepository cityRepository;
+    private final RegionRepository regionRepository;
+    private final DepartmentRepository departmentRepository;
 
     @Autowired
-    private ProfileRepository repository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private BookingRepository bookingRepository;
-    @Autowired
-    private AuthUserRepository authUserRepository;
-    @Autowired
-    private CityRepository cityRepository;
-    @Autowired
-    private RegionRepository regionRepository;
-    @Autowired
-    private DepartmentRepository departmentRepository;
-
-
-    public List<Profile> getAll() {
-        return repository.findAll();
-    }
-
-    public Profile getById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(
-                        () -> new EntityNotFoundException(id + " not found")
-                );
+    public ProfileService(ProfileRepository profileRepository, CategoryRepository categoryRepository, AuthUserRepository authUserRepository, CityRepository cityRepository, RegionRepository regionRepository, DepartmentRepository departmentRepository) {
+        super(profileRepository, "profile");
+        this.profileRepository = profileRepository;
+        this.categoryRepository = categoryRepository;
+        this.authUserRepository = authUserRepository;
+        this.cityRepository = cityRepository;
+        this.regionRepository = regionRepository;
+        this.departmentRepository = departmentRepository;
     }
 
     public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId, Long userId) {
@@ -64,17 +55,18 @@ public class ProfileService {
                 .orElseThrow(
                         () -> new EntityNotFoundException(userId + " not found")
                 );
+
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
         profile.setUser(newUser);
 
-        return repository.save(profile);
-
+        return profileRepository.save(profile);
     }
 
-    public Profile update(Profile profile, Long id) {
-        Profile newProfile = getById(id);
+    @Override
+    public Profile updateById(Profile profile, Long profileId) {
+        Profile newProfile = findById(profileId);
         newProfile.setFirstname(profile.getFirstname());
         newProfile.setLastname(profile.getLastname());
         newProfile.setStreetNumber(profile.getStreetNumber());
@@ -86,18 +78,14 @@ public class ProfileService {
         newProfile.setDateOfBirth(profile.getDateOfBirth());
         newProfile.setUser(profile.getUser());
 
-        return repository.save(newProfile);
-    }
-
-    public void delete(Long id) {
-        repository.deleteById(id);
+        return profileRepository.save(newProfile);
     }
 
     public Profile updateCategoryInProfile(Long profileId, List<Long> categoryIds) {
-        Profile newProfile = getById(profileId);
+        Profile newProfile = findById(profileId);
         List<Category> categories = categoryRepository.findAllById(categoryIds);
 
         newProfile.setCategories(categories);
-        return repository.save(newProfile);
+        return profileRepository.save(newProfile);
     }
 }

@@ -17,18 +17,18 @@ import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 public class BookingController {
 
     @Autowired
-    private BookingService service;
+    private BookingService bookingService;
 
     @GetMapping(ALL)
     public ResponseEntity<List<BookingDTO>> getAll() {
-        List<Booking> bookings = service.getAll();
+        List<Booking> bookings = bookingService.findAll();
         List<BookingDTO> bookingDTOS = bookings.stream().map(BookingDTO::mapFromEntity).toList();
         return new ResponseEntity<>(bookingDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<BookingDTO> getById(@PathVariable Long id) {
-        Booking newBooking = service.getById(id);
+        Booking newBooking = bookingService.findById(id);
         BookingDTO bookingDTO =BookingDTO.mapFromEntity(newBooking);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
@@ -38,22 +38,21 @@ public class BookingController {
                                           @PathVariable Long activityId,
                                           @PathVariable Long profileId
     ) {
-        service.add(activityId, profileId);
+        bookingService.add(activityId, profileId);
         Map<String, String> response = Map.of("message", "Booking created successfully");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<BookingDTO> update(@RequestBody Booking booking, @PathVariable Long id) {
-        Booking newBooking = service.update(booking, id);
+    public ResponseEntity<BookingDTO> updateById(@RequestBody Booking booking, @PathVariable Long id) {
+        Booking newBooking = bookingService.updateById(booking, id);
         BookingDTO bookingDTO = BookingDTO.mapFromEntity(newBooking);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
+        bookingService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

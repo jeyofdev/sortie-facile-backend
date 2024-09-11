@@ -34,7 +34,7 @@ public class CityController {
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")
     public ResponseEntity<CityDTO> add(@RequestBody City city, @PathVariable Long departmentId) {
-        City newCity = cityService.addWithDepartment(city, departmentId);
+        City newCity = cityService.add(city, departmentId);
         CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
         return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
     }
@@ -49,6 +49,6 @@ public class CityController {
     @DeleteMapping(DELETE)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         cityService.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

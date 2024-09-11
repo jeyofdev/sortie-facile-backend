@@ -1,6 +1,5 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
-
 import java.util.Date;
 
 public record ActivityDTO(
