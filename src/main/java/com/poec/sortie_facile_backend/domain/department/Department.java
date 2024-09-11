@@ -29,8 +29,8 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
     private List<Profile> profiles = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "region_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
     private Region region;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)

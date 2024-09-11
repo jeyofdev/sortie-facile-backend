@@ -31,8 +31,8 @@ public class City {
     @OneToMany(mappedBy = "city")
     private List<Profile> profiles = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "department_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
     public City(String name) {
