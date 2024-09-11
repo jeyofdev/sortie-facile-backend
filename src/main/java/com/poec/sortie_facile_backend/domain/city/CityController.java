@@ -1,12 +1,7 @@
 package com.poec.sortie_facile_backend.domain.city;
 
-import com.poec.sortie_facile_backend.domain.activity.Activity;
-import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
-import com.poec.sortie_facile_backend.domain.region.Region;
-import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
-import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,7 +40,10 @@ public class CityController {
     }
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")
-    public ResponseEntity<CityDTO> add(@RequestBody SaveCityDTO saveCityDTO, @PathVariable("departmentId") Long departmentId) {
+    public ResponseEntity<CityDTO> add(
+            @RequestBody SaveCityDTO saveCityDTO,
+            @PathVariable("departmentId") Long departmentId
+    ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City newCity = cityService.add(city, departmentId);
         CityDTO newCityDTO = cityMapper.mapFromEntity(newCity);
@@ -54,7 +52,10 @@ public class CityController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<CityDTO> updateById(@RequestBody SaveCityDTO saveCityDTO, @PathVariable("id") Long cityId) {
+    public ResponseEntity<CityDTO> updateById(
+            @RequestBody SaveCityDTO saveCityDTO,
+            @PathVariable("id") Long cityId
+    ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City updatedCity = cityService.updateById(city, cityId);
         CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity);

@@ -1,12 +1,7 @@
 package com.poec.sortie_facile_backend.domain.department;
 
-import com.poec.sortie_facile_backend.domain.activity.Activity;
-import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.department.dto.SaveDepartmentDTO;
-import com.poec.sortie_facile_backend.domain.region.Region;
-import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
-import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +32,7 @@ public class DepartmentController {
     }
 
     @GetMapping(ID)
-    public ResponseEntity<DepartmentDTO> getById(@PathVariable Long departmentId) {
+    public ResponseEntity<DepartmentDTO> getById(@PathVariable("id") Long departmentId) {
         Department department = departmentService.findById(departmentId);
         DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department);
 
@@ -45,7 +40,10 @@ public class DepartmentController {
     }
 
     @PostMapping(ADD + REGION + ID)
-    public ResponseEntity<DepartmentDTO> add(@RequestBody SaveDepartmentDTO saveDepartmentDTO, @PathVariable("id") Long regionId) {
+    public ResponseEntity<DepartmentDTO> add(
+            @RequestBody SaveDepartmentDTO saveDepartmentDTO,
+            @PathVariable("id") Long regionId
+    ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department newDepartment = departmentService.add(department, regionId);
         DepartmentDTO newDepartmentDTO = departmentMapper.mapFromEntity(newDepartment);
@@ -54,7 +52,10 @@ public class DepartmentController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<DepartmentDTO> updateById(@RequestBody SaveDepartmentDTO saveDepartmentDTO, @PathVariable("id") Long departmentId) {
+    public ResponseEntity<DepartmentDTO> updateById(
+            @RequestBody SaveDepartmentDTO saveDepartmentDTO,
+            @PathVariable("id") Long departmentId
+    ) {
         Department region = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department updatedDepartment = departmentService.updateById(region, departmentId);
         DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment);

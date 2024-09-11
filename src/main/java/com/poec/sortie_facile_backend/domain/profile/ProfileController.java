@@ -43,10 +43,10 @@ public class ProfileController {
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")
     public ResponseEntity<ProfileDTO> add(
             @RequestBody SaveProfileDTO saveProfileDTO,
-            @PathVariable Long regionId,
-            @PathVariable Long departmentId,
-            @PathVariable Long cityId,
-            @PathVariable Long userId
+            @PathVariable("regionId") Long regionId,
+            @PathVariable("departmentId") Long departmentId,
+            @PathVariable("cityId") Long cityId,
+            @PathVariable("userId") Long userId
     ) {
         Profile activity = profileMapper.mapToEntity(saveProfileDTO);
         Profile newProfile = profileService.add(activity, regionId, departmentId, cityId, userId);
@@ -56,7 +56,7 @@ public class ProfileController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ProfileDTO> update(
+    public ResponseEntity<ProfileDTO> updateById(
             @RequestBody SaveProfileDTO saveProfileDTO,
             @PathVariable("id") Long profileId
     ) {

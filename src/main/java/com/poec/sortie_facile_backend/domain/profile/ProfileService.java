@@ -41,19 +41,19 @@ public class ProfileService extends AbstractDomainService<Profile> {
     public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId, Long userId) {
         Region newRegion = regionRepository.findById(regionId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(regionId + " not found")
+                        () -> new EntityNotFoundException("Region with id " + regionId + " not found")
                 );
         Department newDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(departmentId + " not found")
+                        () -> new EntityNotFoundException("Department with id " + departmentId + " not found")
                 );
         City newCity = cityRepository.findById(cityId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(cityId + " not found")
+                        () -> new EntityNotFoundException("City with id " + cityId + " not found")
                 );
         AuthUser newUser = authUserRepository.findById(userId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException(userId + " not found")
+                        () -> new EntityNotFoundException("User with id " + userId + " not found")
                 );
 
         profile.setRegion(newRegion);

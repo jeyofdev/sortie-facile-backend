@@ -2,7 +2,6 @@ package com.poec.sortie_facile_backend.domain.region;
 
 import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
 import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -50,7 +49,10 @@ public class RegionController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<RegionDTO> updateById(@RequestBody SaveRegionDTO saveRegionDTO, @PathVariable("id") Long regionId) {
+    public ResponseEntity<RegionDTO> updateById(
+            @RequestBody SaveRegionDTO saveRegionDTO,
+            @PathVariable("id") Long regionId
+    ) {
         Region region = regionMapper.mapToEntity(saveRegionDTO);
         Region updatedRegion = regionService.updateById(region, regionId);
         RegionDTO updatedRegionDTO = regionMapper.mapFromEntity(updatedRegion);

@@ -49,7 +49,10 @@ public class ContactController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ContactDTO> updateById(@RequestBody SaveContactDTO saveContactDTO, @PathVariable("id") Long contactId) {
+    public ResponseEntity<ContactDTO> updateById(
+            @RequestBody SaveContactDTO saveContactDTO,
+            @PathVariable("id") Long contactId
+    ) {
         Contact contact = contactMapper.mapToEntity(saveContactDTO);
         Contact updatedContact = contactService.updateById(contact, contactId);
         ContactDTO updatedContactDTO = contactMapper.mapFromEntity(updatedContact);

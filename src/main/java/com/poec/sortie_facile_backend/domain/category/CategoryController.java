@@ -50,7 +50,10 @@ public class CategoryController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<CategoryDTO> update(@RequestBody SaveCategoryDTO saveCategoryDTO, @PathVariable("id") Long categoryId) {
+    public ResponseEntity<CategoryDTO> updateById(
+            @RequestBody SaveCategoryDTO saveCategoryDTO,
+            @PathVariable("id") Long categoryId
+    ) {
         Category category = categoryMapper.mapToEntity(saveCategoryDTO);
         Category updatedCategory = categoryService.updateById(category, categoryId);
         CategoryDTO updatedCategoryDTO = categoryMapper.mapFromEntity(updatedCategory);
@@ -59,8 +62,8 @@ public class CategoryController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        categoryService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long categoryId) {
+        categoryService.deleteById(categoryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

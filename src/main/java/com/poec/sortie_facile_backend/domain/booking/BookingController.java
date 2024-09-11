@@ -1,8 +1,5 @@
 package com.poec.sortie_facile_backend.domain.booking;
 
-import com.poec.sortie_facile_backend.domain.activity.Activity;
-import com.poec.sortie_facile_backend.domain.activity.ActivityMapper;
-import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.booking.dto.BookingDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +41,8 @@ public class BookingController {
 
     @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{profileId}")
     public ResponseEntity<Map<String, String>> add(
-            @PathVariable Long activityId,
-            @PathVariable Long profileId
+            @PathVariable("activityId") Long activityId,
+            @PathVariable("profileId") Long profileId
     ) {
         bookingService.add(activityId, profileId);
         Map<String, String> response = Map.of("message", "Booking created successfully");
@@ -61,8 +58,8 @@ public class BookingController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
-        bookingService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long bookingId) {
+        bookingService.deleteById(bookingId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
