@@ -18,7 +18,7 @@ public class RegionService  extends AbstractDomainService<Region> {
     @Override
     public Region updateById(Region region, Long regionId) {
         Region newRegion = findById(regionId);
-        System.out.println(newRegion.getName());
+
         newRegion.setName(region.getName());
         newRegion.setDepartments(region.getDepartments());
         newRegion.setActivities(region.getActivities());

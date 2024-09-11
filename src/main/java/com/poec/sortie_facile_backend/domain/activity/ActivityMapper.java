@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, SaveActivityDTO> {
 
+    @Override
     public ActivityDTO mapFromEntity(Activity activity) {
         return new ActivityDTO(
                 activity.getId(),
@@ -26,6 +27,7 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
         );
     }
 
+    @Override
     public Activity mapToEntity(SaveActivityDTO saveCategoryDTO) {
         return new Activity(
                 saveCategoryDTO.name(),

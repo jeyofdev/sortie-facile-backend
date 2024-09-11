@@ -1,5 +1,7 @@
 package com.poec.sortie_facile_backend.domain.region;
 
+import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
+import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,38 +21,46 @@ public class RegionController {
     @Autowired
     private RegionService regionService;
 
+    @Autowired
+    private RegionMapper regionMapper;
+
     @GetMapping(ALL)
     public ResponseEntity<List<RegionDTO>> getAll() {
-        List<Region> regions = regionService.findAll();
-        List<RegionDTO> regionDTOS = regions.stream().map(RegionDTO::mapFromEntity).toList();
+        List<Region> regionList = regionService.findAll();
+        List<RegionDTO> regionDTOS = regionList.stream().map(regionMapper::mapFromEntity).toList();
+
         return new ResponseEntity<>(regionDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
-    public ResponseEntity<RegionDTO> getById(@PathVariable Long id) {
-        Region newRegion = regionService.findById(id);
-        RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
+    public ResponseEntity<RegionDTO> getById(@PathVariable("id") Long regionId) {
+        Region region = regionService.findById(regionId);
+        RegionDTO regionDTO = regionMapper.mapFromEntity(region);
+
         return new ResponseEntity<>(regionDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<RegionDTO> add(@RequestBody Region region) {
+    public ResponseEntity<RegionDTO> add(@RequestBody SaveRegionDTO saveRegionDTO) {
+        Region region = regionMapper.mapToEntity(saveRegionDTO);
         Region newRegion = regionService.add(region);
-        RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
-        return new ResponseEntity<>(regionDTO, HttpStatus.CREATED);
+        RegionDTO newRegionDTO = regionMapper.mapFromEntity(newRegion);
+
+        return new ResponseEntity<>(newRegionDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    @Transactional
-    public ResponseEntity<RegionDTO> update(@RequestBody Region region, @PathVariable Long id) {
-        Region newRegion = regionService.updateById(region, id);
-        RegionDTO regionDTO = RegionDTO.mapFromEntity(newRegion);
-        return new ResponseEntity<>(regionDTO, HttpStatus.OK);
+    public ResponseEntity<RegionDTO> updateById(@RequestBody SaveRegionDTO saveRegionDTO, @PathVariable("id") Long regionId) {
+        Region region = regionMapper.mapToEntity(saveRegionDTO);
+        Region updatedRegion = regionService.updateById(region, regionId);
+        RegionDTO updatedRegionDTO = regionMapper.mapFromEntity(updatedRegion);
+
+        return new ResponseEntity<>(updatedRegionDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        regionService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long regionId) {
+        regionService.deleteById(regionId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

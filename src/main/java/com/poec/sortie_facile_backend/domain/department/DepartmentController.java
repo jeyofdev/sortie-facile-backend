@@ -1,5 +1,12 @@
 package com.poec.sortie_facile_backend.domain.department;
 
+import com.poec.sortie_facile_backend.domain.activity.Activity;
+import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
+import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
+import com.poec.sortie_facile_backend.domain.department.dto.SaveDepartmentDTO;
+import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
+import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -7,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 
@@ -19,32 +25,41 @@ public class DepartmentController {
     @Autowired
     private DepartmentService departmentService;
 
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
     @GetMapping(ALL)
     public ResponseEntity<List<DepartmentDTO>> getAll() {
-        List<Department> departments = departmentService.findAll();
-        List<DepartmentDTO> departmentDTOS = departments.stream().map(DepartmentDTO::mapFromEntity).collect(Collectors.toList());
+        List<Department> departmentList = departmentService.findAll();
+        List<DepartmentDTO> departmentDTOS = departmentList.stream().map(departmentMapper::mapFromEntity).toList();
+
         return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
-    public ResponseEntity<DepartmentDTO> getById(@PathVariable Long id) {
-        Department newDepartment = departmentService.findById(id);
-        DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
+    public ResponseEntity<DepartmentDTO> getById(@PathVariable Long departmentId) {
+        Department department = departmentService.findById(departmentId);
+        DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department);
+
         return new ResponseEntity<>(departmentDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + REGION + ID)
-    public ResponseEntity<DepartmentDTO> add(@RequestBody Department department, @PathVariable Long id) {
-        Department newDepartment = departmentService.add(department, id);
-        DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
-        return new ResponseEntity<>(departmentDTO, HttpStatus.CREATED);
+    public ResponseEntity<DepartmentDTO> add(@RequestBody SaveDepartmentDTO saveDepartmentDTO, @PathVariable("id") Long regionId) {
+        Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
+        Department newDepartment = departmentService.add(department, regionId);
+        DepartmentDTO newDepartmentDTO = departmentMapper.mapFromEntity(newDepartment);
+
+        return new ResponseEntity<>(newDepartmentDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<DepartmentDTO> update(@RequestBody Department department, @PathVariable Long id) {
-        Department newDepartment = departmentService.updateById(department, id);
-        DepartmentDTO departmentDTO = DepartmentDTO.mapFromEntity(newDepartment);
-        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
+    public ResponseEntity<DepartmentDTO> update(@RequestBody SaveDepartmentDTO saveDepartmentDTO, @PathVariable("id") Long departmentId) {
+        Department region = departmentMapper.mapToEntity(saveDepartmentDTO);
+        Department updatedDepartment = departmentService.updateById(region, departmentId);
+        DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment);
+
+        return new ResponseEntity<>(updatedDepartmentDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)

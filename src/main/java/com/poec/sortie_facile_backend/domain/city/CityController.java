@@ -1,5 +1,12 @@
 package com.poec.sortie_facile_backend.domain.city;
 
+import com.poec.sortie_facile_backend.domain.activity.Activity;
+import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
+import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
+import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
+import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
+import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,32 +25,41 @@ public class CityController {
     @Autowired
     private CityService cityService;
 
+    @Autowired
+    private CityMapper cityMapper;
+
     @GetMapping(ALL)
     public ResponseEntity<List<CityDTO>> getAll() {
-        List<City> cities = cityService.findAll();
-        List<CityDTO> cityDTOS = cities.stream().map(CityDTO::mapFromEntity).toList();
+        List<City> cityList = cityService.findAll();
+        List<CityDTO> cityDTOS = cityList.stream().map(cityMapper::mapFromEntity).toList();
+
         return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
-    public ResponseEntity<CityDTO> getById(@PathVariable Long id) {
-        City newCity = cityService.findById(id);
-        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
+    public ResponseEntity<CityDTO> getById(@PathVariable("id") Long cityId) {
+        City city = cityService.findById(cityId);
+        CityDTO cityDTO = cityMapper.mapFromEntity(city);
+
         return new ResponseEntity<>(cityDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")
-    public ResponseEntity<CityDTO> add(@RequestBody City city, @PathVariable Long departmentId) {
+    public ResponseEntity<CityDTO> add(@RequestBody SaveCityDTO saveCityDTO, @PathVariable("departmentId") Long departmentId) {
+        City city = cityMapper.mapToEntity(saveCityDTO);
         City newCity = cityService.add(city, departmentId);
-        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
-        return new ResponseEntity<>(cityDTO, HttpStatus.CREATED);
+        CityDTO newCityDTO = cityMapper.mapFromEntity(newCity);
+
+        return new ResponseEntity<>(newCityDTO, HttpStatus.CREATED);
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<CityDTO> update(@RequestBody City city, @PathVariable Long id) {
-        City newCity = cityService.updateById(city, id);
-        CityDTO cityDTO = CityDTO.mapFromEntity(newCity);
-        return new ResponseEntity<>(cityDTO, HttpStatus.OK);
+    public ResponseEntity<CityDTO> update(@RequestBody SaveCityDTO saveCityDTO, @PathVariable("id") Long cityId) {
+        City city = cityMapper.mapToEntity(saveCityDTO);
+        City updatedCity = cityService.updateById(city, cityId);
+        CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity);
+
+        return new ResponseEntity<>(updatedCityDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(DELETE)
