@@ -54,7 +54,7 @@ public class DepartmentController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<DepartmentDTO> update(@RequestBody SaveDepartmentDTO saveDepartmentDTO, @PathVariable("id") Long departmentId) {
+    public ResponseEntity<DepartmentDTO> updateById(@RequestBody SaveDepartmentDTO saveDepartmentDTO, @PathVariable("id") Long departmentId) {
         Department region = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department updatedDepartment = departmentService.updateById(region, departmentId);
         DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment);
@@ -63,8 +63,8 @@ public class DepartmentController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        departmentService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long departmentId) {
+        departmentService.deleteById(departmentId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

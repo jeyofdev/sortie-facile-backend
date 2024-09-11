@@ -54,7 +54,7 @@ public class CityController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<CityDTO> update(@RequestBody SaveCityDTO saveCityDTO, @PathVariable("id") Long cityId) {
+    public ResponseEntity<CityDTO> updateById(@RequestBody SaveCityDTO saveCityDTO, @PathVariable("id") Long cityId) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City updatedCity = cityService.updateById(city, cityId);
         CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity);
@@ -63,8 +63,8 @@ public class CityController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
-        cityService.deleteById(id);
+    public ResponseEntity<Void> deleteById(@PathVariable Long cityId) {
+        cityService.deleteById(cityId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
