@@ -6,8 +6,8 @@ public record RegionDTO(
         Long id,
         String name,
         List<Long> departmentIds,
-        List<Long> activityIds,
-        List<Long> profileIds
+        List<Long> activityIds
+        /*List<Long> profileIds*/
 ) {
 
 }

@@ -23,7 +23,7 @@ public class BookingController {
     @Autowired
     private BookingMapper bookingMapper;
 
-    @GetMapping(ALL)
+    /*@GetMapping(ALL)
     public ResponseEntity<List<BookingDTO>> getAll() {
         List<Booking> bookingList = bookingService.findAll();
         List<BookingDTO> bookingDTOS = bookingList.stream().map(bookingMapper::mapFromEntity).toList();
@@ -61,5 +61,5 @@ public class BookingController {
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long bookingId) {
         bookingService.deleteById(bookingId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    }*/
 }

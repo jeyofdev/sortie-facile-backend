@@ -13,8 +13,8 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
         return new CityDTO(
                 city.getId(),
                 city.getName(),
-                city.getDepartment().getId(),
-                city.getActivities().stream().map(Activity::getId).toList()
+                city.getActivities().stream().map(Activity::getId).toList(),
+                city.getDepartment().getId()
         );
     }
 

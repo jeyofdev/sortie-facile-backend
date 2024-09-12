@@ -1,5 +1,7 @@
 package com.poec.sortie_facile_backend.domain.activity.dto;
 
+import jakarta.annotation.Nullable;
+
 import java.util.Date;
 
 public record ActivityDTO(
@@ -14,7 +16,7 @@ public record ActivityDTO(
         boolean isVisible,
         Long regionId,
         Long departmentId,
-        Long cityId,
-        Long profileId
+        Long cityId
+        /*Long profileId*/
 ) {
 }

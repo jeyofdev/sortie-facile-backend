@@ -70,9 +70,9 @@ public class ActivityController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/{activityId}/countBookings")
+   /* @GetMapping("/{activityId}/countBookings")
     public ResponseEntity<Integer> countBookingsForActivity(@PathVariable("activityId") Long activityId) {
         int count = activityService.countBookingsByActivityId(activityId);
         return new ResponseEntity<>(count, HttpStatus.OK);
-    }
+    }*/
 }

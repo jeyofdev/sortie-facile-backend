@@ -49,7 +49,7 @@ public class Profile {
     @Column(name = "date_of_birth", nullable = false)
     private String dateOfBirth;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    /*@ManyToMany(cascade = CascadeType.PERSIST)
     private List<Category> categories = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
@@ -72,7 +72,7 @@ public class Profile {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
-    private AuthUser user;
+    private AuthUser user;*/
 }
 
 

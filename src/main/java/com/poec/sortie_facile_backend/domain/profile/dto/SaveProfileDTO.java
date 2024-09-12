@@ -9,10 +9,10 @@ public record SaveProfileDTO(
         String description,
         String avatar,
         String phone,
-        String dateOfBirth,
-        String cityName,
+        String dateOfBirth
+        /*String cityName,
         String departmentName,
-        String regionName
+        String regionName*/
 ) {
 
 }

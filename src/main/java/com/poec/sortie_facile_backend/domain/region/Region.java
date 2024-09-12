@@ -22,11 +22,11 @@ public class Region {
     @Column(name = "name", columnDefinition = "VARCHAR(50)", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activities = new ArrayList<>();
 
-    @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Profile> profiles = new ArrayList<>();
+    /*@OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Profile> profiles = new ArrayList<>();*/
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
     private List<Department> departments = new ArrayList<>();

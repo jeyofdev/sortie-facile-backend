@@ -3,7 +3,12 @@ package com.poec.sortie_facile_backend.domain.activity;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
+import com.poec.sortie_facile_backend.domain.city.City;
+import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.region.Region;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, SaveActivityDTO> {
@@ -20,10 +25,10 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
                 activity.getDescription(),
                 activity.getNbGuest(),
                 activity.isVisible(),
-                activity.getRegion().getId(),
-                activity.getDepartment().getId(),
-                activity.getCity().getId(),
-                activity.getProfile().getId()
+                Optional.ofNullable(activity.getRegion()).map(Region::getId).orElse(null),
+                Optional.ofNullable(activity.getDepartment()).map(Department::getId).orElse(null),
+                Optional.ofNullable(activity.getCity()).map(City::getId).orElse(null)
+                /*activity.getProfile().getId()*/
         );
     }
 

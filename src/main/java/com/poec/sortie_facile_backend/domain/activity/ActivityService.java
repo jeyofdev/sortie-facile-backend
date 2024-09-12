@@ -50,23 +50,23 @@ public class ActivityService extends AbstractDomainService<Activity> {
                 .orElseThrow(
                         () -> new EntityNotFoundException("City with id " +  cityId + " not found")
                 );
-        Profile existingProfile = profileRepository.findById(profileId)
+        /*Profile existingProfile = profileRepository.findById(profileId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
                 );
         Category existingCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Category with id " +  categoryId + " not found")
-                );
+                );*/
         activity.setRegion(existingRegion);
         activity.setDepartment(existingDepartment);
         activity.setCity(existingCity);
-        activity.setProfile(existingProfile);
-        activity.setCategory(existingCategory);
+        /*activity.setProfile(existingProfile);
+        activity.setCategory(existingCategory);*/
         Activity savedActivity = activityRepository.save(activity);
 
-        existingProfile.getActivities().add(activity);
-        profileRepository.save(existingProfile);
+        /*existingProfile.getActivities().add(activity);*/
+        /*profileRepository.save(existingProfile);*/
         
         return savedActivity;
     }
@@ -87,7 +87,7 @@ public class ActivityService extends AbstractDomainService<Activity> {
         return activityRepository.save(newActivity);
     }
 
-    public int countBookingsByActivityId(Long activityId) {
+    /*public int countBookingsByActivityId(Long activityId) {
         return activityRepository.countBookingsByActivityId(activityId);
-    }
+    }*/
 }

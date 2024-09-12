@@ -10,10 +10,7 @@ public record SaveActivityDTO(
         String link,
         String description,
         int nbGuest,
-        boolean isVisible,
-        Long regionId,
-        Long departmentId,
-        Long cityId,
-        Long profileId
+        boolean isVisible
+        /*Long profileId*/
 ) {
 }

@@ -41,9 +41,9 @@ public class AuthUser implements UserDetails {
     @Column(name = "role", columnDefinition = "VARCHAR(20)")
     private String role;
 
-    @OneToOne(mappedBy = "user")
+    /*@OneToOne(mappedBy = "user")
     @JoinColumn(name = "profile_id")
-    private Profile profile;
+    private Profile profile;*/
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

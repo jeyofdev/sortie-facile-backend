@@ -4,8 +4,8 @@ public record AuthUserDTO(
         Long id,
         String nickname,
         String email,
-        String role,
-        Long profileId
+        String role
+       /* Long profileId*/
 
 ) {
     public static AuthUserDTO mapFromEntity(AuthUser authUser) {
@@ -13,8 +13,8 @@ public record AuthUserDTO(
                 authUser.getId(),
                 authUser.getUsername(),
                 authUser.getEmail(),
-                authUser.getRole(),
-                authUser.getProfile().getId()
+                authUser.getRole()
+                /*authUser.getProfile().getId()*/
         );
     }
 }

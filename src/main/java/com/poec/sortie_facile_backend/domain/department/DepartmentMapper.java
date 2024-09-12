@@ -14,9 +14,9 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
         return new DepartmentDTO(
                 department.getId(),
                 department.getName(),
+                department.getActivities().stream().map(Activity::getId).toList(),
                 department.getRegion().getId(),
-                department.getCities().stream().map(City::getId).toList(),
-                department.getActivities().stream().map(Activity::getId).toList()
+                department.getCities().stream().map(City::getId).toList()
         );
     }
 

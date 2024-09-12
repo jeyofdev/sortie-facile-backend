@@ -39,7 +39,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
     }
 
     public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId, Long userId) {
-        Region newRegion = regionRepository.findById(regionId)
+        /*Region newRegion = regionRepository.findById(regionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Region with id " + regionId + " not found")
                 );
@@ -59,7 +59,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
-        profile.setUser(newUser);
+        profile.setUser(newUser);*/
 
         return profileRepository.save(profile);
     }
@@ -76,7 +76,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         newProfile.setAvatar(profile.getAvatar());
         newProfile.setPhone(profile.getPhone());
         newProfile.setDateOfBirth(profile.getDateOfBirth());
-        newProfile.setUser(profile.getUser());
+        /*newProfile.setUser(profile.getUser());*/
 
         return profileRepository.save(newProfile);
     }
@@ -85,7 +85,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         Profile newProfile = findById(profileId);
         List<Category> categories = categoryRepository.findAllById(categoryIds);
 
-        newProfile.setCategories(categories);
+        /*newProfile.setCategories(categories);*/
         return profileRepository.save(newProfile);
     }
 }

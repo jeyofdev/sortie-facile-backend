@@ -50,19 +50,19 @@ public class Activity {
     @Column(name="isVisible", columnDefinition = "BOOLEAN" ,nullable = false )
     private boolean isVisible;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "region_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
     private Region region;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "department_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
-    @OneToMany(mappedBy = "activity")
+    /*@OneToMany(mappedBy = "activity")
     private List<Booking> bookings = new ArrayList<>();
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -71,7 +71,7 @@ public class Activity {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
-    private Profile profile;
+    private Profile profile;*/
 
     public Activity(String name, Date date, int age, String imgUrl, String link, String description, int nbGuest, boolean isVisible) {
         this.name = name;
@@ -99,9 +99,9 @@ public class Activity {
                 ", city=" + city +
                 ", region=" + region +
                 ", department=" + department +
-                ", bookings=" + bookings +
+                /*", bookings=" + bookings +
                 ", category=" + category +
-                ", profile=" + profile +
+                ", profile=" + profile +*/
                 '}';
     }
 

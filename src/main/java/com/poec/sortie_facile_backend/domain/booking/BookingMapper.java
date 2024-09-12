@@ -9,9 +9,9 @@ public class BookingMapper {
     public BookingDTO mapFromEntity(Booking booking) {
         return new BookingDTO(
                 booking.getId(),
-                booking.getCreatedAt(),
-                booking.getActivity().getId(),
-                booking.getProfile().getId()
+                booking.getCreatedAt()
+                /*booking.getActivity().getId(),
+                booking.getProfile().getId()*/
         );
     }
 }

@@ -26,19 +26,19 @@ public class BookingService extends AbstractDomainService<Booking> {
     }
 
     public Booking add(Long activityId, Long profileId) {
-        Activity newActivity = activityRepository.findById(activityId)
+        /*Activity newActivity = activityRepository.findById(activityId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Activity with id " + activityId + " not found")
                 );
         Profile newProfile = profileRepository.findById(profileId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id" + profileId + " not found")
-                );
+                );*/
 
         Booking booking = new Booking();
         booking.setCreatedAt(new Date().toString());
-        booking.setActivity(newActivity);
-        booking.setProfile(newProfile);
+        /*booking.setActivity(newActivity);
+        booking.setProfile(newProfile);*/
 
         return bookingRepository.save(booking);
     }
@@ -48,8 +48,8 @@ public class BookingService extends AbstractDomainService<Booking> {
         Booking newBooking = findById(bookingId);
 
         newBooking.setCreatedAt(booking.getCreatedAt());
-        newBooking.setActivity(booking.getActivity());
-        newBooking.setProfile(booking.getProfile());
+        /*newBooking.setActivity(booking.getActivity());
+        newBooking.setProfile(booking.getProfile());*/
 
         return bookingRepository.save(newBooking);
     }

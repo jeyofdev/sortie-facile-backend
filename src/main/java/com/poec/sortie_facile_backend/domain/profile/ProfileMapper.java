@@ -22,12 +22,12 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 profile.getDescription(),
                 profile.getAvatar(),
                 profile.getPhone(),
-                profile.getDateOfBirth(),
-                profile.getCity().getName(),
+                profile.getDateOfBirth()
+                /*profile.getCity().getName(),
                 profile.getDepartment().getName(),
                 profile.getRegion().getName(),
                 profile.getBookings().stream().map(Booking::getId).toList(),
-                profile.getCategories().stream().map(Category::getId).toList()
+                profile.getCategories().stream().map(Category::getId).toList()*/
         );
     }
 
@@ -50,7 +50,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
 
     public ProfileUpdateCategoriesDTO mapFromEntityCategory(Profile profile) {
         return new ProfileUpdateCategoriesDTO (
-                profile.getCategories().stream().map(Category::getId).toList()
+                /*profile.getCategories().stream().map(Category::getId).toList()*/
         );
     }
 }
