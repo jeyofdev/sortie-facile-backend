@@ -23,7 +23,6 @@ public class CategoryController {
     @Autowired
     private CategoryMapper categoryMapper;
 
-
     @GetMapping(ALL)
     public ResponseEntity<List<CategoryDTO>> getAll() {
         List<Category> categoryList = categoryService.findAll();
@@ -62,7 +61,7 @@ public class CategoryController {
     }
 
     @DeleteMapping(DELETE)
-    public ResponseEntity<Void> deleteById(@PathVariable Long categoryId) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long categoryId) {
         categoryService.deleteById(categoryId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

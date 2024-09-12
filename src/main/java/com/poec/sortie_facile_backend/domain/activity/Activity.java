@@ -63,13 +63,13 @@ public class Activity {
     private Department department;
 
     /*@OneToMany(mappedBy = "activity")
-    private List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();*/
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    /*@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile profile;*/
 
@@ -99,9 +99,9 @@ public class Activity {
                 ", city=" + city +
                 ", region=" + region +
                 ", department=" + department +
-                /*", bookings=" + bookings +
+                /*", bookings=" + bookings +*/
                 ", category=" + category +
-                ", profile=" + profile +*/
+                /*", profile=" + profile +*/
                 '}';
     }
 

@@ -3,6 +3,7 @@ package com.poec.sortie_facile_backend.domain.activity;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
+import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.region.Region;
@@ -27,7 +28,8 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
                 activity.isVisible(),
                 Optional.ofNullable(activity.getRegion()).map(Region::getId).orElse(null),
                 Optional.ofNullable(activity.getDepartment()).map(Department::getId).orElse(null),
-                Optional.ofNullable(activity.getCity()).map(City::getId).orElse(null)
+                Optional.ofNullable(activity.getCity()).map(City::getId).orElse(null),
+                Optional.ofNullable(activity.getCategory()).map(Category::getId).orElse(null)
                 /*activity.getProfile().getId()*/
         );
     }

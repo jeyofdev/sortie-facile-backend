@@ -53,16 +53,17 @@ public class ActivityService extends AbstractDomainService<Activity> {
         /*Profile existingProfile = profileRepository.findById(profileId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
-                );
+                );*/
         Category existingCategory = categoryRepository.findById(categoryId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Category with id " +  categoryId + " not found")
-                );*/
+                );
         activity.setRegion(existingRegion);
         activity.setDepartment(existingDepartment);
         activity.setCity(existingCity);
-        /*activity.setProfile(existingProfile);
-        activity.setCategory(existingCategory);*/
+        /*activity.setProfile(existingProfile);*/
+        activity.setCategory(existingCategory);
+
         Activity savedActivity = activityRepository.save(activity);
 
         /*existingProfile.getActivities().add(activity);*/

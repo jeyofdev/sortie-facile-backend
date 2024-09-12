@@ -22,11 +22,11 @@ public class Category {
     @Column(name = "title", columnDefinition = "VARCHAR(100)", nullable = false)
     private String title;
 
-    /*@OneToMany(mappedBy = "category")
-    private List<Activity> activities = new ArrayList<>();*/
-
     @Column(name = "img_url", columnDefinition = "VARCHAR(255)", nullable = false)
     private String imgUrl;
+
+    @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Activity> activities = new ArrayList<>();
 
     /*@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "activity_id")
