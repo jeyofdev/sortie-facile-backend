@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.auth_user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -41,7 +42,7 @@ public class AuthUser implements UserDetails {
     @Column(name = "role", columnDefinition = "VARCHAR(20)")
     private String role;
 
-    /*@OneToOne(mappedBy = "user")
+    /*@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile profile;*/
 

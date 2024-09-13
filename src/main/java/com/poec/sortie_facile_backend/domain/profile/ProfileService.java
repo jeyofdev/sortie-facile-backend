@@ -52,15 +52,15 @@ public class ProfileService extends AbstractDomainService<Profile> {
                 .orElseThrow(
                         () -> new EntityNotFoundException("City with id " + cityId + " not found")
                 );
-        /*AuthUser newUser = authUserRepository.findById(userId)
+        AuthUser newUser = authUserRepository.findById(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("User with id " + userId + " not found")
                 );
-*/
+
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
-        /*profile.setUser(newUser);*/
+        profile.setUser(newUser);
 
         return profileRepository.save(profile);
     }
@@ -77,7 +77,6 @@ public class ProfileService extends AbstractDomainService<Profile> {
         newProfile.setAvatar(profile.getAvatar());
         newProfile.setPhone(profile.getPhone());
         newProfile.setDateOfBirth(profile.getDateOfBirth());
-        /*newProfile.setUser(profile.getUser());*/
 
         return profileRepository.save(newProfile);
     }

@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
+import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
@@ -33,7 +34,8 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 profile.getActivities() != null ? profile.getActivities().stream().map(Activity::getId).toList() : new ArrayList<>(),
                 Optional.ofNullable(profile.getRegion()).map(Region::getId).orElse(null),
                 Optional.ofNullable(profile.getDepartment()).map(Department::getId).orElse(null),
-                Optional.ofNullable(profile.getCity()).map(City::getId).orElse(null)
+                Optional.ofNullable(profile.getCity()).map(City::getId).orElse(null),
+                Optional.ofNullable(profile.getUser()).map(AuthUser::getId).orElse(null)
                 /*profile.getCity().getName(),
                 profile.getDepartment().getName(),
                 profile.getRegion().getName(),

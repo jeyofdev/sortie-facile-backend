@@ -16,7 +16,8 @@ public record ProfileDTO(
         List<Long> activityIds,
         Long regionId,
         Long departmentId,
-        Long cityId
+        Long cityId,
+        Long userId
         /*List<Long> categoryIds*/
         /*String cityName,
         String departmentName,

@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
@@ -68,11 +69,12 @@ public class Profile {
     private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "profile")
-    private List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();*/
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private AuthUser user;*/
+    @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("profile")
+    private AuthUser user;
 }
 
 
