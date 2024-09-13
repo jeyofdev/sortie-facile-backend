@@ -20,11 +20,12 @@ public class ContactMapper implements BaseDomainMapper<Contact, ContactDTO, Save
 
     @Override
     public Contact mapToEntity(SaveContactDTO saveContactDTO) {
-        return new Contact(
-                saveContactDTO.title(),
-                saveContactDTO.email(),
-                saveContactDTO.message(),
-                saveContactDTO.isRead()
-        );
+        Contact contact = new Contact();
+        contact.setTitle(saveContactDTO.title());
+        contact.setEmail(saveContactDTO.email());
+        contact.setMessage(saveContactDTO.message());
+        contact.setRead(saveContactDTO.isRead());
+
+        return contact;
     }
 }

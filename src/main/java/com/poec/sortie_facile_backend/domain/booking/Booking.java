@@ -25,8 +25,4 @@ public class Booking {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
-
-    public Booking(String createdAt) {
-        this.createdAt = createdAt;
-    }
 }

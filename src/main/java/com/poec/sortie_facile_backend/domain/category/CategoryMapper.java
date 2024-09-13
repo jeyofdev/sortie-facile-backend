@@ -20,9 +20,10 @@ public class CategoryMapper implements BaseDomainMapper<Category, CategoryDTO, S
 
     @Override
     public Category mapToEntity(SaveCategoryDTO saveCategoryDTO) {
-        return new Category(
-                saveCategoryDTO.title(),
-                saveCategoryDTO.imgUrl()
-        );
+        Category category = new Category();
+        category.setTitle(saveCategoryDTO.title());
+        category.setImgUrl(saveCategoryDTO.title());
+
+        return category;
     }
 }

@@ -34,8 +34,4 @@ public class City {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
-
-    public City(String name) {
-        this.name = name;
-    }
 }

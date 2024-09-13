@@ -72,38 +72,4 @@ public class Activity {
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
-
-    public Activity(String name, Date date, int age, String imgUrl, String link, String description, int nbGuest, boolean isVisible) {
-        this.name = name;
-        this.date = date;
-        this.age = age;
-        this.imgUrl = imgUrl;
-        this.link = link;
-        this.description = description;
-        this.nbGuest = nbGuest;
-        this.isVisible = isVisible;
-    }
-
-    @Override
-    public String toString() {
-        return "Activity{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", date=" + date +
-                ", age=" + age +
-                ", imgUrl='" + imgUrl + '\'' +
-                ", link='" + link + '\'' +
-                ", description='" + description + '\'' +
-                ", nbGuest=" + nbGuest +
-                ", isVisible=" + isVisible +
-                ", city=" + city +
-                ", region=" + region +
-                ", department=" + department +
-                ", bookings=" + bookings +
-                ", category=" + category +
-                ", profile=" + profile +
-                '}';
-    }
-
-
 }

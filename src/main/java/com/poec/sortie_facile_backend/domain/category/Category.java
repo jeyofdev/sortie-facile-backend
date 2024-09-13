@@ -30,9 +30,4 @@ public class Category {
 
     @ManyToMany(mappedBy = "categories", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Profile> profiles = new ArrayList<>();
-
-    public Category(String title, String imgUrl) {
-        this.title = title;
-        this.imgUrl = imgUrl;
-    }
 }
