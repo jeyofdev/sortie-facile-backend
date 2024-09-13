@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
+import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
@@ -39,7 +40,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
     }
 
     public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId, Long userId) {
-        /*Region newRegion = regionRepository.findById(regionId)
+        Region newRegion = regionRepository.findById(regionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Region with id " + regionId + " not found")
                 );
@@ -51,15 +52,15 @@ public class ProfileService extends AbstractDomainService<Profile> {
                 .orElseThrow(
                         () -> new EntityNotFoundException("City with id " + cityId + " not found")
                 );
-        AuthUser newUser = authUserRepository.findById(userId)
+        /*AuthUser newUser = authUserRepository.findById(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("User with id " + userId + " not found")
                 );
-
+*/
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
-        profile.setUser(newUser);*/
+        /*profile.setUser(newUser);*/
 
         return profileRepository.save(profile);
     }
@@ -79,6 +80,17 @@ public class ProfileService extends AbstractDomainService<Profile> {
         /*newProfile.setUser(profile.getUser());*/
 
         return profileRepository.save(newProfile);
+    }
+
+    @Override
+    public void deleteById(Long profileId) {
+        Profile profile = findById(profileId);
+
+        for (Activity activity : profile.getActivities()) {
+            activity.setProfile(null);
+        }
+
+        repository.deleteById(profileId);
     }
 
     public Profile updateCategoryInProfile(Long profileId, List<Long> categoryIds) {

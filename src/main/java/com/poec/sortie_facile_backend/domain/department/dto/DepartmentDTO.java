@@ -7,7 +7,8 @@ public record DepartmentDTO(
         String name,
         List<Long> activityIds,
         Long regionId,
-        List<Long> cityIds
+        List<Long> cityIds,
+        List<Long> profileIds
 ) {
 
 }

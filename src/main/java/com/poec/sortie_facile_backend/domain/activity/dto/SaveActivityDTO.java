@@ -11,6 +11,5 @@ public record SaveActivityDTO(
         String description,
         int nbGuest,
         boolean isVisible
-        /*Long profileId*/
 ) {
 }

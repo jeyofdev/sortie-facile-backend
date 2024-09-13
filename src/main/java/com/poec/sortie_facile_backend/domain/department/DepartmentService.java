@@ -4,6 +4,7 @@ import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.city.CityRepository;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.domain.region.RegionRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -48,6 +49,10 @@ public class DepartmentService extends AbstractDomainService<Department> {
     public void deleteById(Long departmentId) {
         Department department = findById(departmentId);
 
+        for (Profile profile : department.getProfiles()) {
+            profile.setDepartment(null);
+        }
+
         for (Activity activity : department.getActivities()) {
             activity.setDepartment(null);
         }
@@ -57,10 +62,15 @@ public class DepartmentService extends AbstractDomainService<Department> {
                 activity.setCity(null);
             }
 
+            for (Profile profile : city.getProfiles()) {
+                profile.setCity(null);
+            }
+
             city.setDepartment(null);
             cityRepository.delete(city);
         }
 
+        department.getProfiles().clear();
         department.setRegion(null);
         repository.deleteById(departmentId);
     }

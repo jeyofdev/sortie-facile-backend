@@ -6,6 +6,7 @@ public record CityDTO(
         Long id,
         String name,
         List<Long> activityIds,
-        Long departmentId
+        Long departmentId,
+        List<Long> profileIds
 ) {
 }

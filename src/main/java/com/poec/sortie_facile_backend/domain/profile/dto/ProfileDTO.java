@@ -12,12 +12,17 @@ public record ProfileDTO(
         String description,
         String avatar,
         String phone,
-        String dateOfBirth
+        String dateOfBirth,
+        List<Long> activityIds,
+        Long regionId,
+        Long departmentId,
+        Long cityId
+        /*List<Long> categoryIds*/
         /*String cityName,
         String departmentName,
         String regionName,*/
-        /*List<Long> bookingIds,
-        List<Long> categoryIds*/
+        /*List<Long> bookingIds,*/
+
 ) {
 
 }

@@ -69,9 +69,9 @@ public class Activity {
     @JoinColumn(name = "category_id", referencedColumnName = "id")
     private Category category;
 
-    /*@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_id")
-    private Profile profile;*/
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private Profile profile;
 
     public Activity(String name, Date date, int age, String imgUrl, String link, String description, int nbGuest, boolean isVisible) {
         this.name = name;
@@ -101,7 +101,7 @@ public class Activity {
                 ", department=" + department +
                 /*", bookings=" + bookings +*/
                 ", category=" + category +
-                /*", profile=" + profile +*/
+                ", profile=" + profile +
                 '}';
     }
 

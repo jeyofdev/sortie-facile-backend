@@ -77,6 +77,16 @@ public class ProfileController {
 
         return new ResponseEntity<>(newProfileUpdated, HttpStatus.OK);
     }*/
+
+    //-----------------
+    // for test
+    //-----------------
+
+    @DeleteMapping(DELETE)
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long profileId) {
+        profileService.deleteById(profileId);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
 
 

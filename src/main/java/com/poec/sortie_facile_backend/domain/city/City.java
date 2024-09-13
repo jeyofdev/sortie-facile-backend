@@ -28,8 +28,8 @@ public class City {
     @OneToMany(mappedBy = "city", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activities = new ArrayList<>();
 
-    /*@OneToMany(mappedBy = "city")
-    private List<Profile> profiles = new ArrayList<>();*/
+    @OneToMany(mappedBy = "city", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Profile> profiles = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id", referencedColumnName = "id")

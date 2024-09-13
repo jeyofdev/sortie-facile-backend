@@ -4,6 +4,7 @@ import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,10 @@ public class CityService extends AbstractDomainService<City> {
 
         for (Activity activity : city.getActivities()) {
             activity.setCity(null);
+        }
+
+        for (Profile profile : city.getProfiles()) {
+            profile.setCity(null);
         }
 
         repository.deleteById(cityId);

@@ -4,7 +4,11 @@ import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
+import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> {
@@ -14,7 +18,8 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
                 city.getId(),
                 city.getName(),
                 city.getActivities().stream().map(Activity::getId).toList(),
-                city.getDepartment().getId()
+                Optional.ofNullable(city.getDepartment()).map(Department::getId).orElse(null),
+                city.getProfiles().stream().map(Profile::getId).toList()
         );
     }
 

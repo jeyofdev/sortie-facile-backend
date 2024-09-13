@@ -5,6 +5,7 @@ import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,6 +38,10 @@ public class RegionService  extends AbstractDomainService<Region> {
     public void deleteById(Long regionId) {
         Region region = findById(regionId);
 
+        for (Profile profile : region.getProfiles()) {
+            profile.setRegion(null);
+        }
+
         for (Activity activity : region.getActivities()) {
             activity.setRegion(null);
         }
@@ -51,7 +56,15 @@ public class RegionService  extends AbstractDomainService<Region> {
                     activity.setCity(null);
                 }
 
+                for (Profile profile : department.getProfiles()) {
+                    profile.setCity(null);
+                }
+
                 city.setDepartment(null);
+            }
+
+            for (Profile profile : department.getProfiles()) {
+                profile.setDepartment(null);
             }
 
             department.setRegion(null);

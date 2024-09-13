@@ -16,8 +16,8 @@ public class RegionMapper  implements BaseDomainMapper<Region, RegionDTO, SaveRe
                 region.getId(),
                 region.getName(),
                 region.getDepartments().stream().map(Department::getId).toList(),
-                region.getActivities().stream().map(Activity::getId).toList()
-                /*region.getProfiles().stream().map(Profile::getId).toList()*/
+                region.getActivities().stream().map(Activity::getId).toList(),
+                region.getProfiles().stream().map(Profile::getId).toList()
         );
     }
 

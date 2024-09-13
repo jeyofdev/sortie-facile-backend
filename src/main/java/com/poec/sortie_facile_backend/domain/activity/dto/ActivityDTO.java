@@ -15,7 +15,7 @@ public record ActivityDTO(
         Long regionId,
         Long departmentId,
         Long cityId,
-        Long  categoryId
-        /*Long profileId*/
+        Long  categoryId,
+        Long profileId
 ) {
 }

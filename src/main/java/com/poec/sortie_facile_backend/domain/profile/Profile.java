@@ -49,26 +49,26 @@ public class Profile {
     @Column(name = "date_of_birth", nullable = false)
     private String dateOfBirth;
 
+    @OneToMany(mappedBy = "profile", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Activity> activities;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "region_id", referencedColumnName = "id")
+    private Region region;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "department_id", referencedColumnName = "id")
+    private Department department;
+
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "city_id", referencedColumnName = "id")
+    private City city;
+
     /*@ManyToMany(cascade = CascadeType.PERSIST)
     private List<Category> categories = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "profile")
-    private List<Activity> activities;
-
     @OneToMany(mappedBy = "profile")
     private List<Booking> bookings = new ArrayList<>();
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "city_id")
-    private City city;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "department_id")
-    private Department department;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "region_id")
-    private Region region;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
