@@ -66,10 +66,10 @@ public class Profile {
     private City city;
 
     /*@ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categories = new ArrayList<>();*/
 
-    @OneToMany(mappedBy = "profile")
-    private List<Booking> bookings = new ArrayList<>();*/
+    @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
+    private List<Booking> bookings = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id", referencedColumnName = "id")

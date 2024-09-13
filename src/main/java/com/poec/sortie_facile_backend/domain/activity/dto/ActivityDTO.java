@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.activity.dto;
 
 import java.util.Date;
+import java.util.List;
 
 public record ActivityDTO(
         Long id,
@@ -16,6 +17,7 @@ public record ActivityDTO(
         Long departmentId,
         Long cityId,
         Long  categoryId,
-        Long profileId
+        Long profileId,
+        List<Long> bookingIds
 ) {
 }

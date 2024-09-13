@@ -62,8 +62,8 @@ public class Activity {
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
-    /*@OneToMany(mappedBy = "activity")
-    private List<Booking> bookings = new ArrayList<>();*/
+    @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
+    private List<Booking> bookings = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "category_id", referencedColumnName = "id")

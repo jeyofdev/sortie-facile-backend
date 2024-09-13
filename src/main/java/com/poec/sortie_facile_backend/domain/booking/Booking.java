@@ -18,13 +18,13 @@ public class Booking {
     @Column(name = "created_at", nullable = false)
     private String createdAt;
 
-    /*@ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "activity_id")
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "activity_id", referencedColumnName = "id")
     private Activity activity;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "profile_id")
-    private Profile profile;*/
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinColumn(name = "profile_id", referencedColumnName = "id")
+    private Profile profile;
 
     public Booking(String createdAt) {
         this.createdAt = createdAt;

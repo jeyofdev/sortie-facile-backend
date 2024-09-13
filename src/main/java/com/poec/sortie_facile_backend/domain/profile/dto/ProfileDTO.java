@@ -17,12 +17,12 @@ public record ProfileDTO(
         Long regionId,
         Long departmentId,
         Long cityId,
-        Long userId
+        Long userId,
+        List<Long> bookingIds
         /*List<Long> categoryIds*/
         /*String cityName,
         String departmentName,
         String regionName,*/
-        /*List<Long> bookingIds,*/
 
 ) {
 

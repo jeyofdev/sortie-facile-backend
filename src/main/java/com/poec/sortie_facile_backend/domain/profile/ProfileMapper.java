@@ -35,7 +35,8 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 Optional.ofNullable(profile.getRegion()).map(Region::getId).orElse(null),
                 Optional.ofNullable(profile.getDepartment()).map(Department::getId).orElse(null),
                 Optional.ofNullable(profile.getCity()).map(City::getId).orElse(null),
-                Optional.ofNullable(profile.getUser()).map(AuthUser::getId).orElse(null)
+                Optional.ofNullable(profile.getUser()).map(AuthUser::getId).orElse(null),
+                profile.getBookings() != null ? profile.getBookings().stream().map(Booking::getId).toList() : new ArrayList<>()
                 /*profile.getCity().getName(),
                 profile.getDepartment().getName(),
                 profile.getRegion().getName(),

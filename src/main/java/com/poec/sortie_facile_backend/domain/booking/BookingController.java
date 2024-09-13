@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 
@@ -23,7 +22,7 @@ public class BookingController {
     @Autowired
     private BookingMapper bookingMapper;
 
-    /*@GetMapping(ALL)
+    @GetMapping(ALL)
     public ResponseEntity<List<BookingDTO>> getAll() {
         List<Booking> bookingList = bookingService.findAll();
         List<BookingDTO> bookingDTOS = bookingList.stream().map(bookingMapper::mapFromEntity).toList();
@@ -40,26 +39,26 @@ public class BookingController {
     }
 
     @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{profileId}")
-    public ResponseEntity<Map<String, String>> add(
+    public ResponseEntity<BookingDTO> add(
             @PathVariable("activityId") Long activityId,
             @PathVariable("profileId") Long profileId
     ) {
-        bookingService.add(activityId, profileId);
-        Map<String, String> response = Map.of("message", "Booking created successfully");
+        Booking booking = bookingService.add(activityId, profileId);
+        BookingDTO bookingDTO = bookingMapper.mapFromEntity(booking);
 
-        return new ResponseEntity<>(response, HttpStatus.CREATED);
+        return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
     }
 
-    @PutMapping(UPDATE)
+    /*@PutMapping(UPDATE)
     public ResponseEntity<BookingDTO> updateById(@RequestBody Booking booking, @PathVariable("id") Long bookingId) {
         Booking newBooking = bookingService.updateById(booking, bookingId);
         BookingDTO bookingDTO = bookingMapper.mapFromEntity(newBooking);
         return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
-    }
+    }*/
 
     @DeleteMapping(DELETE)
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long bookingId) {
         bookingService.deleteById(bookingId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*/
+    }
 }
