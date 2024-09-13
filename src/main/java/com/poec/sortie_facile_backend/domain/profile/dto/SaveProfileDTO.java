@@ -7,7 +7,7 @@ public record SaveProfileDTO(
         String lastname,
         String streetNumber,
         String street,
-        Long postalCode,
+        String postalCode,
         String description,
         String avatar,
         String phone,

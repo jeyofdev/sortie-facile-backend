@@ -9,6 +9,7 @@ import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -18,33 +19,53 @@ import java.util.List;
 @Data
 @RequiredArgsConstructor
 @Entity
+@Table(name = "profile")
 public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "firstname", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name = "firstname", columnDefinition = "VARCHAR(50)")
+    @NotNull(message = "The firstname field is required.")
+    @NotBlank(message = "The name firstname cannot be empty.")
+    @Size(min = 2, max = 50, message = "The firstname field must contain between 2 and 50 characters.")
     private String firstname;
 
-    @Column(name = "lastname", columnDefinition = "VARCHAR(100)", nullable = false)
+    @Column(name = "lastname", columnDefinition = "VARCHAR(50)")
+    @NotNull(message = "The lastname field is required.")
+    @NotBlank(message = "The name lastname cannot be empty.")
+    @Size(min = 2, max = 50, message = "The lastname field must contain between 2 and 50 characters.")
     private String lastname;
 
-    @Column(name = "street_number", columnDefinition = "VARCHAR(100)")
+    @Column(name = "street_number", columnDefinition = "VARCHAR(4)")
+    @NotNull(message = "The street number field is required.")
+    @NotBlank(message = "The name street number cannot be empty.")
+    @Pattern(regexp = "^[0-9]*$", message = "The street number must be a maximum of 4 digits.")
     private String streetNumber;
 
-    @Column(name = "street", columnDefinition = "VARCHAR(100)")
+    @Column(name = "street", columnDefinition = "VARCHAR(50)")
+    @NotNull(message = "The street field is required.")
+    @NotBlank(message = "The name street cannot be empty.")
+    @Size(min = 2, max = 50, message = "The street field must contain between 2 and 50 characters.")
     private String street;
 
-    @Column(name = "postal_code", columnDefinition = "INT(5)", nullable = false)
-    private Long postalCode;
+    @Column(name = "postalCode", columnDefinition = "VARCHAR(5)")
+    @NotNull(message = "The postal code field is required.")
+    @Pattern(regexp = "\\d{5}", message = "The postal code must be exactly 5 digits.")
+    private String postalCode;
 
-    @Column(name = "description", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "description", columnDefinition = "LONGTEXT")
+    @NotNull(message = "The description field is required.")
+    @NotBlank(message = "The description field cannot be empty.")
     private String description;
 
-    @Column(name = "avatar", columnDefinition = "VARCHAR(255)")
+    @Column(name = "avatar", columnDefinition = "LONGTEXT")
+    @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
     private String avatar;
 
-    @Column(name = "phone", columnDefinition = "VARCHAR(14)")
+    @Column(name = "phone", columnDefinition = "VARCHAR(10)")
+    @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
     private String phone;
 
     @Column(name = "date_of_birth", nullable = false)

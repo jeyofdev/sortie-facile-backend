@@ -8,7 +8,7 @@ public record ProfileDTO(
         String lastname,
         String streetNumber,
         String street,
-        Long postalCode,
+        @jakarta.validation.constraints.NotNull(message = "The postal code field is required.") @jakarta.validation.constraints.Pattern(regexp = "\\d{5}", message = "The postal code must be exactly 5 digits.") String postalCode,
         String description,
         String avatar,
         String phone,

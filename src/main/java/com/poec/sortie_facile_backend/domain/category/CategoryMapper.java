@@ -22,7 +22,7 @@ public class CategoryMapper implements BaseDomainMapper<Category, CategoryDTO, S
     public Category mapToEntity(SaveCategoryDTO saveCategoryDTO) {
         Category category = new Category();
         category.setTitle(saveCategoryDTO.title());
-        category.setImgUrl(saveCategoryDTO.title());
+        category.setImgUrl(saveCategoryDTO.imgUrl());
 
         return category;
     }
