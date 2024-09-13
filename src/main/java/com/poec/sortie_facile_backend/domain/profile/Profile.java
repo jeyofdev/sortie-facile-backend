@@ -65,8 +65,13 @@ public class Profile {
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    /*@ManyToMany(cascade = CascadeType.PERSIST)
-    private List<Category> categories = new ArrayList<>();*/
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "profile_category",
+            joinColumns = @JoinColumn(name = "profile_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categories = new ArrayList<>();
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
     private List<Booking> bookings = new ArrayList<>();

@@ -52,6 +52,8 @@ public class ProfileService extends AbstractDomainService<Profile> {
                 .orElseThrow(
                         () -> new EntityNotFoundException("City with id " + cityId + " not found")
                 );
+        List<Category> categoryList = categoryRepository.findAllById(profile.getCategories().stream().map(Category::getId).toList());
+
         AuthUser newUser = authUserRepository.findById(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("User with id " + userId + " not found")
@@ -60,6 +62,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
+        profile.setCategories(categoryList);
         profile.setUser(newUser);
 
         return profileRepository.save(profile);
@@ -87,6 +90,10 @@ public class ProfileService extends AbstractDomainService<Profile> {
 
         for (Activity activity : profile.getActivities()) {
             activity.setProfile(null);
+        }
+
+        for (Category category : profile.getCategories()) {
+            category.setProfiles(null);
         }
 
         repository.deleteById(profileId);

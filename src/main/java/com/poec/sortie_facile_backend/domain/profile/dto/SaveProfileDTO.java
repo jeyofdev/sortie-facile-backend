@@ -1,5 +1,7 @@
 package com.poec.sortie_facile_backend.domain.profile.dto;
 
+import java.util.List;
+
 public record SaveProfileDTO(
         String firstname,
         String lastname,
@@ -9,7 +11,8 @@ public record SaveProfileDTO(
         String description,
         String avatar,
         String phone,
-        String dateOfBirth
+        String dateOfBirth,
+        List<Long> categoryIds
 ) {
 
 }

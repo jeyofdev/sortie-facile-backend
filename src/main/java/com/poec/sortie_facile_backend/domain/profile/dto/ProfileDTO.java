@@ -18,7 +18,8 @@ public record ProfileDTO(
         Long departmentId,
         Long cityId,
         Long userId,
-        List<Long> bookingIds
+        List<Long> bookingIds,
+        List<Long> categoryIds
 ) {
 
 }

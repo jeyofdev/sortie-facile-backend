@@ -5,19 +5,29 @@ import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
+import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileUpdateCategoriesDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, SaveProfileDTO> {
+    private final CategoryRepository categoryRepository;
+
+    @Autowired
+    public ProfileMapper(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
+    }
+
     @Override
     public ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
@@ -36,17 +46,15 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 Optional.ofNullable(profile.getDepartment()).map(Department::getId).orElse(null),
                 Optional.ofNullable(profile.getCity()).map(City::getId).orElse(null),
                 Optional.ofNullable(profile.getUser()).map(AuthUser::getId).orElse(null),
-                profile.getBookings() != null ? profile.getBookings().stream().map(Booking::getId).toList() : new ArrayList<>()
-                /*profile.getCity().getName(),
-                profile.getDepartment().getName(),
-                profile.getRegion().getName(),
-                profile.getBookings().stream().map(Booking::getId).toList(),
-                profile.getCategories().stream().map(Category::getId).toList()*/
+                profile.getBookings() != null ? profile.getBookings().stream().map(Booking::getId).toList() : new ArrayList<>(),
+                profile.getCategories() != null ? profile.getCategories().stream().map(Category::getId).toList() : new ArrayList<>()
         );
     }
 
     @Override
     public Profile mapToEntity(SaveProfileDTO saveProfileDTO) {
+        List<Category> categoryList = categoryRepository.findAllById(saveProfileDTO.categoryIds());
+
         Profile profile = new Profile();
 
         profile.setDescription(saveProfileDTO.description());
@@ -58,6 +66,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
         profile.setAvatar(saveProfileDTO.avatar());
         profile.setPhone(saveProfileDTO.phone());
         profile.setDateOfBirth(saveProfileDTO.dateOfBirth());
+        profile.setCategories(categoryList);
 
         return profile;
     }

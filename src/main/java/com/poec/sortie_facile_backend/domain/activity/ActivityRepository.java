@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ActivityRepository extends JpaRepository<Activity, Long> {
+
     @Query("SELECT COUNT(b) FROM Booking b WHERE b.activity.id = :activityId")
     int countBookingsByActivityId(@Param("activityId") Long activityId);
 }

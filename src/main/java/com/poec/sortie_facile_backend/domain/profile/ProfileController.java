@@ -1,7 +1,6 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
-import com.poec.sortie_facile_backend.domain.profile.dto.ProfileUpdateCategoriesDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

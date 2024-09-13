@@ -28,12 +28,8 @@ public class Category {
     @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activities = new ArrayList<>();
 
-    /*@ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "activity_id")
-    private Activity activity;
-
-    @ManyToMany(mappedBy = "categories")
-    private List<Profile> profiles = new ArrayList<>();*/
+    @ManyToMany(mappedBy = "categories", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Profile> profiles = new ArrayList<>();
 
     public Category(String title, String imgUrl) {
         this.title = title;
