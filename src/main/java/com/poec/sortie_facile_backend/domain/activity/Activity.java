@@ -99,7 +99,7 @@ public class Activity {
                 ", city=" + city +
                 ", region=" + region +
                 ", department=" + department +
-                /*", bookings=" + bookings +*/
+                ", bookings=" + bookings +
                 ", category=" + category +
                 ", profile=" + profile +
                 '}';

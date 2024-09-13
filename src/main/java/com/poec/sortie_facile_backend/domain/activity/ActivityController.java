@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
+import com.poec.sortie_facile_backend.common.model.DataCountResponse;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
 import lombok.RequiredArgsConstructor;
@@ -70,9 +71,9 @@ public class ActivityController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-   /* @GetMapping("/{activityId}/countBookings")
-    public ResponseEntity<Integer> countBookingsForActivity(@PathVariable("activityId") Long activityId) {
-        int count = activityService.countBookingsByActivityId(activityId);
+   @GetMapping("/{activityId}/count-bookings")
+    public ResponseEntity<DataCountResponse> countBookingsForActivity(@PathVariable("activityId") Long activityId) {
+       DataCountResponse count = activityService.countBookingsByActivityId(activityId);
         return new ResponseEntity<>(count, HttpStatus.OK);
-    }*/
+    }
 }

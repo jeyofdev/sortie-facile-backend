@@ -45,12 +45,6 @@ public class BookingService extends AbstractDomainService<Booking> {
 
     @Override
     public Booking updateById(Booking booking, Long bookingId) {
-        Booking newBooking = findById(bookingId);
-
-        newBooking.setCreatedAt(booking.getCreatedAt());
-        /*newBooking.setActivity(booking.getActivity());
-        newBooking.setProfile(booking.getProfile());*/
-
-        return bookingRepository.save(newBooking);
+        return findById(bookingId);
     }
 }

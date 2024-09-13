@@ -49,13 +49,6 @@ public class BookingController {
         return new ResponseEntity<>(bookingDTO, HttpStatus.CREATED);
     }
 
-    /*@PutMapping(UPDATE)
-    public ResponseEntity<BookingDTO> updateById(@RequestBody Booking booking, @PathVariable("id") Long bookingId) {
-        Booking newBooking = bookingService.updateById(booking, bookingId);
-        BookingDTO bookingDTO = bookingMapper.mapFromEntity(newBooking);
-        return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
-    }*/
-
     @DeleteMapping(DELETE)
     public ResponseEntity<Void> deleteById(@PathVariable("id") Long bookingId) {
         bookingService.deleteById(bookingId);

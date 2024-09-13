@@ -19,11 +19,6 @@ public record ProfileDTO(
         Long cityId,
         Long userId,
         List<Long> bookingIds
-        /*List<Long> categoryIds*/
-        /*String cityName,
-        String departmentName,
-        String regionName,*/
-
 ) {
 
 }

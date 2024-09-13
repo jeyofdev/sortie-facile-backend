@@ -29,7 +29,6 @@ public class RegionService  extends AbstractDomainService<Region> {
         newRegion.setName(region.getName());
         newRegion.setDepartments(region.getDepartments());
         newRegion.setActivities(region.getActivities());
-     /*   newRegion.setProfiles(region.getProfiles());*/
 
         return regionRepository.save(newRegion);
     }

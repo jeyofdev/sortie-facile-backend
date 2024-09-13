@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
+import com.poec.sortie_facile_backend.common.model.DataCountResponse;
 import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
@@ -64,12 +65,7 @@ public class ActivityService extends AbstractDomainService<Activity> {
         activity.setProfile(existingProfile);
         activity.setCategory(existingCategory);
 
-        Activity savedActivity = activityRepository.save(activity);
-
-        /*existingProfile.getActivities().add(activity);*/
-        /*profileRepository.save(existingProfile);*/
-        
-        return savedActivity;
+        return activityRepository.save(activity);
     }
 
     @Override
@@ -88,7 +84,7 @@ public class ActivityService extends AbstractDomainService<Activity> {
         return activityRepository.save(newActivity);
     }
 
-    /*public int countBookingsByActivityId(Long activityId) {
-        return activityRepository.countBookingsByActivityId(activityId);
-    }*/
+    public DataCountResponse countBookingsByActivityId(Long activityId) {
+        return new DataCountResponse(activityRepository.countBookingsByActivityId(activityId));
+    }
 }
