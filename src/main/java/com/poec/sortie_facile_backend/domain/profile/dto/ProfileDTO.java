@@ -1,5 +1,7 @@
 package com.poec.sortie_facile_backend.domain.profile.dto;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public record ProfileDTO(
@@ -8,11 +10,11 @@ public record ProfileDTO(
         String lastname,
         String streetNumber,
         String street,
-        @jakarta.validation.constraints.NotNull(message = "The postal code field is required.") @jakarta.validation.constraints.Pattern(regexp = "\\d{5}", message = "The postal code must be exactly 5 digits.") String postalCode,
+        String postalCode,
         String description,
         String avatar,
         String phone,
-        String dateOfBirth,
+        LocalDate dateOfBirth,
         List<Long> activityIds,
         Long regionId,
         Long departmentId,

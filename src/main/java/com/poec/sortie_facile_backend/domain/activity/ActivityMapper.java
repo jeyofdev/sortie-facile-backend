@@ -11,6 +11,7 @@ import com.poec.sortie_facile_backend.domain.profile.Profile;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -21,7 +22,7 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
         return new ActivityDTO(
                 activity.getId(),
                 activity.getName(),
-                activity.getDate(),
+                activity.getCreatedAt(),
                 activity.getAge(),
                 activity.getImgUrl(),
                 activity.getLink(),
@@ -42,7 +43,7 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
         Activity activity = new Activity();
 
         activity.setName(saveActivityDTO.name());
-        activity.setDate(saveActivityDTO.date());
+        activity.setCreatedAt(new Date());
         activity.setAge(saveActivityDTO.age());
         activity.setImgUrl(saveActivityDTO.imgUrl());
         activity.setLink(saveActivityDTO.link());

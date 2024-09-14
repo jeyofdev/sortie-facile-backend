@@ -32,8 +32,8 @@ public class Activity {
     @Size(min = 5, max = 200, message = "The name field must contain between 5 and 200 characters.")
     private String name;
 
-    @Column(name="date")
-    private Date date;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private Date createdAt;
 
     @Column(name="age", columnDefinition = "INT")
     @Min(value = 0, message ="The age must be at least 1.")

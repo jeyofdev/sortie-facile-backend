@@ -73,7 +73,6 @@ public class ActivityService extends AbstractDomainService<Activity> {
         Activity newActivity = findById(activityId);
 
         newActivity.setName(activity.getName());
-        newActivity.setDate(activity.getDate());
         newActivity.setAge(activity.getAge());
         newActivity.setImgUrl(activity.getImgUrl());
         newActivity.setLink(activity.getLink());

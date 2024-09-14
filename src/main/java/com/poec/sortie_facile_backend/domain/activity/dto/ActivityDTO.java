@@ -6,7 +6,7 @@ import java.util.List;
 public record ActivityDTO(
         Long id,
         String name,
-        Date date,
+        Date createdDate,
         int age,
         String imgUrl,
         String link,

@@ -6,6 +6,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @RequiredArgsConstructor
 @Entity
@@ -17,8 +19,8 @@ public class Booking {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "created_at")
-    private String createdAt;
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
+    private Date createdAt;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "activity_id", referencedColumnName = "id")

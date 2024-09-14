@@ -1,8 +1,10 @@
 package com.poec.sortie_facile_backend.domain.booking.dto;
 
+import java.util.Date;
+
 public record BookingDTO(
         Long id,
-        String createdAt,
+        Date createdAt,
         Long activityId,
         Long profileId
 ) {

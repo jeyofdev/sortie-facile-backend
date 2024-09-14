@@ -36,7 +36,7 @@ public class BookingService extends AbstractDomainService<Booking> {
                 );
 
         Booking booking = new Booking();
-        booking.setCreatedAt(new Date().toString());
+        booking.setCreatedAt(new Date());
         booking.setActivity(newActivity);
         booking.setProfile(newProfile);
 

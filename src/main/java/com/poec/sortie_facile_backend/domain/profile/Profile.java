@@ -13,7 +13,9 @@ import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -68,8 +70,9 @@ public class Profile {
     @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
     private String phone;
 
-    @Column(name = "date_of_birth", nullable = false)
-    private String dateOfBirth;
+    @Column(name = "date_of_birth", columnDefinition = "Date")
+    @NotNull(message = "The date of birth field is required.")
+    private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activities;
