@@ -5,6 +5,7 @@ import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.region.Region;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,10 +36,16 @@ public class CityService extends AbstractDomainService<City> {
 
     @Override
     public City updateById(City city, Long cityId) {
-        City newCity = findById(cityId);
-        newCity.setName(city.getName());
+        City existingCity = findById(cityId);
+        existingCity.setName(city.getName());
 
-        return cityRepository.save(newCity);
+        if (city.getDepartment() != null) {
+            Department department = departmentRepository.findById(city.getDepartment().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Department with id " + city.getDepartment().getId() + " not found"));
+            existingCity.setDepartment(department);
+        }
+
+        return cityRepository.save(existingCity);
     }
 
     @Override

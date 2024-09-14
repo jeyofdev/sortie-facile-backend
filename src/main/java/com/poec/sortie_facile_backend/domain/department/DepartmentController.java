@@ -56,8 +56,8 @@ public class DepartmentController {
             @RequestBody SaveDepartmentDTO saveDepartmentDTO,
             @PathVariable("id") Long departmentId
     ) {
-        Department region = departmentMapper.mapToEntity(saveDepartmentDTO);
-        Department updatedDepartment = departmentService.updateById(region, departmentId);
+        Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
+        Department updatedDepartment = departmentService.updateById(department, departmentId);
         DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment);
 
         return new ResponseEntity<>(updatedDepartmentDTO, HttpStatus.OK);

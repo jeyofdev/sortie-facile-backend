@@ -30,6 +30,12 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
         Department department = new Department();
         department.setName(saveDepartmentDTO.name());
 
+        if (saveDepartmentDTO.regionId() != null) {
+            Region region = new Region();
+            region.setId(saveDepartmentDTO.regionId());
+            department.setRegion(region);
+        }
+
         return department;
     }
 }

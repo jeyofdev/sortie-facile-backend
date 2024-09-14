@@ -6,6 +6,7 @@ import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.region.Region;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,6 +29,12 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
         City city = new City();
         city.setName(saveCityDTO.name());
         city.setPostalCode(saveCityDTO.postalCode());
+
+        if (saveCityDTO.departmentId() != null) {
+            Department department = new Department();
+            department.setId(saveCityDTO.departmentId());
+            city.setDepartment(department);
+        }
 
         return city;
     }

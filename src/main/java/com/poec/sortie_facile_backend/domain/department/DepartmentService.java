@@ -39,10 +39,16 @@ public class DepartmentService extends AbstractDomainService<Department> {
 
     @Override
     public Department updateById(Department department, Long departmentId) {
-        Department newDepartment = findById(departmentId);
-        newDepartment.setName(department.getName());
+        Department existingDepartment = findById(departmentId);
+        existingDepartment.setName(department.getName());
 
-        return departmentRepository.save(newDepartment);
+        if (department.getRegion() != null) {
+            Region region = regionRepository.findById(department.getRegion().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Region with id " + department.getRegion().getId() + " not found"));
+            existingDepartment.setRegion(region);
+        }
+
+        return departmentRepository.save(existingDepartment);
     }
 
     @Override
