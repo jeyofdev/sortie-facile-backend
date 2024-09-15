@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.category;
 
 import com.poec.sortie_facile_backend.domain.category.dto.CategoryDTO;
 import com.poec.sortie_facile_backend.domain.category.dto.SaveCategoryDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class CategoryController {
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<CategoryDTO> add(@RequestBody SaveCategoryDTO saveCategoryDTO) {
+    public ResponseEntity<CategoryDTO> add(@Valid @RequestBody SaveCategoryDTO saveCategoryDTO) {
         Category category = categoryMapper.mapToEntity(saveCategoryDTO);
         Category newCategory = categoryService.add(category);
         CategoryDTO newCategoryDTO = categoryMapper.mapFromEntity(newCategory);
@@ -50,7 +51,7 @@ public class CategoryController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<CategoryDTO> updateById(
-            @RequestBody SaveCategoryDTO saveCategoryDTO,
+            @Valid @RequestBody SaveCategoryDTO saveCategoryDTO,
             @PathVariable("id") Long categoryId
     ) {
         Category category = categoryMapper.mapToEntity(saveCategoryDTO);
