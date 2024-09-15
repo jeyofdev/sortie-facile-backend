@@ -1,5 +1,9 @@
 package com.poec.sortie_facile_backend.util;
 
+import com.poec.sortie_facile_backend.domain.activity.Activity;
+import com.poec.sortie_facile_backend.domain.activity.ActivityMapper;
+import com.poec.sortie_facile_backend.domain.activity.ActivityRepository;
+import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryMapper;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
@@ -19,6 +23,10 @@ import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.department.DepartmentMapper;
 import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
 import com.poec.sortie_facile_backend.domain.department.dto.SaveDepartmentDTO;
+import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.domain.profile.ProfileMapper;
+import com.poec.sortie_facile_backend.domain.profile.ProfileRepository;
+import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.domain.region.RegionMapper;
 import com.poec.sortie_facile_backend.domain.region.RegionRepository;
@@ -28,6 +36,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,12 +53,16 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final RegionRepository regionRepository;
     private final DepartmentRepository departmentRepository;
     private final CityRepository cityRepository;
+    private final ProfileRepository profileRepository;
+    private final ActivityRepository activityRepository;
 
     private final CategoryMapper categoryMapper;
     private final ContactMapper contactMapper;
     private final RegionMapper regionMapper;
     private final DepartmentMapper departmentMapper;
     private final CityMapper cityMapper;
+    private final ProfileMapper profileMapper;
+    private final ActivityMapper activityMapper;
 
     @Override
     public void run(String... args) throws Exception {
@@ -84,25 +98,12 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private void createDatas() {
         this.createMessageEmails();
-        this.createCategories();
         this.createRegions();
         this.createDepartments();
         this.createCities();
-    }
-
-    private void createCategories() {
-        List<SaveCategoryDTO> saveCategoryList = Arrays.asList(
-                new SaveCategoryDTO("Sport", "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnR8ZW58MHx8MHx8fDA%3D"),
-                new SaveCategoryDTO("Cinéma", "https://images.unsplash.com/photo-1604061986761-d9d0cc41b0d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8VGFibGUlMjBCYXNzZXxlbnwwfHwwfHx8MA%3D%3D"),
-                new SaveCategoryDTO("Culture", "https://plus.unsplash.com/premium_photo-1661407582641-9ce38a3c8402?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2FuYXAlQzMlQTl8ZW58MHx8MHx8fDA%3D"),
-                new SaveCategoryDTO("Musique", "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJtb2lyZXxlbnwwfHwwfHx8MA%3D%3D"),
-                new SaveCategoryDTO("Jeux vidéos", "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww")
-        );
-
-        for (SaveCategoryDTO saveCategory : saveCategoryList) {
-            Category category = categoryMapper.mapToEntity(saveCategory);
-            categoryRepository.save(category);
-        }
+        this.createCategories();
+        this.createProfiles();
+        this.createActivities();
     }
 
     private void createMessageEmails() {
@@ -164,4 +165,122 @@ public class DatabaseInitializer implements CommandLineRunner {
             cityRepository.save(department);
         }
     }
+
+    private void createCategories() {
+        List<SaveCategoryDTO> saveCategoryList = Arrays.asList(
+                new SaveCategoryDTO("Sport", "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnR8ZW58MHx8MHx8fDA%3D"),
+                new SaveCategoryDTO("Cinéma", "https://images.unsplash.com/photo-1604061986761-d9d0cc41b0d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8VGFibGUlMjBCYXNzZXxlbnwwfHwwfHx8MA%3D%3D"),
+                new SaveCategoryDTO("Culture", "https://plus.unsplash.com/premium_photo-1661407582641-9ce38a3c8402?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2FuYXAlQzMlQTl8ZW58MHx8MHx8fDA%3D"),
+                new SaveCategoryDTO("Musique", "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJtb2lyZXxlbnwwfHwwfHx8MA%3D%3D"),
+                new SaveCategoryDTO("Jeux vidéos", "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww")
+        );
+
+        for (SaveCategoryDTO saveCategory : saveCategoryList) {
+            Category category = categoryMapper.mapToEntity(saveCategory);
+            categoryRepository.save(category);
+        }
+    }
+
+    private void createProfiles() {
+        List<SaveProfileDTO> saveProfileList = Arrays.asList(
+                new SaveProfileDTO(
+                        "Alice",
+                        "Doe",
+                        "12",
+                        "Place de la Victoire",
+                        "33000",
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus interdum urna, vel sagittis lectus tristique at.",
+                        "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww",
+                        "0122334455",
+                        LocalDate.of(2000, 5, 10),
+                        new ArrayList<>(),
+                        null,
+                        null,
+                        null
+                ),
+                new SaveProfileDTO(
+                        "Sophie",
+                        "Doe",
+                        "45",
+                        "Avenue de la république",
+                        "75008",
+                        "Curabitur vehicula, purus a fringilla dapibus, arcu magna pharetra augue, vel gravida risus turpis sit amet lectus.",
+                        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww",
+                        "0145622333",
+                        LocalDate.of(2002, 1, 21),
+                        new ArrayList<>(),
+                        null,
+                        null,
+                        null
+                )
+        );
+
+        for (SaveProfileDTO saveProfile : saveProfileList) {
+            Profile profile = profileMapper.mapToEntity(saveProfile);
+            profileRepository.save(profile);
+        }
+    }
+
+    private void createActivities() {
+        List<SaveActivityDTO> saveActivityList = Arrays.asList(
+                new SaveActivityDTO(
+                        "Randonnée en montagne",
+                        25,
+                        "https://images.unsplash.com/photo-1469395013119-ca3b424d83e5?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        null,
+                        "Découvrez les paysages magnifiques des montagnes en participant à cette randonnée organisée pour les amateurs de nature.",
+                        10,
+                        true,
+                        new ArrayList<>(),
+                        null,
+                        null,
+                        null
+                ),
+                new SaveActivityDTO(
+                        "Projection de film en plein air",
+                        25,
+                        "https://images.unsplash.com/photo-1608170825938-a8ea0305d46c?q=80&w=1325&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        null,
+                        "Venez profiter d'une soirée cinéma sous les étoiles avec la projection d'un classique du cinéma.",
+                        50,
+                        true,
+                        new ArrayList<>(),
+                        null,
+                        null,
+                        null
+                ),
+                new SaveActivityDTO(
+                        "Visite guidée d'un musée",
+                        25,
+                        "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        null,
+                        "Découvrez les trésors artistiques du musée avec une visite guidée interactive et immersive.",
+                        15,
+                        true,
+                        new ArrayList<>(),
+                        null,
+                        null,
+                        null
+                ),
+                new SaveActivityDTO(
+                        "Match caritatif de football",
+                        25,
+                        "https://images.unsplash.com/photo-1494177310973-4841f7d5a882?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+                        null,
+                        "Participez à un tournoi de football pour une bonne cause.",
+                        22,
+                        true,
+                        new ArrayList<>(),
+                        null,
+                        null,
+                        null
+                )
+        );
+
+        for (SaveActivityDTO saveActivity : saveActivityList) {
+            Activity activity = activityMapper.mapToEntity(saveActivity);
+            activityRepository.save(activity);
+        }
+    }
+
 }
