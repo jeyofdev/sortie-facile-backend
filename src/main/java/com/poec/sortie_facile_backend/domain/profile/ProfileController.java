@@ -66,17 +66,6 @@ public class ProfileController {
         return new ResponseEntity<>(updatedProfileDTO, HttpStatus.OK);
     }
 
-    /*@PutMapping(UPDATE + "/categories")
-    public ResponseEntity<ProfileUpdateCategoriesDTO> updateCategoryInProfile(
-            @RequestBody ProfileUpdateCategoriesDTO profileUpdateCategoriesDTO,
-            @PathVariable Long id
-    ) {
-        Profile newProfile = profileService.updateCategoryInProfile(id, profileUpdateCategoriesDTO.categoryIds());
-        ProfileUpdateCategoriesDTO newProfileUpdated = profileMapper.mapFromEntityCategory(newProfile);
-
-        return new ResponseEntity<>(newProfileUpdated, HttpStatus.OK);
-    }*/
-
     //-----------------
     // for test
     //-----------------

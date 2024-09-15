@@ -17,6 +17,7 @@ public class ContactService extends AbstractDomainService<Contact> {
     @Override
     public Contact updateById(Contact contact, Long contactId) {
         Contact newContact = findById(contactId);
+
         newContact.setMessage(contact.getMessage());
         newContact.setEmail(contact.getEmail());
         newContact.setTitle(contact.getTitle());

@@ -70,18 +70,50 @@ public class ProfileService extends AbstractDomainService<Profile> {
 
     @Override
     public Profile updateById(Profile profile, Long profileId) {
-        Profile newProfile = findById(profileId);
-        newProfile.setFirstname(profile.getFirstname());
-        newProfile.setLastname(profile.getLastname());
-        newProfile.setStreetNumber(profile.getStreetNumber());
-        newProfile.setStreet(profile.getStreet());
-        newProfile.setPostalCode(profile.getPostalCode());
-        newProfile.setDescription(profile.getDescription());
-        newProfile.setAvatar(profile.getAvatar());
-        newProfile.setPhone(profile.getPhone());
-        newProfile.setDateOfBirth(profile.getDateOfBirth());
+        Profile existingProfile = findById(profileId);
 
-        return profileRepository.save(newProfile);
+        existingProfile.setFirstname(profile.getFirstname());
+        existingProfile.setLastname(profile.getLastname());
+        existingProfile.setStreetNumber(profile.getStreetNumber());
+        existingProfile.setStreet(profile.getStreet());
+        existingProfile.setPostalCode(profile.getPostalCode());
+        existingProfile.setDescription(profile.getDescription());
+        existingProfile.setAvatar(profile.getAvatar());
+        existingProfile.setPhone(profile.getPhone());
+        existingProfile.setDateOfBirth(profile.getDateOfBirth());
+
+        // update region id
+        if (profile.getRegion() != null) {
+            Region region = regionRepository.findById(profile.getRegion().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Region with id " + profile.getRegion().getId() + " not found"));
+            existingProfile.setRegion(region);
+        }
+
+        // update department id
+        if (profile.getDepartment() != null) {
+            Department department = departmentRepository.findById(profile.getDepartment().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Department with id " + profile.getDepartment().getId() + " not found"));
+            existingProfile.setDepartment(department);
+        }
+
+        // update city id
+        if (profile.getCity() != null) {
+            City city = cityRepository.findById(profile.getCity().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("City with id " + profile.getCity().getId() + " not found"));
+            existingProfile.setCity(city);
+        }
+
+        // update category ids list
+        if (profile.getCategories() != null) {
+            List<Category> newCategories = categoryRepository.findAllById(profile.getCategories().stream()
+                    .map(Category::getId)
+                    .toList()
+            );
+
+            existingProfile.setCategories(newCategories);
+        }
+
+        return profileRepository.save(existingProfile);
     }
 
     @Override
@@ -97,13 +129,5 @@ public class ProfileService extends AbstractDomainService<Profile> {
         }
 
         repository.deleteById(profileId);
-    }
-
-    public Profile updateCategoryInProfile(Long profileId, List<Long> categoryIds) {
-        Profile newProfile = findById(profileId);
-        List<Category> categories = categoryRepository.findAllById(categoryIds);
-
-        /*newProfile.setCategories(categories);*/
-        return profileRepository.save(newProfile);
     }
 }

@@ -9,7 +9,6 @@ import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
-import com.poec.sortie_facile_backend.domain.profile.dto.ProfileUpdateCategoriesDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +52,6 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
 
     @Override
     public Profile mapToEntity(SaveProfileDTO saveProfileDTO) {
-        List<Category> categoryList = categoryRepository.findAllById(saveProfileDTO.categoryIds());
-
         Profile profile = new Profile();
 
         profile.setDescription(saveProfileDTO.description());
@@ -66,14 +63,30 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
         profile.setAvatar(saveProfileDTO.avatar());
         profile.setPhone(saveProfileDTO.phone());
         profile.setDateOfBirth(saveProfileDTO.dateOfBirth());
-        profile.setCategories(categoryList);
+
+        if (saveProfileDTO.categoryIds() != null) {
+            List<Category> categoryList = categoryRepository.findAllById(saveProfileDTO.categoryIds());
+            profile.setCategories(categoryList);
+        }
+
+        if (saveProfileDTO.regionId() != null) {
+            Region region = new Region();
+            region.setId(saveProfileDTO.regionId());
+            profile.setRegion(region);
+        }
+
+        if (saveProfileDTO.departmentId() != null) {
+            Department department = new Department();
+            department.setId(saveProfileDTO.departmentId());
+            profile.setDepartment(department);
+        }
+
+        if (saveProfileDTO.cityId() != null) {
+            City city = new City();
+            city.setId(saveProfileDTO.cityId());
+            profile.setCity(city);
+        }
 
         return profile;
-    }
-
-    public ProfileUpdateCategoriesDTO mapFromEntityCategory(Profile profile) {
-        return new ProfileUpdateCategoriesDTO (
-                /*profile.getCategories().stream().map(Category::getId).toList()*/
-        );
     }
 }

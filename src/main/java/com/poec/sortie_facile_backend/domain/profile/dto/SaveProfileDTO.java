@@ -1,7 +1,8 @@
 package com.poec.sortie_facile_backend.domain.profile.dto;
 
+import jakarta.annotation.Nullable;
+
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public record SaveProfileDTO(
@@ -14,7 +15,10 @@ public record SaveProfileDTO(
         String avatar,
         String phone,
         LocalDate dateOfBirth,
-        List<Long> categoryIds
+        @Nullable List<Long> categoryIds,
+        @Nullable Long regionId,
+        @Nullable Long departmentId,
+        @Nullable Long cityId
 ) {
 
 }
