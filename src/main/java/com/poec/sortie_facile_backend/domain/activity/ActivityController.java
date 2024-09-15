@@ -40,17 +40,16 @@ public class ActivityController {
         return new ResponseEntity<>(activityDTO, HttpStatus.FOUND);
     }
 
-    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}" + CATEGORY + "/{categoryId}")
+    @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}")
     public ResponseEntity<ActivityDTO> add(
             @RequestBody SaveActivityDTO saveActivityDTO,
             @PathVariable("regionId") Long regionId,
             @PathVariable("departmentId") Long departmentId,
             @PathVariable("cityId") Long cityId,
-            @PathVariable("profileId") Long profileId,
-            @PathVariable("categoryId") Long categoryId
+            @PathVariable("profileId") Long profileId
     ) {
         Activity activity = activityMapper.mapToEntity(saveActivityDTO);
-        Activity newActivity = activityService.add(activity, regionId, departmentId, cityId, profileId, categoryId);
+        Activity newActivity = activityService.add(activity, regionId, departmentId, cityId, profileId);
         ActivityDTO newActivityDTO = activityMapper.mapFromEntity(newActivity);
 
         return new ResponseEntity<>(newActivityDTO, HttpStatus.CREATED);

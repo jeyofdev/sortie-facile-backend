@@ -34,9 +34,9 @@ public class Category {
     @NotBlank(message = "The image URL field cannot be empty.")
     private String imgUrl;
 
-    @OneToMany(mappedBy = "category", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Activity> activities = new ArrayList<>();
+    @ManyToMany(mappedBy = "categoryList", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Activity> activityList = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "categories", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Profile> profiles = new ArrayList<>();
+    @ManyToMany(mappedBy = "categoryList", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    private List<Profile> profileList = new ArrayList<>();
 }

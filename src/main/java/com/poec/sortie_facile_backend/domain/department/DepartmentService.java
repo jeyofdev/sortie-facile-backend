@@ -55,20 +55,20 @@ public class DepartmentService extends AbstractDomainService<Department> {
     public void deleteById(Long departmentId) {
         Department department = findById(departmentId);
 
-        for (Profile profile : department.getProfiles()) {
+        for (Profile profile : department.getProfileList()) {
             profile.setDepartment(null);
         }
 
-        for (Activity activity : department.getActivities()) {
+        for (Activity activity : department.getActivityList()) {
             activity.setDepartment(null);
         }
 
-        for (City city : department.getCities()) {
-            for (Activity activity : department.getActivities()) {
+        for (City city : department.getCityList()) {
+            for (Activity activity : department.getActivityList()) {
                 activity.setCity(null);
             }
 
-            for (Profile profile : city.getProfiles()) {
+            for (Profile profile : city.getProfileList()) {
                 profile.setCity(null);
             }
 
@@ -76,7 +76,7 @@ public class DepartmentService extends AbstractDomainService<Department> {
             cityRepository.delete(city);
         }
 
-        department.getProfiles().clear();
+        department.getProfileList().clear();
         department.setRegion(null);
         repository.deleteById(departmentId);
     }

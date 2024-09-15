@@ -6,7 +6,6 @@ import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
-import com.poec.sortie_facile_backend.domain.region.Region;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,9 +17,9 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
         return new CityDTO(
                 city.getId(),
                 city.getName(),
-                city.getActivities().stream().map(Activity::getId).toList(),
+                city.getActivityList().stream().map(Activity::getId).toList(),
                 Optional.ofNullable(city.getDepartment()).map(Department::getId).orElse(null),
-                city.getProfiles().stream().map(Profile::getId).toList()
+                city.getProfileList().stream().map(Profile::getId).toList()
         );
     }
 

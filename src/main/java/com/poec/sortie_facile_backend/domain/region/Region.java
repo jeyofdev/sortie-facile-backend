@@ -29,11 +29,11 @@ public class Region {
     private String name;
 
     @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Activity> activities = new ArrayList<>();
+    private List<Activity> activityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Profile> profiles = new ArrayList<>();
+    private List<Profile> profileList = new ArrayList<>();
 
     @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
-    private List<Department> departments = new ArrayList<>();
+    private List<Department> departmentList = new ArrayList<>();
 }

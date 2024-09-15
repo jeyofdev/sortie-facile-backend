@@ -40,13 +40,13 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 profile.getAvatar(),
                 profile.getPhone(),
                 profile.getDateOfBirth(),
-                profile.getActivities() != null ? profile.getActivities().stream().map(Activity::getId).toList() : new ArrayList<>(),
+                profile.getActivityList() != null ? profile.getActivityList().stream().map(Activity::getId).toList() : new ArrayList<>(),
                 Optional.ofNullable(profile.getRegion()).map(Region::getId).orElse(null),
                 Optional.ofNullable(profile.getDepartment()).map(Department::getId).orElse(null),
                 Optional.ofNullable(profile.getCity()).map(City::getId).orElse(null),
                 Optional.ofNullable(profile.getUser()).map(AuthUser::getId).orElse(null),
-                profile.getBookings() != null ? profile.getBookings().stream().map(Booking::getId).toList() : new ArrayList<>(),
-                profile.getCategories() != null ? profile.getCategories().stream().map(Category::getId).toList() : new ArrayList<>()
+                profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),
+                profile.getCategoryList() != null ? profile.getCategoryList().stream().map(Category::getId).toList() : new ArrayList<>()
         );
     }
 
@@ -66,7 +66,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
 
         if (saveProfileDTO.categoryIds() != null) {
             List<Category> categoryList = categoryRepository.findAllById(saveProfileDTO.categoryIds());
-            profile.setCategories(categoryList);
+            profile.setCategoryList(categoryList);
         }
 
         if (saveProfileDTO.regionId() != null) {

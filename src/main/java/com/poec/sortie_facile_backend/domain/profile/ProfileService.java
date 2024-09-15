@@ -52,7 +52,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
                 .orElseThrow(
                         () -> new EntityNotFoundException("City with id " + cityId + " not found")
                 );
-        List<Category> categoryList = categoryRepository.findAllById(profile.getCategories().stream().map(Category::getId).toList());
+        List<Category> categoryList = categoryRepository.findAllById(profile.getCategoryList().stream().map(Category::getId).toList());
 
         AuthUser newUser = authUserRepository.findById(userId)
                 .orElseThrow(
@@ -62,7 +62,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         profile.setRegion(newRegion);
         profile.setDepartment(newDepartment);
         profile.setCity(newCity);
-        profile.setCategories(categoryList);
+        profile.setCategoryList(categoryList);
         profile.setUser(newUser);
 
         return profileRepository.save(profile);
@@ -104,13 +104,13 @@ public class ProfileService extends AbstractDomainService<Profile> {
         }
 
         // update category ids list
-        if (profile.getCategories() != null) {
-            List<Category> newCategories = categoryRepository.findAllById(profile.getCategories().stream()
+        if (profile.getCategoryList() != null) {
+            List<Category> newCategories = categoryRepository.findAllById(profile.getCategoryList().stream()
                     .map(Category::getId)
                     .toList()
             );
 
-            existingProfile.setCategories(newCategories);
+            existingProfile.setCategoryList(newCategories);
         }
 
         return profileRepository.save(existingProfile);
@@ -120,12 +120,12 @@ public class ProfileService extends AbstractDomainService<Profile> {
     public void deleteById(Long profileId) {
         Profile profile = findById(profileId);
 
-        for (Activity activity : profile.getActivities()) {
+        for (Activity activity : profile.getActivityList()) {
             activity.setProfile(null);
         }
 
-        for (Category category : profile.getCategories()) {
-            category.setProfiles(null);
+        for (Category category : profile.getCategoryList()) {
+            category.setProfileList(null);
         }
 
         repository.deleteById(profileId);

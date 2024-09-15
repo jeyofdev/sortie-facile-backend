@@ -16,7 +16,7 @@ public record ActivityDTO(
         Long regionId,
         Long departmentId,
         Long cityId,
-        Long  categoryId,
+        List<Long> categoryIds,
         Long profileId,
         List<Long> bookingIds
 ) {

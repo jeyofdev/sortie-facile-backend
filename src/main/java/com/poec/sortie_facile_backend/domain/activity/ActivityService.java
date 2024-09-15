@@ -16,6 +16,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ActivityService extends AbstractDomainService<Activity> {
 
@@ -38,7 +40,7 @@ public class ActivityService extends AbstractDomainService<Activity> {
         this.profileRepository = profileRepository;
     }
 
-    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId, Long categoryId) {
+    public Activity add(Activity activity, Long regionId, Long departmentId, Long cityId, Long profileId) {
         Region existingRegion = regionRepository.findById(regionId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Region with id " + regionId + " not found")
@@ -55,32 +57,62 @@ public class ActivityService extends AbstractDomainService<Activity> {
                 .orElseThrow(
                         () -> new EntityNotFoundException("Profile with id " +  profileId + " not found")
                 );
-        Category existingCategory = categoryRepository.findById(categoryId)
-                .orElseThrow(
-                        () -> new EntityNotFoundException("Category with id " +  categoryId + " not found")
-                );
+
+        List<Category> categoryList = categoryRepository.findAllById(activity.getCategoryList().stream().map(Category::getId).toList());
+
         activity.setRegion(existingRegion);
         activity.setDepartment(existingDepartment);
         activity.setCity(existingCity);
         activity.setProfile(existingProfile);
-        activity.setCategory(existingCategory);
+        activity.setCategoryList(categoryList);
 
         return activityRepository.save(activity);
     }
 
     @Override
     public Activity updateById(Activity activity, Long activityId) {
-        Activity newActivity = findById(activityId);
+        Activity existingActivity = findById(activityId);
 
-        newActivity.setName(activity.getName());
-        newActivity.setAge(activity.getAge());
-        newActivity.setImgUrl(activity.getImgUrl());
-        newActivity.setLink(activity.getLink());
-        newActivity.setDescription(activity.getDescription());
-        newActivity.setNbGuest(activity.getNbGuest());
-        newActivity.setVisible(activity.isVisible());
+        existingActivity.setName(activity.getName());
+        existingActivity.setAge(activity.getAge());
+        existingActivity.setImgUrl(activity.getImgUrl());
+        existingActivity.setLink(activity.getLink());
+        existingActivity.setDescription(activity.getDescription());
+        existingActivity.setNbGuest(activity.getNbGuest());
+        existingActivity.setVisible(activity.isVisible());
 
-        return activityRepository.save(newActivity);
+        // update region id
+        if (activity.getRegion() != null) {
+            Region region = regionRepository.findById(activity.getRegion().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Region with id " + activity.getRegion().getId() + " not found"));
+            existingActivity.setRegion(region);
+        }
+
+        // update department id
+        if (activity.getDepartment() != null) {
+            Department department = departmentRepository.findById(activity.getDepartment().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("Department with id " + activity.getDepartment().getId() + " not found"));
+            existingActivity.setDepartment(department);
+        }
+
+        // update city id
+        if (activity.getCity() != null) {
+            City city = cityRepository.findById(activity.getCity().getId())
+                    .orElseThrow(() -> new EntityNotFoundException("City with id " + activity.getCity().getId() + " not found"));
+            existingActivity.setCity(city);
+        }
+
+        // update category ids list
+        if (activity.getCategoryList() != null) {
+            List<Category> newCategories = categoryRepository.findAllById(activity.getCategoryList().stream()
+                    .map(Category::getId)
+                    .toList()
+            );
+
+            existingActivity.setCategoryList(newCategories);
+        }
+
+        return activityRepository.save(existingActivity);
     }
 
     public DataCountResponse countBookingsByActivityId(Long activityId) {

@@ -30,15 +30,15 @@ public class Department {
     private String name;
 
     @OneToMany(mappedBy = "department", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Activity> activities = new ArrayList<>();
+    private List<Activity> activityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "department", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Profile> profiles = new ArrayList<>();
+    private List<Profile> profileList = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "region_id", referencedColumnName = "id")
     private Region region;
 
     @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
-    private List<City> cities = new ArrayList<>();
+    private List<City> cityList = new ArrayList<>();
 }

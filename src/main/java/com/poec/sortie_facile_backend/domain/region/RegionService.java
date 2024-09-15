@@ -34,32 +34,32 @@ public class RegionService  extends AbstractDomainService<Region> {
     public void deleteById(Long regionId) {
         Region region = findById(regionId);
 
-        for (Profile profile : region.getProfiles()) {
+        for (Profile profile : region.getProfileList()) {
             profile.setRegion(null);
         }
 
-        for (Activity activity : region.getActivities()) {
+        for (Activity activity : region.getActivityList()) {
             activity.setRegion(null);
         }
 
-        for (Department department : region.getDepartments()) {
-            for (Activity activity : department.getActivities()) {
+        for (Department department : region.getDepartmentList()) {
+            for (Activity activity : department.getActivityList()) {
                 activity.setDepartment(null);
             }
 
-            for (City city : department.getCities()) {
-                for (Activity activity : city.getActivities()) {
+            for (City city : department.getCityList()) {
+                for (Activity activity : city.getActivityList()) {
                     activity.setCity(null);
                 }
 
-                for (Profile profile : department.getProfiles()) {
+                for (Profile profile : department.getProfileList()) {
                     profile.setCity(null);
                 }
 
                 city.setDepartment(null);
             }
 
-            for (Profile profile : department.getProfiles()) {
+            for (Profile profile : department.getProfileList()) {
                 profile.setDepartment(null);
             }
 

@@ -57,9 +57,6 @@ public class Activity {
     @Max(value = 100, message ="The nb guest cannot exceed 100 years.")
     private int nbGuest;
 
-//    @Column(name="hour", nullable = false)
-//    private String hour;
-
     @Column(name="isVisible", columnDefinition = "BOOLEAN" , nullable = false )
     private boolean isVisible;
 
@@ -76,11 +73,15 @@ public class Activity {
     private Department department;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
-    private List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookingList = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "category_id", referencedColumnName = "id")
-    private Category category;
+    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @JoinTable(
+            name = "activity_category",
+            joinColumns = @JoinColumn(name = "activity_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private List<Category> categoryList;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "profile_id", referencedColumnName = "id")

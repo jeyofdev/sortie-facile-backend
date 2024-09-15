@@ -29,12 +29,12 @@ public class CategoryService extends AbstractDomainService<Category> {
     public void deleteById(Long categoryId) {
         Category category = findById(categoryId);
 
-        for (Activity activity : category.getActivities()) {
-            activity.setCategory(null);
+        for (Activity activity : category.getActivityList()) {
+            activity.getCategoryList().remove(category);
         }
 
-        for (Profile profile : category.getProfiles()) {
-            profile.getCategories().remove(category);
+        for (Profile profile : category.getProfileList()) {
+            profile.getCategoryList().remove(category);
         }
 
         repository.deleteById(categoryId);

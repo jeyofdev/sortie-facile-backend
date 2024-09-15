@@ -34,10 +34,10 @@ public class City {
     private String postalCode;
 
     @OneToMany(mappedBy = "city", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Activity> activities = new ArrayList<>();
+    private List<Activity> activityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "city", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Profile> profiles = new ArrayList<>();
+    private List<Profile> profileList = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "department_id", referencedColumnName = "id")

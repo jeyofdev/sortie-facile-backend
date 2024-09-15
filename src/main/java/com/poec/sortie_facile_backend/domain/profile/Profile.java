@@ -15,7 +15,6 @@ import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Data
@@ -75,7 +74,7 @@ public class Profile {
     private LocalDate dateOfBirth;
 
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-    private List<Activity> activities;
+    private List<Activity> activityList;
 
     @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "region_id", referencedColumnName = "id")
@@ -95,10 +94,10 @@ public class Profile {
             joinColumns = @JoinColumn(name = "profile_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private List<Category> categories = new ArrayList<>();
+    private List<Category> categoryList = new ArrayList<>();
 
     @OneToMany(mappedBy = "profile", cascade = CascadeType.ALL)
-    private List<Booking> bookings = new ArrayList<>();
+    private List<Booking> bookingList = new ArrayList<>();
 
     @OneToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "user_id", referencedColumnName = "id")

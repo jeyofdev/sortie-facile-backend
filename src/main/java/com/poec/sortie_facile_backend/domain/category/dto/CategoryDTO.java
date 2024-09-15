@@ -5,8 +5,7 @@ import java.util.List;
 public record CategoryDTO(
         Long id,
         String title,
-        String imgUrl,
-        List<Long> activityIds
+        String imgUrl
 ) {
 
 }
