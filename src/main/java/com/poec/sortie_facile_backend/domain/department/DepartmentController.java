@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.department;
 
 import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.department.dto.SaveDepartmentDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class DepartmentController {
 
     @PostMapping(ADD + REGION + ID)
     public ResponseEntity<DepartmentDTO> add(
-            @RequestBody SaveDepartmentDTO saveDepartmentDTO,
+            @Valid @RequestBody SaveDepartmentDTO saveDepartmentDTO,
             @PathVariable("id") Long regionId
     ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
@@ -53,7 +54,7 @@ public class DepartmentController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<DepartmentDTO> updateById(
-            @RequestBody SaveDepartmentDTO saveDepartmentDTO,
+            @Valid @RequestBody SaveDepartmentDTO saveDepartmentDTO,
             @PathVariable("id") Long departmentId
     ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);

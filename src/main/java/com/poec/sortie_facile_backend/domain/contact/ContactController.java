@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.contact;
 
 import com.poec.sortie_facile_backend.domain.contact.dto.ContactDTO;
 import com.poec.sortie_facile_backend.domain.contact.dto.SaveContactDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,7 +41,7 @@ public class ContactController {
     }
 
     @PostMapping(ADD)
-    public ResponseEntity<ContactDTO> add(@RequestBody SaveContactDTO saveContactDTO) {
+    public ResponseEntity<ContactDTO> add(@Valid @RequestBody SaveContactDTO saveContactDTO) {
         Contact contact = contactMapper.mapToEntity(saveContactDTO);
         Contact newContact = contactService.add(contact);
         ContactDTO newContactDTO = contactMapper.mapFromEntity(newContact);
@@ -50,7 +51,7 @@ public class ContactController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<ContactDTO> updateById(
-            @RequestBody SaveContactDTO saveContactDTO,
+            @Valid @RequestBody SaveContactDTO saveContactDTO,
             @PathVariable("id") Long contactId
     ) {
         Contact contact = contactMapper.mapToEntity(saveContactDTO);

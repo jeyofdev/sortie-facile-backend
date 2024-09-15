@@ -3,6 +3,7 @@ package com.poec.sortie_facile_backend.domain.activity;
 import com.poec.sortie_facile_backend.common.model.DataCountResponse;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class ActivityController {
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}")
     public ResponseEntity<ActivityDTO> add(
-            @RequestBody SaveActivityDTO saveActivityDTO,
+            @Valid @RequestBody SaveActivityDTO saveActivityDTO,
             @PathVariable("regionId") Long regionId,
             @PathVariable("departmentId") Long departmentId,
             @PathVariable("cityId") Long cityId,
@@ -56,7 +57,7 @@ public class ActivityController {
     }
 
     @PutMapping(UPDATE)
-    public ResponseEntity<ActivityDTO> updateById(@RequestBody SaveActivityDTO saveActivityDTO, @PathVariable("id") Long activityId) {
+    public ResponseEntity<ActivityDTO> updateById(@Valid @RequestBody SaveActivityDTO saveActivityDTO, @PathVariable("id") Long activityId) {
         Activity activity = activityMapper.mapToEntity(saveActivityDTO);
         Activity updatedActivity = activityService.updateById(activity, activityId);
         ActivityDTO updatedActivityDTO = activityMapper.mapFromEntity(updatedActivity);

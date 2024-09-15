@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class ProfileController {
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")
     public ResponseEntity<ProfileDTO> add(
-            @RequestBody SaveProfileDTO saveProfileDTO,
+            @Valid @RequestBody SaveProfileDTO saveProfileDTO,
             @PathVariable("regionId") Long regionId,
             @PathVariable("departmentId") Long departmentId,
             @PathVariable("cityId") Long cityId,
@@ -56,7 +57,7 @@ public class ProfileController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<ProfileDTO> updateById(
-            @RequestBody SaveProfileDTO saveProfileDTO,
+            @Valid @RequestBody SaveProfileDTO saveProfileDTO,
             @PathVariable("id") Long profileId
     ) {
         Profile profile = profileMapper.mapToEntity(saveProfileDTO);

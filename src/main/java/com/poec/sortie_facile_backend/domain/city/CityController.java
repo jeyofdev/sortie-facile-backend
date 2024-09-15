@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.city;
 
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,7 +42,7 @@ public class CityController {
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")
     public ResponseEntity<CityDTO> add(
-            @RequestBody SaveCityDTO saveCityDTO,
+            @Valid @RequestBody SaveCityDTO saveCityDTO,
             @PathVariable("departmentId") Long departmentId
     ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
@@ -53,7 +54,7 @@ public class CityController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<CityDTO> updateById(
-            @RequestBody SaveCityDTO saveCityDTO,
+            @Valid @RequestBody SaveCityDTO saveCityDTO,
             @PathVariable("id") Long cityId
     ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
