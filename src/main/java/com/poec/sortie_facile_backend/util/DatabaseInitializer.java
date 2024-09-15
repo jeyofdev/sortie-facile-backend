@@ -7,6 +7,10 @@ import com.poec.sortie_facile_backend.core.enums.Role;
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
 import com.poec.sortie_facile_backend.domain.category.dto.SaveCategoryDTO;
+import com.poec.sortie_facile_backend.domain.contact.Contact;
+import com.poec.sortie_facile_backend.domain.contact.ContactMapper;
+import com.poec.sortie_facile_backend.domain.contact.ContactRepository;
+import com.poec.sortie_facile_backend.domain.contact.dto.SaveContactDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,8 +27,10 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final PasswordEncoder passwordEncoder;
 
     private final CategoryRepository categoryRepository;
+    private final ContactRepository contactRepository;
 
     private final CategoryMapper categoryMapper;
+    private final ContactMapper contactMapper;
 
     @Override
     public void run(String... args) throws Exception {
@@ -59,6 +65,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createDatas() {
+        this.createMessageEmails();
         this.createCategories();
     }
 
@@ -74,6 +81,18 @@ public class DatabaseInitializer implements CommandLineRunner {
         for (SaveCategoryDTO saveCategory : saveCategoryList) {
             Category category = categoryMapper.mapToEntity(saveCategory);
             categoryRepository.save(category);
+        }
+    }
+
+    private void createMessageEmails() {
+        SaveContactDTO saveEmailMessageA = new SaveContactDTO("Renseignement sur une activité", "johndoe@test.com", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in felis quis odio elementum bibendum a id tellus. Integer ultricies vel mauris eu pretium. Donec efficitur felis quis tincidunt vulputate. Aliquam et odio efficitur, bibendum elit sed, ullamcorper tellus. Pellentesque at sapien vitae diam euismod viverra eu vel nisi.", false);
+        SaveContactDTO saveEmailMessageB = new SaveContactDTO("Annulation de réservation", "janedoe@test.com", "Sed at rhoncus sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer maximus odio id sem tristique efficitur. Sed efficitur, tortor sed tempus aliquet, quam orci varius tellus, eget vestibulum urna justo quis sapien. Phasellus gravida consequat pharetra.", false);
+
+        List<SaveContactDTO> saveEmailMessageList = Arrays.asList(saveEmailMessageA, saveEmailMessageB);
+
+        for (SaveContactDTO saveEmailMessage : saveEmailMessageList) {
+            Contact emailMessage = contactMapper.mapToEntity(saveEmailMessage);
+            contactRepository.save(emailMessage);
         }
     }
 }
