@@ -17,6 +17,7 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
         return new CityDTO(
                 city.getId(),
                 city.getName(),
+                city.getZipCode(),
                 city.getActivityList().stream().map(Activity::getId).toList(),
                 Optional.ofNullable(city.getDepartment()).map(Department::getId).orElse(null),
                 city.getProfileList().stream().map(Profile::getId).toList()
@@ -27,7 +28,7 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
     public City mapToEntity(SaveCityDTO saveCityDTO) {
         City city = new City();
         city.setName(saveCityDTO.name());
-        city.setPostalCode(saveCityDTO.postalCode());
+        city.setZipCode(saveCityDTO.zipCode());
 
         if (saveCityDTO.departmentId() != null) {
             Department department = new Department();

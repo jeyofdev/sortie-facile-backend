@@ -9,6 +9,10 @@ public record SaveDepartmentDTO(
         @Size(min = 2, max = 50, message = "The name field must contain between 2 and 50 characters.")
         String name,
 
+        @NotNull(message = "The department number field is required.")
+        @Pattern(regexp = "\\d{2,3}", message = "The department number must be composed of 2 or 3 digits.")
+        String number,
+
         @Nullable Long regionId
 ) {
 

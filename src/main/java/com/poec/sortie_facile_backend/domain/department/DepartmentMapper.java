@@ -18,6 +18,7 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
         return new DepartmentDTO(
                 department.getId(),
                 department.getName(),
+                department.getNumber(),
                 department.getActivityList().stream().map(Activity::getId).toList(),
                 Optional.ofNullable(department.getRegion()).map(Region::getId).orElse(null),
                 department.getCityList().stream().map(City::getId).toList(),
@@ -29,6 +30,7 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
     public Department mapToEntity(SaveDepartmentDTO saveDepartmentDTO) {
         Department department = new Department();
         department.setName(saveDepartmentDTO.name());
+        department.setNumber(saveDepartmentDTO.number());
 
         if (saveDepartmentDTO.regionId() != null) {
             Region region = new Region();

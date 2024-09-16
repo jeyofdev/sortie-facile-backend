@@ -30,9 +30,9 @@ public record SaveProfileDTO(
         @Size(min = 2, max = 50, message = "The street field must contain between 2 and 50 characters.")
         String street,
 
-        @NotNull(message = "The postal code field is required.")
-        @Pattern(regexp = "\\d{5}", message = "The postal code must be exactly 5 digits.")
-        String postalCode,
+        @NotNull(message = "The zip code field is required.")
+        @Pattern(regexp = "\\d{5}", message = "The zip code must be exactly 5 digits.")
+        String zipCode,
 
         @NotNull(message = "The description field is required.")
         @NotBlank(message = "The description field cannot be empty.")

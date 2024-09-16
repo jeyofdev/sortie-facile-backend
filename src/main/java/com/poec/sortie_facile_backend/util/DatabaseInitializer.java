@@ -153,7 +153,7 @@ public class DatabaseInitializer implements CommandLineRunner {
 
         List<SaveDepartmentDTO> saveDepartmentList = new ArrayList<>();
         for (LocationDepartmentInfo department : departmentList) {
-            saveDepartmentList.add(new SaveDepartmentDTO(department.getName(), null));
+            saveDepartmentList.add(new SaveDepartmentDTO(department.getName(), department.getNumber(), null));
         }
 
         for (SaveDepartmentDTO saveDepartment : saveDepartmentList) {
