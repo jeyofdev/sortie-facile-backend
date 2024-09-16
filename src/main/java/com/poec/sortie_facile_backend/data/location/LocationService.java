@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.data.location;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.poec.sortie_facile_backend.data.location.model.ListLocationResponse;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,7 @@
-package com.poec.sortie_facile_backend.data.location;
+package com.poec.sortie_facile_backend.data.location.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.poec.sortie_facile_backend.data.location.Location;
 import lombok.Data;
 
 import java.util.List;
