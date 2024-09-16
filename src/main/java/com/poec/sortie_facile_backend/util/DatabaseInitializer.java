@@ -1,5 +1,8 @@
 package com.poec.sortie_facile_backend.util;
 
+import com.poec.sortie_facile_backend.data.location.ListLocationResponse;
+import com.poec.sortie_facile_backend.data.location.Location;
+import com.poec.sortie_facile_backend.data.location.LocationService;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.activity.ActivityMapper;
 import com.poec.sortie_facile_backend.domain.activity.ActivityRepository;
@@ -36,6 +39,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,6 +67,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final CityMapper cityMapper;
     private final ProfileMapper profileMapper;
     private final ActivityMapper activityMapper;
+    private final LocationService locationService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -96,7 +101,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.authUserRepository.save(user1);
     }
 
-    private void createDatas() {
+    private void createDatas() throws IOException {
         this.createMessageEmails();
         this.createRegions();
         this.createDepartments();
@@ -118,12 +123,18 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createRegions() {
-        List<SaveRegionDTO> saveRegionList = Arrays.asList(
-                new SaveRegionDTO("Nouvelle Aquitaine"),
-                new SaveRegionDTO("Auvergne Rhone Alpes"),
-                new SaveRegionDTO("Ile de France")
-        );
+    private void createRegions() throws IOException {
+        ListLocationResponse locationDatas = locationService.getAllDatas();
+
+        List<String> regionList = locationDatas.getLocations().stream()
+                .map(Location::getRegionName)
+                .distinct()
+                .toList();
+
+        List<SaveRegionDTO> saveRegionList = new ArrayList<>();
+        for (String region : regionList) {
+            saveRegionList.add(new SaveRegionDTO(region));
+        }
 
         for (SaveRegionDTO saveRegion : saveRegionList) {
             Region region = regionMapper.mapToEntity(saveRegion);
