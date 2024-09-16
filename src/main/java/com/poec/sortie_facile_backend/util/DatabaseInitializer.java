@@ -3,6 +3,7 @@ package com.poec.sortie_facile_backend.util;
 import com.poec.sortie_facile_backend.data.location.model.ListLocationResponse;
 import com.poec.sortie_facile_backend.data.location.Location;
 import com.poec.sortie_facile_backend.data.location.LocationService;
+import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationDepartmentInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationRegionInfo;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
@@ -109,7 +110,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.createMessageEmails();
         this.createRegions(locationDatas);
         this.createDepartments(locationDatas);
-        this.createCities();
+        this.createCities(locationDatas);
         this.createCategories();
         this.createProfiles();
         this.createActivities();
@@ -161,18 +162,17 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createCities() {
-        List<SaveCityDTO> saveCityList = Arrays.asList(
-                new SaveCityDTO("Bordeaux", "33000", null),
-                new SaveCityDTO("Mérignac", "33700", null),
-                new SaveCityDTO("Le Bouscat", "33110", null),
-                new SaveCityDTO("Bègles", "33130",  null),
-                new SaveCityDTO("Mont-de-Marsan", "40000",null),
-                new SaveCityDTO("Biscarrosse", "40600", null),
-                new SaveCityDTO("Dax", "40100", null),
-                new SaveCityDTO("Lyon", "69001", null),
-                new SaveCityDTO("Villeurbanne", "69100", null)
-        );
+    private void createCities(ListLocationResponse locationDatas) {
+        List<LocationCityInfo> cityList = locationDatas.getLocations().stream()
+                .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode()))
+                .distinct()
+                .limit(100)
+                .toList();
+
+        List<SaveCityDTO> saveCityList = new ArrayList<>();
+        for (LocationCityInfo city : cityList) {
+            saveCityList.add(new SaveCityDTO(city.getLabel(), city.getZipCode(), null));
+        }
 
         for (SaveCityDTO saveCity : saveCityList) {
             City department = cityMapper.mapToEntity(saveCity);
