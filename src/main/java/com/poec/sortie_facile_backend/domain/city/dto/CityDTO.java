@@ -5,6 +5,7 @@ import java.util.List;
 public record CityDTO(
         Long id,
         String name,
+        String zipCode,
         List<Long> activityIds,
         Long departmentId,
         List<Long> profileIds

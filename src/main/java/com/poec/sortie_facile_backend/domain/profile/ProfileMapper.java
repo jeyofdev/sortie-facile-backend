@@ -35,7 +35,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 profile.getLastname(),
                 profile.getStreetNumber(),
                 profile.getStreet(),
-                profile.getPostalCode(),
+                profile.getZipCode(),
                 profile.getDescription(),
                 profile.getAvatar(),
                 profile.getPhone(),
@@ -59,7 +59,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
         profile.setLastname(saveProfileDTO.lastname());
         profile.setStreetNumber(saveProfileDTO.streetNumber());
         profile.setStreet(saveProfileDTO.street());
-        profile.setPostalCode(saveProfileDTO.postalCode());
+        profile.setZipCode(saveProfileDTO.zipCode());
         profile.setAvatar(saveProfileDTO.avatar());
         profile.setPhone(saveProfileDTO.phone());
         profile.setDateOfBirth(saveProfileDTO.dateOfBirth());

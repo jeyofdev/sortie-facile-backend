@@ -24,8 +24,8 @@ public class City {
     @Column(name = "name", columnDefinition = "VARCHAR(50)")
     private String name;
 
-    @Column(name = "postalCode", columnDefinition = "VARCHAR(5)")
-    private String postalCode;
+    @Column(name = "zip_code", columnDefinition = "VARCHAR(5)")
+    private String zipCode;
 
     @OneToMany(mappedBy = "city", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activityList = new ArrayList<>();

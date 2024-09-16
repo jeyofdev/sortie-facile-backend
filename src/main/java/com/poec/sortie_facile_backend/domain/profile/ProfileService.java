@@ -76,7 +76,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         existingProfile.setLastname(profile.getLastname());
         existingProfile.setStreetNumber(profile.getStreetNumber());
         existingProfile.setStreet(profile.getStreet());
-        existingProfile.setPostalCode(profile.getPostalCode());
+        existingProfile.setZipCode(profile.getZipCode());
         existingProfile.setDescription(profile.getDescription());
         existingProfile.setAvatar(profile.getAvatar());
         existingProfile.setPhone(profile.getPhone());

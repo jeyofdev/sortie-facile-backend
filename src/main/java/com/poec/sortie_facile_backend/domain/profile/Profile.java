@@ -38,8 +38,8 @@ public class Profile {
     @Column(name = "street", columnDefinition = "VARCHAR(50)")
     private String street;
 
-    @Column(name = "postalCode", columnDefinition = "VARCHAR(5)")
-    private String postalCode;
+    @Column(name = "zip_code", columnDefinition = "VARCHAR(5)")
+    private String zipCode;
 
     @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;

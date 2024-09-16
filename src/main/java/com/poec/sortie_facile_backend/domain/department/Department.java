@@ -25,6 +25,9 @@ public class Department {
     @Column(name = "name", columnDefinition = "VARCHAR(50)")
     private String name;
 
+    @Column(name = "number", columnDefinition = "VARCHAR(3)")
+    private String number;
+
     @OneToMany(mappedBy = "department", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activityList = new ArrayList<>();
 

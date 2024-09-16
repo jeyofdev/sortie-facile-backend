@@ -1,7 +1,6 @@
 package com.poec.sortie_facile_backend.domain.profile.dto;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 public record ProfileDTO(
@@ -10,7 +9,7 @@ public record ProfileDTO(
         String lastname,
         String streetNumber,
         String street,
-        String postalCode,
+        String zipCode,
         String description,
         String avatar,
         String phone,
