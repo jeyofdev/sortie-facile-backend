@@ -4,6 +4,7 @@ import com.poec.sortie_facile_backend.data.all.AllDataResponse;
 import com.poec.sortie_facile_backend.data.all.AllDataService;
 import com.poec.sortie_facile_backend.data.all.category.CategoryDataInfo;
 import com.poec.sortie_facile_backend.data.all.contact.ContactDataInfo;
+import com.poec.sortie_facile_backend.data.all.profile.ProfileDataInfo;
 import com.poec.sortie_facile_backend.data.location.model.ListLocationDataResponse;
 import com.poec.sortie_facile_backend.data.location.LocationDataService;
 import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
@@ -113,16 +114,16 @@ public class DatabaseInitializer implements CommandLineRunner {
         ListLocationDataResponse locationDataList = locationDataService.getAllDatas();
         AllDataResponse allDataList = allDataService.getAllDatas();
 
-        this.createMessageEmails(allDataList);
+        this.createContacts(allDataList);
         this.createRegions(locationDataList);
         this.createDepartments(locationDataList);
         this.createCities(locationDataList);
         this.createCategories(allDataList);
-      /*  this.createProfiles();
-        this.createActivities();*/
+        this.createProfiles(allDataList);
+       /* this.createActivities();*/
     }
 
-    private void createMessageEmails(AllDataResponse allDataList) {
+    private void createContacts(AllDataResponse allDataList) {
         List<ContactDataInfo> contactList = allDataList.getContactDataList().stream()
                 .map(contact -> new ContactDataInfo(
                         contact.getTitle(),
@@ -208,43 +209,57 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createProfiles() {
-        List<SaveProfileDTO> saveProfileList = Arrays.asList(
-                new SaveProfileDTO(
-                        "Alice",
-                        "Doe",
-                        "12",
-                        "Place de la Victoire",
-                        "33000",
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse faucibus interdum urna, vel sagittis lectus tristique at.",
-                        "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8YXZhdGFyfGVufDB8fDB8fHww",
-                        "0122334455",
-                        LocalDate.of(2000, 5, 10),
-                        new ArrayList<>(),
-                        null,
-                        null,
-                        null
-                ),
-                new SaveProfileDTO(
-                        "Sophie",
-                        "Doe",
-                        "45",
-                        "Avenue de la république",
-                        "75008",
-                        "Curabitur vehicula, purus a fringilla dapibus, arcu magna pharetra augue, vel gravida risus turpis sit amet lectus.",
-                        "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8YXZhdGFyfGVufDB8fDB8fHww",
-                        "0145622333",
-                        LocalDate.of(2002, 1, 21),
-                        new ArrayList<>(),
-                        null,
-                        null,
-                        null
-                )
-        );
+    private void createProfiles(AllDataResponse allDataList) {
+        List<ProfileDataInfo> profileList = allDataList.getProfileDataList().stream()
+                .map(profile -> new ProfileDataInfo(
+                        profile.getFirstname(),
+                        profile.getLastname(),
+                        profile.getStreetNumber(),
+                        profile.getStreet(),
+                        profile.getZipCode(),
+                        profile.getDescription(),
+                        profile.getAvatar(),
+                        profile.getPhone(),
+                        LocalDate.parse(profile.getDateOfBirth()),
+                        profile.getRegionId(),
+                        profile.getDepartmentId(),
+                        profile.getCityId(),
+                        profile.getCategoryIds(),
+                        profile.getActivityIds(),
+                        profile.getBookingIds()
+                ))
+                .toList();
 
-        for (SaveProfileDTO saveProfile : saveProfileList) {
-            Profile profile = profileMapper.mapToEntity(saveProfile);
-            profileRepository.save(profile);
+        for (ProfileDataInfo profile : profileList) {
+            Region region = regionRepository.findById(profile.getRegionId()).orElse(null);
+            Department department = departmentRepository.findById(profile.getDepartmentId()).orElse(null);
+            City city = cityRepository.findById(profile.getCityId()).orElse(null);
+
+            Profile currentProfile = profileMapper.mapToEntity(new SaveProfileDTO(
+                            profile.getFirstname(),
+                            profile.getLastname(),
+                            profile.getStreetNumber(),
+                            profile.getStreet(),
+                            profile.getZipCode(),
+                            profile.getDescription(),
+                            profile.getAvatar(),
+                            profile.getPhone(),
+                            profile.getDateOfBirth(),
+                            profile.getCategoryIds(),
+                            null,
+                            null,
+                            null
+                    )
+            );
+
+            List<Category> categoryList = categoryRepository.findAllById(currentProfile.getCategoryList().stream().map(Category::getId).toList());
+
+            currentProfile.setRegion(region);
+            currentProfile.setDepartment(department);
+            currentProfile.setCity(city);
+            currentProfile.setCategoryList(categoryList);
+
+            profileRepository.save(currentProfile);
         }
     }
 
