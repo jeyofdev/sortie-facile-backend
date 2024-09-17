@@ -1,8 +1,7 @@
 package com.poec.sortie_facile_backend.util;
 
 import com.poec.sortie_facile_backend.data.location.model.ListLocationResponse;
-import com.poec.sortie_facile_backend.data.location.Location;
-import com.poec.sortie_facile_backend.data.location.LocationService;
+import com.poec.sortie_facile_backend.data.location.LocationDataService;
 import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationDepartmentInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationRegionInfo;
@@ -70,7 +69,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final CityMapper cityMapper;
     private final ProfileMapper profileMapper;
     private final ActivityMapper activityMapper;
-    private final LocationService locationService;
+    private final LocationDataService locationService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -105,12 +104,12 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createDatas() throws IOException {
-        ListLocationResponse locationDatas = locationService.getAllDatas();
+        ListLocationResponse locationDataList = locationService.getAllDatas();
 
         this.createMessageEmails();
-        this.createRegions(locationDatas);
-        this.createDepartments(locationDatas);
-        this.createCities(locationDatas);
+        this.createRegions(locationDataList);
+        this.createDepartments(locationDataList);
+        this.createCities(locationDataList);
         this.createCategories();
         this.createProfiles();
         this.createActivities();
@@ -128,42 +127,42 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createRegions(ListLocationResponse locationDatas) {
-        List<LocationRegionInfo> regionList = locationDatas.getLocations().stream()
+    private void createRegions(ListLocationResponse locationDataList) {
+        List<LocationRegionInfo> regionList = locationDataList.getLocationData().stream()
                 .map(location -> new LocationRegionInfo(location.getRegionName()))
                 .distinct()
                 .toList();
 
-        List<SaveRegionDTO> saveRegionList = new ArrayList<>();
         for (LocationRegionInfo region : regionList) {
-            saveRegionList.add(new SaveRegionDTO(region.getName()));
-        }
-
-        for (SaveRegionDTO saveRegion : saveRegionList) {
-            Region region = regionMapper.mapToEntity(saveRegion);
-            regionRepository.save(region);
+            Region currentRegion = regionMapper.mapToEntity(new SaveRegionDTO(region.getName()));
+            regionRepository.save(currentRegion);
         }
     }
 
-    private void createDepartments(ListLocationResponse locationDatas) {
-        List<LocationDepartmentInfo> departmentList = locationDatas.getLocations().stream()
-                .map(location -> new LocationDepartmentInfo(location.getDepartmentName(), location.getDepartmentNumber()))
+    private void createDepartments(ListLocationResponse locationDataList) {
+        List<LocationDepartmentInfo> departmentList = locationDataList.getLocationData().stream()
+                .map(location -> new LocationDepartmentInfo(
+                        location.getDepartmentName(),
+                        location.getDepartmentNumber(),
+                        location.getRegionName()
+                ))
                 .distinct()
                 .toList();
 
-        List<SaveDepartmentDTO> saveDepartmentList = new ArrayList<>();
         for (LocationDepartmentInfo department : departmentList) {
-            saveDepartmentList.add(new SaveDepartmentDTO(department.getName(), department.getNumber(), null));
-        }
+            Region region = regionRepository.findByName(department.getRegionName());
 
-        for (SaveDepartmentDTO saveDepartment : saveDepartmentList) {
-            Department department = departmentMapper.mapToEntity(saveDepartment);
-            departmentRepository.save(department);
+            Department currentDepartment = departmentMapper.mapToEntity(
+                    new SaveDepartmentDTO(department.getName(), department.getNumber(), null)
+            );
+            currentDepartment.setRegion(region);
+
+            departmentRepository.save(currentDepartment);
         }
     }
 
-    private void createCities(ListLocationResponse locationDatas) {
-        List<LocationCityInfo> cityList = locationDatas.getLocations().stream()
+    private void createCities(ListLocationResponse locationDataList) {
+        List<LocationCityInfo> cityList = locationDataList.getLocationData().stream()
                 .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode()))
                 .distinct()
                 .limit(100)

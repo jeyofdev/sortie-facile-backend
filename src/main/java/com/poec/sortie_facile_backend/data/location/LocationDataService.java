@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 
 @Service
-public class LocationService {
+public class LocationDataService {
     public ListLocationResponse getAllDatas() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         ClassPathResource resource = new ClassPathResource("location.data.json");

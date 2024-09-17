@@ -34,10 +34,10 @@ public class Department {
     @OneToMany(mappedBy = "department", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Profile> profileList = new ArrayList<>();
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "region_id", referencedColumnName = "id")
     private Region region;
 
-    @OneToMany(mappedBy = "department", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "department", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<City> cityList = new ArrayList<>();
 }
