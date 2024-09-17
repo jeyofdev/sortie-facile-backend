@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.util;
 
 import com.poec.sortie_facile_backend.data.all.AllDataResponse;
 import com.poec.sortie_facile_backend.data.all.AllDataService;
+import com.poec.sortie_facile_backend.data.all.activity.ActivityDataInfo;
 import com.poec.sortie_facile_backend.data.all.category.CategoryDataInfo;
 import com.poec.sortie_facile_backend.data.all.contact.ContactDataInfo;
 import com.poec.sortie_facile_backend.data.all.profile.ProfileDataInfo;
@@ -50,6 +51,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -120,7 +122,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.createCities(locationDataList);
         this.createCategories(allDataList);
         this.createProfiles(allDataList);
-       /* this.createActivities();*/
+        this.createActivities(allDataList);
     }
 
     private void createContacts(AllDataResponse allDataList) {
@@ -263,66 +265,56 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createActivities() {
-        List<SaveActivityDTO> saveActivityList = Arrays.asList(
-                new SaveActivityDTO(
-                        "Randonnée en montagne",
-                        25,
-                        "https://images.unsplash.com/photo-1469395013119-ca3b424d83e5?q=80&w=1473&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    private void createActivities(AllDataResponse allDataList) {
+        List<ActivityDataInfo> activityList = allDataList.getActivityDataList().stream()
+                .map(activity -> new ActivityDataInfo(
+                        activity.getName(),
                         null,
-                        "Découvrez les paysages magnifiques des montagnes en participant à cette randonnée organisée pour les amateurs de nature.",
-                        10,
-                        true,
-                        new ArrayList<>(),
-                        null,
-                        null,
-                        null
-                ),
-                new SaveActivityDTO(
-                        "Projection de film en plein air",
-                        25,
-                        "https://images.unsplash.com/photo-1608170825938-a8ea0305d46c?q=80&w=1325&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        null,
-                        "Venez profiter d'une soirée cinéma sous les étoiles avec la projection d'un classique du cinéma.",
-                        50,
-                        true,
-                        new ArrayList<>(),
-                        null,
-                        null,
-                        null
-                ),
-                new SaveActivityDTO(
-                        "Visite guidée d'un musée",
-                        25,
-                        "https://images.unsplash.com/photo-1518998053901-5348d3961a04?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        null,
-                        "Découvrez les trésors artistiques du musée avec une visite guidée interactive et immersive.",
-                        15,
-                        true,
-                        new ArrayList<>(),
-                        null,
-                        null,
-                        null
-                ),
-                new SaveActivityDTO(
-                        "Match caritatif de football",
-                        25,
-                        "https://images.unsplash.com/photo-1494177310973-4841f7d5a882?q=80&w=1471&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                        null,
-                        "Participez à un tournoi de football pour une bonne cause.",
-                        22,
-                        true,
-                        new ArrayList<>(),
-                        null,
-                        null,
-                        null
-                )
-        );
+                        activity.getAge(),
+                        activity.getImgUrl(),
+                        activity.getLink(),
+                        activity.getDescription(),
+                        activity.getNbGuest(),
+                        activity.getIsVisible(),
+                        activity.getRegionId(),
+                        activity.getDepartmentId(),
+                        activity.getCityId(),
+                        activity.getCategoryIds(),
+                        activity.getProfileId()
+                ))
+                .toList();
 
-        for (SaveActivityDTO saveActivity : saveActivityList) {
-            Activity activity = activityMapper.mapToEntity(saveActivity);
-            activityRepository.save(activity);
+        for (ActivityDataInfo activity : activityList) {
+            Region region = regionRepository.findById(activity.getRegionId()).orElse(null);
+            Department department = departmentRepository.findById(activity.getDepartmentId()).orElse(null);
+            City city = cityRepository.findById(activity.getCityId()).orElse(null);
+            Profile profile = profileRepository.findById(activity.getProfileId()).orElse(null);
+
+            Activity currentActivity = activityMapper.mapToEntity(new SaveActivityDTO(
+                    activity.getName(),
+                    activity.getAge(),
+                    activity.getImgUrl(),
+                    activity.getLink(),
+                    activity.getDescription(),
+                    activity.getNbGuest(),
+                    activity.isVisible(),
+                    activity.getCategoryIds(),
+                    null,
+                    null,
+                    null,
+                    null
+                    )
+            );
+
+            List<Category> categoryList = categoryRepository.findAllById(currentActivity.getCategoryList().stream().map(Category::getId).toList());
+
+            currentActivity.setRegion(region);
+            currentActivity.setDepartment(department);
+            currentActivity.setCity(city);
+            currentActivity.setCategoryList(categoryList);
+            currentActivity.setProfile(profile);
+
+            activityRepository.save(currentActivity);
         }
     }
-
 }

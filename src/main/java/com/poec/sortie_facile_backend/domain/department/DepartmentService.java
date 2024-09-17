@@ -64,7 +64,7 @@ public class DepartmentService extends AbstractDomainService<Department> {
         }
 
         for (City city : department.getCityList()) {
-            for (Activity activity : department.getActivityList()) {
+            for (Activity activity : city.getActivityList()) {
                 activity.setCity(null);
             }
 

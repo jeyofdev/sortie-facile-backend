@@ -84,6 +84,12 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
             activity.setCategoryList(categoryList);
         }
 
+        if (saveActivityDTO.profileId() != null) {
+            Profile profile = new Profile();
+            profile.setId(saveActivityDTO.profileId());
+            activity.setProfile(profile);
+        }
+
         return activity;
     }
 }

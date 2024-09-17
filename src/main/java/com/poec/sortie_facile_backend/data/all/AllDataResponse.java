@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.data.all;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.poec.sortie_facile_backend.data.all.activity.ActivityData;
 import com.poec.sortie_facile_backend.data.all.category.CategoryData;
 import com.poec.sortie_facile_backend.data.all.contact.ContactData;
 import com.poec.sortie_facile_backend.data.all.profile.ProfileData;
@@ -18,4 +19,7 @@ public class AllDataResponse {
 
     @JsonProperty("profiles")
     private List<ProfileData> profileDataList;
+
+    @JsonProperty("activities")
+    private List<ActivityData> activityDataList;
 }

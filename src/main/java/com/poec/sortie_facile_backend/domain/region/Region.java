@@ -24,7 +24,7 @@ public class Region {
     @Column(name = "name", columnDefinition = "VARCHAR(50)")
     private String name;
 
-    @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "region", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Activity> activityList = new ArrayList<>();
 
     @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})

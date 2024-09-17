@@ -49,22 +49,22 @@ public class Activity {
     @Column(name="isVisible", columnDefinition = "BOOLEAN" , nullable = false )
     private boolean isVisible;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "city_id", referencedColumnName = "id")
     private City city;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "region_id", referencedColumnName = "id")
     private Region region;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 
     @OneToMany(mappedBy = "activity", cascade = CascadeType.ALL)
     private List<Booking> bookingList = new ArrayList<>();
 
-    @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinTable(
             name = "activity_category",
             joinColumns = @JoinColumn(name = "activity_id"),
@@ -72,7 +72,7 @@ public class Activity {
     )
     private List<Category> categoryList;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 }
