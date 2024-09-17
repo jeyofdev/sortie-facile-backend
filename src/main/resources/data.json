@@ -1,0 +1,16 @@
+{
+  "contacts": [
+    {
+      "title": "Renseignement sur une activité",
+      "email": "johndoe@test.com",
+      "message": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in felis quis odio elementum bibendum a id tellus. Integer ultricies vel mauris eu pretium. Donec efficitur felis quis tincidunt vulputate. Aliquam et odio efficitur, bibendum elit sed, ullamcorper tellus. Pellentesque at sapien vitae diam euismod viverra eu vel nisi.",
+      "isRead": false
+    },
+    {
+      "title": "Annulation de réservation",
+      "email": "janedoe@test.com",
+      "message": "Sed at rhoncus sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer maximus odio id sem tristique efficitur. Sed efficitur, tortor sed tempus aliquet, quam orci varius tellus, eget vestibulum urna justo quis sapien. Phasellus gravida consequat pharetra.",
+      "isRead": false
+    }
+  ]
+}

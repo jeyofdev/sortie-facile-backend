@@ -7,7 +7,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ListLocationResponse {
+public class ListLocationDataResponse {
     @JsonProperty("locations")
-    private List<LocationData> locationData;
+    private List<LocationData> locationDataList;
 }

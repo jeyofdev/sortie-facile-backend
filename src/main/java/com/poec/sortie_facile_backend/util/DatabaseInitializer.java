@@ -1,6 +1,9 @@
 package com.poec.sortie_facile_backend.util;
 
-import com.poec.sortie_facile_backend.data.location.model.ListLocationResponse;
+import com.poec.sortie_facile_backend.data.contact.ContactDataService;
+import com.poec.sortie_facile_backend.data.contact.model.ContactDataInfo;
+import com.poec.sortie_facile_backend.data.contact.model.ListContactDataResponse;
+import com.poec.sortie_facile_backend.data.location.model.ListLocationDataResponse;
 import com.poec.sortie_facile_backend.data.location.LocationDataService;
 import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationDepartmentInfo;
@@ -70,7 +73,8 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final ProfileMapper profileMapper;
     private final ActivityMapper activityMapper;
 
-    private final LocationDataService locationService;
+    private final LocationDataService locationDataService;
+    private final ContactDataService contactDataService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -105,9 +109,10 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createDatas() throws IOException {
-        ListLocationResponse locationDataList = locationService.getAllDatas();
+        ListLocationDataResponse locationDataList = locationDataService.getAllDatas();
+        ListContactDataResponse contactDataList = contactDataService.getAllDatas();
 
-        this.createMessageEmails();
+        this.createMessageEmails(contactDataList);
         this.createRegions(locationDataList);
         this.createDepartments(locationDataList);
         this.createCities(locationDataList);
@@ -116,20 +121,30 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.createActivities();
     }
 
-    private void createMessageEmails() {
-        List<SaveContactDTO> saveEmailMessageList = Arrays.asList(
-                new SaveContactDTO("Renseignement sur une activité", "johndoe@test.com", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in felis quis odio elementum bibendum a id tellus. Integer ultricies vel mauris eu pretium. Donec efficitur felis quis tincidunt vulputate. Aliquam et odio efficitur, bibendum elit sed, ullamcorper tellus. Pellentesque at sapien vitae diam euismod viverra eu vel nisi.", false),
-                new SaveContactDTO("Annulation de réservation", "janedoe@test.com", "Sed at rhoncus sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer maximus odio id sem tristique efficitur. Sed efficitur, tortor sed tempus aliquet, quam orci varius tellus, eget vestibulum urna justo quis sapien. Phasellus gravida consequat pharetra.", false)
-        );
+    private void createMessageEmails(ListContactDataResponse contactDataList) {
+        List<ContactDataInfo> contactList = contactDataList.getContactDataList().stream()
+                .map(contact -> new ContactDataInfo(
+                        contact.getTitle(),
+                        contact.getEmail(),
+                        contact.getMessage(),
+                        contact.getIsRead()
+                ))
+                .toList();
 
-        for (SaveContactDTO saveEmailMessage : saveEmailMessageList) {
-            Contact emailMessage = contactMapper.mapToEntity(saveEmailMessage);
-            contactRepository.save(emailMessage);
+        for (ContactDataInfo contact : contactList) {
+            Contact currentContact = contactMapper.mapToEntity(new SaveContactDTO(
+                    contact.getTitle(),
+                    contact.getEmail(),
+                    contact.getMessage(),
+                    contact.getIsRead()
+            ));
+
+            contactRepository.save(currentContact);
         }
     }
 
-    private void createRegions(ListLocationResponse locationDataList) {
-        List<LocationRegionInfo> regionList = locationDataList.getLocationData().stream()
+    private void createRegions(ListLocationDataResponse locationDataList) {
+        List<LocationRegionInfo> regionList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationRegionInfo(location.getRegionName()))
                 .distinct()
                 .toList();
@@ -140,8 +155,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createDepartments(ListLocationResponse locationDataList) {
-        List<LocationDepartmentInfo> departmentList = locationDataList.getLocationData().stream()
+    private void createDepartments(ListLocationDataResponse locationDataList) {
+        List<LocationDepartmentInfo> departmentList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationDepartmentInfo(
                         location.getDepartmentName(),
                         location.getDepartmentNumber(),
@@ -162,8 +177,8 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createCities(ListLocationResponse locationDataList) {
-        List<LocationCityInfo> cityList = locationDataList.getLocationData().stream()
+    private void createCities(ListLocationDataResponse locationDataList) {
+        List<LocationCityInfo> cityList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode(), location.getDepartmentName()))
                 .distinct()
                 .limit(100)
