@@ -1,8 +1,11 @@
 package com.poec.sortie_facile_backend.util;
 
-import com.poec.sortie_facile_backend.data.location.model.ListLocationResponse;
-import com.poec.sortie_facile_backend.data.location.Location;
-import com.poec.sortie_facile_backend.data.location.LocationService;
+import com.poec.sortie_facile_backend.data.all.AllDataResponse;
+import com.poec.sortie_facile_backend.data.all.AllDataService;
+import com.poec.sortie_facile_backend.data.all.category.CategoryDataInfo;
+import com.poec.sortie_facile_backend.data.all.contact.ContactDataInfo;
+import com.poec.sortie_facile_backend.data.location.model.ListLocationDataResponse;
+import com.poec.sortie_facile_backend.data.location.LocationDataService;
 import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationDepartmentInfo;
 import com.poec.sortie_facile_backend.data.location.model.LocationRegionInfo;
@@ -70,7 +73,9 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final CityMapper cityMapper;
     private final ProfileMapper profileMapper;
     private final ActivityMapper activityMapper;
-    private final LocationService locationService;
+
+    private final LocationDataService locationDataService;
+    private final AllDataService allDataService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -105,93 +110,101 @@ public class DatabaseInitializer implements CommandLineRunner {
     }
 
     private void createDatas() throws IOException {
-        ListLocationResponse locationDatas = locationService.getAllDatas();
+        ListLocationDataResponse locationDataList = locationDataService.getAllDatas();
+        AllDataResponse allDataList = allDataService.getAllDatas();
 
-        this.createMessageEmails();
-        this.createRegions(locationDatas);
-        this.createDepartments(locationDatas);
-        this.createCities(locationDatas);
-        this.createCategories();
-        this.createProfiles();
-        this.createActivities();
+        this.createMessageEmails(allDataList);
+        this.createRegions(locationDataList);
+        this.createDepartments(locationDataList);
+        this.createCities(locationDataList);
+        this.createCategories(allDataList);
+      /*  this.createProfiles();
+        this.createActivities();*/
     }
 
-    private void createMessageEmails() {
-        List<SaveContactDTO> saveEmailMessageList = Arrays.asList(
-                new SaveContactDTO("Renseignement sur une activité", "johndoe@test.com", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In in felis quis odio elementum bibendum a id tellus. Integer ultricies vel mauris eu pretium. Donec efficitur felis quis tincidunt vulputate. Aliquam et odio efficitur, bibendum elit sed, ullamcorper tellus. Pellentesque at sapien vitae diam euismod viverra eu vel nisi.", false),
-                new SaveContactDTO("Annulation de réservation", "janedoe@test.com", "Sed at rhoncus sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Integer maximus odio id sem tristique efficitur. Sed efficitur, tortor sed tempus aliquet, quam orci varius tellus, eget vestibulum urna justo quis sapien. Phasellus gravida consequat pharetra.", false)
-        );
+    private void createMessageEmails(AllDataResponse allDataList) {
+        List<ContactDataInfo> contactList = allDataList.getContactDataList().stream()
+                .map(contact -> new ContactDataInfo(
+                        contact.getTitle(),
+                        contact.getEmail(),
+                        contact.getMessage(),
+                        contact.getIsRead()
+                ))
+                .toList();
 
-        for (SaveContactDTO saveEmailMessage : saveEmailMessageList) {
-            Contact emailMessage = contactMapper.mapToEntity(saveEmailMessage);
-            contactRepository.save(emailMessage);
+        for (ContactDataInfo contact : contactList) {
+            Contact currentContact = contactMapper.mapToEntity(new SaveContactDTO(
+                    contact.getTitle(),
+                    contact.getEmail(),
+                    contact.getMessage(),
+                    contact.getIsRead()
+            ));
+
+            contactRepository.save(currentContact);
         }
     }
 
-    private void createRegions(ListLocationResponse locationDatas) {
-        List<LocationRegionInfo> regionList = locationDatas.getLocations().stream()
+    private void createRegions(ListLocationDataResponse locationDataList) {
+        List<LocationRegionInfo> regionList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationRegionInfo(location.getRegionName()))
                 .distinct()
                 .toList();
 
-        List<SaveRegionDTO> saveRegionList = new ArrayList<>();
         for (LocationRegionInfo region : regionList) {
-            saveRegionList.add(new SaveRegionDTO(region.getName()));
-        }
-
-        for (SaveRegionDTO saveRegion : saveRegionList) {
-            Region region = regionMapper.mapToEntity(saveRegion);
-            regionRepository.save(region);
+            Region currentRegion = regionMapper.mapToEntity(new SaveRegionDTO(region.getName()));
+            regionRepository.save(currentRegion);
         }
     }
 
-    private void createDepartments(ListLocationResponse locationDatas) {
-        List<LocationDepartmentInfo> departmentList = locationDatas.getLocations().stream()
-                .map(location -> new LocationDepartmentInfo(location.getDepartmentName(), location.getDepartmentNumber()))
+    private void createDepartments(ListLocationDataResponse locationDataList) {
+        List<LocationDepartmentInfo> departmentList = locationDataList.getLocationDataList().stream()
+                .map(location -> new LocationDepartmentInfo(
+                        location.getDepartmentName(),
+                        location.getDepartmentNumber(),
+                        location.getRegionName()
+                ))
                 .distinct()
                 .toList();
 
-        List<SaveDepartmentDTO> saveDepartmentList = new ArrayList<>();
         for (LocationDepartmentInfo department : departmentList) {
-            saveDepartmentList.add(new SaveDepartmentDTO(department.getName(), department.getNumber(), null));
-        }
+            Region region = regionRepository.findByName(department.getRegionName());
 
-        for (SaveDepartmentDTO saveDepartment : saveDepartmentList) {
-            Department department = departmentMapper.mapToEntity(saveDepartment);
-            departmentRepository.save(department);
+            Department currentDepartment = departmentMapper.mapToEntity(
+                    new SaveDepartmentDTO(department.getName(), department.getNumber(), null)
+            );
+            currentDepartment.setRegion(region);
+
+            departmentRepository.save(currentDepartment);
         }
     }
 
-    private void createCities(ListLocationResponse locationDatas) {
-        List<LocationCityInfo> cityList = locationDatas.getLocations().stream()
-                .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode()))
+    private void createCities(ListLocationDataResponse locationDataList) {
+        List<LocationCityInfo> cityList = locationDataList.getLocationDataList().stream()
+                .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode(), location.getDepartmentName()))
                 .distinct()
                 .limit(100)
                 .toList();
 
-        List<SaveCityDTO> saveCityList = new ArrayList<>();
         for (LocationCityInfo city : cityList) {
-            saveCityList.add(new SaveCityDTO(city.getLabel(), city.getZipCode(), null));
-        }
+            Department department = departmentRepository.findByName(city.getDepartmentName());
 
-        for (SaveCityDTO saveCity : saveCityList) {
-            City department = cityMapper.mapToEntity(saveCity);
-            cityRepository.save(department);
+            City currentCity = cityMapper.mapToEntity(
+                    new SaveCityDTO(city.getLabel(), city.getZipCode(), null)
+            );
+            currentCity.setDepartment(department);
+
+            cityRepository.save(currentCity);
         }
     }
 
-    private void createCategories() {
-        List<SaveCategoryDTO> saveCategoryList = Arrays.asList(
-                new SaveCategoryDTO("Sport", "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnR8ZW58MHx8MHx8fDA%3D"),
-                new SaveCategoryDTO("Cinéma", "https://images.unsplash.com/photo-1604061986761-d9d0cc41b0d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8VGFibGUlMjBCYXNzZXxlbnwwfHwwfHx8MA%3D%3D"),
-                new SaveCategoryDTO("Culture", "https://plus.unsplash.com/premium_photo-1661407582641-9ce38a3c8402?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2FuYXAlQzMlQTl8ZW58MHx8MHx8fDA%3D"),
-                new SaveCategoryDTO("Musique", "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJtb2lyZXxlbnwwfHwwfHx8MA%3D%3D"),
-                new SaveCategoryDTO("Jeux vidéos", "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww")
-        );
+    private void createCategories(AllDataResponse allDataList) {
+        List<CategoryDataInfo> categoryList = allDataList.getCategoryDataList().stream()
+                .map(category -> new CategoryDataInfo(category.getTitle(), category.getImgUrl()))
+                .toList();
 
-        for (SaveCategoryDTO saveCategory : saveCategoryList) {
-            Category category = categoryMapper.mapToEntity(saveCategory);
-            categoryRepository.save(category);
+        for (CategoryDataInfo category : categoryList) {
+            Category currentCategory = categoryMapper.mapToEntity(new SaveCategoryDTO(category.getTitle(), category.getImgUrl()));
+            categoryRepository.save(currentCategory);
         }
     }
 

@@ -30,6 +30,6 @@ public class Region {
     @OneToMany(mappedBy = "region", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private List<Profile> profileList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "region", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "region", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Department> departmentList = new ArrayList<>();
 }

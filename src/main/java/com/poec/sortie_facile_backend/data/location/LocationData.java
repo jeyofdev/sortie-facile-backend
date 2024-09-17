@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data
-public class Location {
+public class LocationData {
     @JsonProperty("insee_code")
     private String inseeCode;
 
