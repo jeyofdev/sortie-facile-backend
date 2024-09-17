@@ -1,8 +1,9 @@
 package com.poec.sortie_facile_backend.util;
 
-import com.poec.sortie_facile_backend.data.contact.ContactDataService;
-import com.poec.sortie_facile_backend.data.contact.model.ContactDataInfo;
-import com.poec.sortie_facile_backend.data.contact.model.ListContactDataResponse;
+import com.poec.sortie_facile_backend.data.all.AllDataResponse;
+import com.poec.sortie_facile_backend.data.all.AllDataService;
+import com.poec.sortie_facile_backend.data.all.category.CategoryDataInfo;
+import com.poec.sortie_facile_backend.data.all.contact.ContactDataInfo;
 import com.poec.sortie_facile_backend.data.location.model.ListLocationDataResponse;
 import com.poec.sortie_facile_backend.data.location.LocationDataService;
 import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
@@ -74,7 +75,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final ActivityMapper activityMapper;
 
     private final LocationDataService locationDataService;
-    private final ContactDataService contactDataService;
+    private final AllDataService allDataService;
 
     @Override
     public void run(String... args) throws Exception {
@@ -110,19 +111,19 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private void createDatas() throws IOException {
         ListLocationDataResponse locationDataList = locationDataService.getAllDatas();
-        ListContactDataResponse contactDataList = contactDataService.getAllDatas();
+        AllDataResponse allDataList = allDataService.getAllDatas();
 
-        this.createMessageEmails(contactDataList);
+        this.createMessageEmails(allDataList);
         this.createRegions(locationDataList);
         this.createDepartments(locationDataList);
         this.createCities(locationDataList);
-        this.createCategories();
-        this.createProfiles();
-        this.createActivities();
+        this.createCategories(allDataList);
+      /*  this.createProfiles();
+        this.createActivities();*/
     }
 
-    private void createMessageEmails(ListContactDataResponse contactDataList) {
-        List<ContactDataInfo> contactList = contactDataList.getContactDataList().stream()
+    private void createMessageEmails(AllDataResponse allDataList) {
+        List<ContactDataInfo> contactList = allDataList.getContactDataList().stream()
                 .map(contact -> new ContactDataInfo(
                         contact.getTitle(),
                         contact.getEmail(),
@@ -196,18 +197,14 @@ public class DatabaseInitializer implements CommandLineRunner {
         }
     }
 
-    private void createCategories() {
-        List<SaveCategoryDTO> saveCategoryList = Arrays.asList(
-                new SaveCategoryDTO("Sport", "https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c3BvcnR8ZW58MHx8MHx8fDA%3D"),
-                new SaveCategoryDTO("Cinéma", "https://images.unsplash.com/photo-1604061986761-d9d0cc41b0d1?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8VGFibGUlMjBCYXNzZXxlbnwwfHwwfHx8MA%3D%3D"),
-                new SaveCategoryDTO("Culture", "https://plus.unsplash.com/premium_photo-1661407582641-9ce38a3c8402?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Q2FuYXAlQzMlQTl8ZW58MHx8MHx8fDA%3D"),
-                new SaveCategoryDTO("Musique", "https://images.unsplash.com/photo-1595428774223-ef52624120d2?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXJtb2lyZXxlbnwwfHwwfHx8MA%3D%3D"),
-                new SaveCategoryDTO("Jeux vidéos", "https://images.unsplash.com/photo-1586753513812-462ed2a82584?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjh8fCVDMyVBOWNsYWlyYWdlJTIwbGVkfGVufDB8fDB8fHww")
-        );
+    private void createCategories(AllDataResponse allDataList) {
+        List<CategoryDataInfo> categoryList = allDataList.getCategoryDataList().stream()
+                .map(category -> new CategoryDataInfo(category.getTitle(), category.getImgUrl()))
+                .toList();
 
-        for (SaveCategoryDTO saveCategory : saveCategoryList) {
-            Category category = categoryMapper.mapToEntity(saveCategory);
-            categoryRepository.save(category);
+        for (CategoryDataInfo category : categoryList) {
+            Category currentCategory = categoryMapper.mapToEntity(new SaveCategoryDTO(category.getTitle(), category.getImgUrl()));
+            categoryRepository.save(currentCategory);
         }
     }
 

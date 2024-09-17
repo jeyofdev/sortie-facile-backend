@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.data.contact.model;
+package com.poec.sortie_facile_backend.data.all.contact;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

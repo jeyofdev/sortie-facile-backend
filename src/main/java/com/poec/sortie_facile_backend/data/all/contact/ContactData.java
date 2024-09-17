@@ -1,4 +1,4 @@
-package com.poec.sortie_facile_backend.data.contact;
+package com.poec.sortie_facile_backend.data.all.contact;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
