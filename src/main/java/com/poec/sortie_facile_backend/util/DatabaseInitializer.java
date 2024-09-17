@@ -69,6 +69,7 @@ public class DatabaseInitializer implements CommandLineRunner {
     private final CityMapper cityMapper;
     private final ProfileMapper profileMapper;
     private final ActivityMapper activityMapper;
+
     private final LocationDataService locationService;
 
     @Override
@@ -163,19 +164,20 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     private void createCities(ListLocationResponse locationDataList) {
         List<LocationCityInfo> cityList = locationDataList.getLocationData().stream()
-                .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode()))
+                .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode(), location.getDepartmentName()))
                 .distinct()
                 .limit(100)
                 .toList();
 
-        List<SaveCityDTO> saveCityList = new ArrayList<>();
         for (LocationCityInfo city : cityList) {
-            saveCityList.add(new SaveCityDTO(city.getLabel(), city.getZipCode(), null));
-        }
+            Department department = departmentRepository.findByName(city.getDepartmentName());
 
-        for (SaveCityDTO saveCity : saveCityList) {
-            City department = cityMapper.mapToEntity(saveCity);
-            cityRepository.save(department);
+            City currentCity = cityMapper.mapToEntity(
+                    new SaveCityDTO(city.getLabel(), city.getZipCode(), null)
+            );
+            currentCity.setDepartment(department);
+
+            cityRepository.save(currentCity);
         }
     }
 
