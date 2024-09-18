@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.common.model.UserNameFormat;
+import com.poec.sortie_facile_backend.common.model.UserYearFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
@@ -12,6 +13,7 @@ import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,13 +35,13 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
         return new ProfileDTO(
                 profile.getId(),
                 new UserNameFormat(profile.getFirstname(), profile.getLastname()),
-                profile.getStreetNumber(),
+                new UserYearFormat(profile.getDateOfBirth()),
+                Helper.formatPhoneNumber(profile.getPhone()),
                 profile.getStreet(),
                 profile.getZipCode(),
                 profile.getDescription(),
                 profile.getAvatar(),
                 profile.getPhone(),
-                profile.getDateOfBirth(),
                 profile.getActivityList() != null ? profile.getActivityList().stream().map(Activity::getId).toList() : new ArrayList<>(),
                 Optional.ofNullable(profile.getRegion()).map(Region::getId).orElse(null),
                 Optional.ofNullable(profile.getDepartment()).map(Department::getId).orElse(null),
