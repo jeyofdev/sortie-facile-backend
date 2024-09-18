@@ -19,7 +19,7 @@ public class Helper {
      *
      * @return String
      */
-    public static String capitalize(String str) {
+    public static String capitalizeFirstLetter(String str) {
         if (str == null || str.isEmpty()) {
             return str;
         }

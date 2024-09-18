@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
+import com.poec.sortie_facile_backend.common.model.UserNameFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
@@ -31,8 +32,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
     public ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
                 profile.getId(),
-                profile.getFirstname(),
-                profile.getLastname(),
+                new UserNameFormat(profile.getFirstname(), profile.getLastname()),
                 profile.getStreetNumber(),
                 profile.getStreet(),
                 profile.getZipCode(),
