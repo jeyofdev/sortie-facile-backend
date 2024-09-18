@@ -31,7 +31,7 @@ public abstract class AbstractDomainService<T> implements BaseDomainService<T> {
     @Override
     public T findById(Long entityId) throws EntityNotFoundException {
         return repository.findById(entityId).orElseThrow(
-                () -> new EntityNotFoundException(Helper.capitalize(entityName) + " with id " + entityId + " cannot be found"));
+                () -> new EntityNotFoundException(Helper.capitalizeFirstLetter(entityName) + " with id " + entityId + " cannot be found"));
     }
 
     @Override
