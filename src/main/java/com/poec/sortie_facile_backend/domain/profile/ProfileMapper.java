@@ -1,18 +1,22 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
-import com.poec.sortie_facile_backend.common.model.UserNameFormat;
-import com.poec.sortie_facile_backend.common.model.UserYearFormat;
+import com.poec.sortie_facile_backend.common.model.AddressFormat;
+import com.poec.sortie_facile_backend.common.model.NameFormat;
+import com.poec.sortie_facile_backend.common.model.YearFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
+import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
 import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,19 +38,21 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
     public ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
                 profile.getId(),
-                new UserNameFormat(profile.getFirstname(), profile.getLastname()),
-                new UserYearFormat(profile.getDateOfBirth()),
+                profile.getUser().getEmail(),
+                new NameFormat(profile.getFirstname(), profile.getLastname()),
+                new YearFormat(profile.getDateOfBirth()),
                 Helper.formatPhoneNumber(profile.getPhone()),
-                profile.getStreet(),
-                profile.getZipCode(),
+                new AddressFormat(
+                        profile.getStreetNumber(),
+                        profile.getStreet(),
+                        profile.getZipCode(),
+                        new RegionDTO(profile.getRegion().getId(), profile.getRegion().getName(), null, null, null),
+                        new DepartmentDTO(profile.getDepartment().getId(), profile.getDepartment().getName(), profile.getDepartment().getNumber(), null, null, null, null),
+                        new CityDTO(profile.getCity().getId(), profile.getCity().getName(), profile.getCity().getZipCode(), null, null, null)
+                ),
                 profile.getDescription(),
                 profile.getAvatar(),
-                profile.getPhone(),
                 profile.getActivityList() != null ? profile.getActivityList().stream().map(Activity::getId).toList() : new ArrayList<>(),
-                Optional.ofNullable(profile.getRegion()).map(Region::getId).orElse(null),
-                Optional.ofNullable(profile.getDepartment()).map(Department::getId).orElse(null),
-                Optional.ofNullable(profile.getCity()).map(City::getId).orElse(null),
-                Optional.ofNullable(profile.getUser()).map(AuthUser::getId).orElse(null),
                 profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),
                 profile.getCategoryList() != null ? profile.getCategoryList().stream().map(Category::getId).toList() : new ArrayList<>()
         );

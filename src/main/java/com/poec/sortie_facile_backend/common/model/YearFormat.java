@@ -10,11 +10,11 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserYearFormat {
+public class YearFormat {
     private Integer age;
     private String dateOfBirth;
 
-    public UserYearFormat(LocalDate dateOfBirth) {
+    public YearFormat(LocalDate dateOfBirth) {
         this.age = Helper.calculateAge(dateOfBirth);
         this.dateOfBirth = Helper.formatDate(dateOfBirth);
     }

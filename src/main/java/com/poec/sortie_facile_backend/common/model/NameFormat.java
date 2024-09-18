@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserNameFormat {
+public class NameFormat {
     private String firstname;
     private String lastname;
     private String fullName;
 
-    public UserNameFormat(String firstname, String lastname) {
+    public NameFormat(String firstname, String lastname) {
         this.firstname = Helper.capitalizeFirstLetter(firstname);
         this.lastname = Helper.capitalizeFirstLetter(lastname);
         this.fullName = this.firstname + " " + this.lastname;
