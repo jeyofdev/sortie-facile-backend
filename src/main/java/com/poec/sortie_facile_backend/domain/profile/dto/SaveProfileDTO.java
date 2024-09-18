@@ -20,6 +20,12 @@ public record SaveProfileDTO(
         @Size(min = 2, max = 50, message = "The lastname field must contain between 2 and 50 characters.")
         String lastname,
 
+        @NotNull(message = "The date of birth field is required.")
+        LocalDate dateOfBirth,
+
+        @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
+        String phone,
+
         @NotNull(message = "The street number field is required.")
         @NotBlank(message = "The name street number cannot be empty.")
         @Pattern(regexp = "^[0-9]*$", message = "The street number must be a maximum of 4 digits.")
@@ -40,12 +46,6 @@ public record SaveProfileDTO(
 
         @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
         String avatar,
-
-        @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
-        String phone,
-
-        @NotNull(message = "The date of birth field is required.")
-        LocalDate dateOfBirth,
 
         @Nullable List<Long> categoryIds,
         @Nullable Long regionId,

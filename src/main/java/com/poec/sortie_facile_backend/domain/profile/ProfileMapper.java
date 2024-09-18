@@ -1,11 +1,11 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
-import com.poec.sortie_facile_backend.auth_user.AuthUser;
+
 import com.poec.sortie_facile_backend.common.model.AddressFormat;
 import com.poec.sortie_facile_backend.common.model.NameFormat;
 import com.poec.sortie_facile_backend.common.model.YearFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
-import com.poec.sortie_facile_backend.domain.activity.Activity;
+import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
@@ -23,7 +23,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, SaveProfileDTO> {
@@ -38,7 +37,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
     public ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
                 profile.getId(),
-                profile.getUser().getEmail(),
+                /*profile.getUser().getEmail(),*/
                 new NameFormat(profile.getFirstname(), profile.getLastname()),
                 new YearFormat(profile.getDateOfBirth()),
                 Helper.formatPhoneNumber(profile.getPhone()),
@@ -52,7 +51,23 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 ),
                 profile.getDescription(),
                 profile.getAvatar(),
-                profile.getActivityList() != null ? profile.getActivityList().stream().map(Activity::getId).toList() : new ArrayList<>(),
+                profile.getActivityList() != null ? profile.getActivityList().stream().map(activity -> new ActivityDTO(
+                        activity.getId(),
+                        activity.getName(),
+                        activity.getCreatedAt(),
+                        activity.getAge(),
+                        activity.getImgUrl(),
+                        null,
+                        activity.getDescription(),
+                        activity.getNbGuest(),
+                        activity.isVisible(),
+                        null,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                )).toList() : new ArrayList<>(),
                 profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),
                 profile.getCategoryList() != null ? profile.getCategoryList().stream().map(Category::getId).toList() : new ArrayList<>()
         );
@@ -62,15 +77,15 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
     public Profile mapToEntity(SaveProfileDTO saveProfileDTO) {
         Profile profile = new Profile();
 
-        profile.setDescription(saveProfileDTO.description());
         profile.setFirstname(saveProfileDTO.firstname());
         profile.setLastname(saveProfileDTO.lastname());
+        profile.setDateOfBirth(saveProfileDTO.dateOfBirth());
+        profile.setPhone(saveProfileDTO.phone());
         profile.setStreetNumber(saveProfileDTO.streetNumber());
         profile.setStreet(saveProfileDTO.street());
         profile.setZipCode(saveProfileDTO.zipCode());
+        profile.setDescription(saveProfileDTO.description());
         profile.setAvatar(saveProfileDTO.avatar());
-        profile.setPhone(saveProfileDTO.phone());
-        profile.setDateOfBirth(saveProfileDTO.dateOfBirth());
 
         if (saveProfileDTO.categoryIds() != null) {
             List<Category> categoryList = categoryRepository.findAllById(saveProfileDTO.categoryIds());
