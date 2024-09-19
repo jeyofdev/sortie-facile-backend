@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
 
+import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.common.model.AddressFormat;
 import com.poec.sortie_facile_backend.common.model.NameFormat;
 import com.poec.sortie_facile_backend.common.model.YearFormat;
@@ -37,7 +38,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
     public ProfileDTO mapFromEntity(Profile profile) {
         return new ProfileDTO(
                 profile.getId(),
-                /*profile.getUser().getEmail(),*/
+                profile.getUser().getEmail(),
                 new NameFormat(profile.getFirstname(), profile.getLastname()),
                 new YearFormat(profile.getDateOfBirth()),
                 Helper.formatPhoneNumber(profile.getPhone()),
@@ -108,6 +109,12 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
             City city = new City();
             city.setId(saveProfileDTO.cityId());
             profile.setCity(city);
+        }
+
+        if (saveProfileDTO.userId() != null) {
+            AuthUser authUser = new AuthUser();
+            authUser.setId(saveProfileDTO.userId());
+            profile.setUser(authUser);
         }
 
         return profile;

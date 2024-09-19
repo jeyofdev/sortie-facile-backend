@@ -9,7 +9,6 @@ public class AuthUserMapper {
                 authUser.getUsername(),
                 authUser.getEmail(),
                 authUser.getRole()
-                /*authUser.getProfile().getId()*/
         );
     }
 }

@@ -1,6 +1,5 @@
 package com.poec.sortie_facile_backend.auth_user;
 
-import com.poec.sortie_facile_backend.auth_user.dto.AuthUserDTO;
 import com.poec.sortie_facile_backend.core.interfaces.IAuthUserService;
 import com.poec.sortie_facile_backend.exceptions.NotFoundException;
 import jakarta.persistence.EntityNotFoundException;

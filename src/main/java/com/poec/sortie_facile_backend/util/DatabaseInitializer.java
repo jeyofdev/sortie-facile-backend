@@ -43,6 +43,7 @@ import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.domain.region.RegionMapper;
 import com.poec.sortie_facile_backend.domain.region.RegionRepository;
 import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -100,7 +101,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.createCities(locationDataList);
         this.createCategories(allDataList);
         this.createProfiles(allDataList);
-        this.createActivities(allDataList);
+      /*  this.createActivities(allDataList);*/
     }
 
     private void createUsers(AllDataResponse allDataList) {
@@ -228,7 +229,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                         profile.getCityId(),
                         profile.getCategoryIds(),
                         profile.getActivityIds(),
-                        profile.getBookingIds()
+                        profile.getBookingIds(),
+                        profile.getProfileId()
                 ))
                 .toList();
 
@@ -236,6 +238,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             Region region = regionRepository.findById(profile.getRegionId()).orElse(null);
             Department department = departmentRepository.findById(profile.getDepartmentId()).orElse(null);
             City city = cityRepository.findById(profile.getCityId()).orElse(null);
+            AuthUser authUser = authUserRepository.findById(profile.getUserId()).orElse(null);
 
             Profile currentProfile = profileMapper.mapToEntity(new SaveProfileDTO(
                             profile.getFirstname(),
@@ -250,7 +253,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                             profile.getCategoryIds(),
                             null,
                             null,
-                            null
+                            null,
+                            profile.getUserId()
                     )
             );
 

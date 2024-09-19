@@ -24,4 +24,5 @@ public class ProfileDataInfo {
     private List<Long> categoryIds;
     private List<Long> activityIds;
     private List<Long> bookingIds;
+    private Long userId;
 }
