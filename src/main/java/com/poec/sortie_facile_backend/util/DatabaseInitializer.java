@@ -281,7 +281,7 @@ public class DatabaseInitializer implements CommandLineRunner {
                         activity.getDepartmentId(),
                         activity.getCityId(),
                         activity.getCategoryIds(),
-                        activity.getProfileId()
+                        activity.getCreatorUserId()
                 ))
                 .toList();
 
@@ -289,7 +289,7 @@ public class DatabaseInitializer implements CommandLineRunner {
             Region region = regionRepository.findById(activity.getRegionId()).orElse(null);
             Department department = departmentRepository.findById(activity.getDepartmentId()).orElse(null);
             City city = cityRepository.findById(activity.getCityId()).orElse(null);
-            Profile profile = profileRepository.findById(activity.getProfileId()).orElse(null);
+            Profile profile = profileRepository.findById(activity.getCreatorUserId()).orElse(null);
 
             Activity currentActivity = activityMapper.mapToEntity(new SaveActivityDTO(
                     activity.getName(),

@@ -70,8 +70,6 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         null,
                         null,
                         null,
-                        null,
-                        null,
                         null
                 )).toList() : new ArrayList<>(),
                 profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),

@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
 import com.poec.sortie_facile_backend.common.model.AgeFormat;
+import com.poec.sortie_facile_backend.common.model.LocationFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
@@ -8,9 +9,12 @@ import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
+import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +47,11 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
                 activity.getDescription(),
                 activity.getNbGuest(),
                 activity.isVisible(),
-                Optional.ofNullable(activity.getRegion()).map(Region::getId).orElse(null),
-                Optional.ofNullable(activity.getDepartment()).map(Department::getId).orElse(null),
-                Optional.ofNullable(activity.getCity()).map(City::getId).orElse(null),
+                new LocationFormat(
+                        new RegionDTO(activity.getRegion().getId(), activity.getRegion().getName(), null, null, null),
+                        new DepartmentDTO(activity.getDepartment().getId(), activity.getDepartment().getName(), activity.getDepartment().getNumber(), null, null, null, null),
+                        new CityDTO(activity.getCity().getId(), activity.getCity().getName(), activity.getCity().getZipCode(), null, null, null)
+                ),
                 activity.getCategoryList().stream().map(Category::getId).toList(),
                 Optional.ofNullable(activity.getProfile()).map(Profile::getId).orElse(null),
                 activity.getBookingList().stream().map(Booking::getId).toList()
@@ -89,9 +95,9 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
             activity.setCategoryList(categoryList);
         }
 
-        if (saveActivityDTO.profileId() != null) {
+        if (saveActivityDTO.creatorUserId() != null) {
             Profile profile = new Profile();
-            profile.setId(saveActivityDTO.profileId());
+            profile.setId(saveActivityDTO.creatorUserId());
             activity.setProfile(profile);
         }
 

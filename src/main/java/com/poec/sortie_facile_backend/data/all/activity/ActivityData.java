@@ -46,6 +46,6 @@ public class ActivityData {
     @JsonProperty("categoryIds")
     private List<Long> categoryIds;
 
-    @JsonProperty("profileId")
-    private Long profileId;
+    @JsonProperty("creatorUserId")
+    private Long creatorUserId;
 }
