@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.auth_user;
 
+import com.poec.sortie_facile_backend.auth_user.dto.AuthUserDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,20 +24,23 @@ public class AuthUserController {
     private final AuthUserService authUserService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<AuthUser>> getAll(HttpServletRequest request) throws AccessDeniedException {
-        List<AuthUser> userList = authUserService.findAll();
-        return new ResponseEntity<>(userList, HttpStatus.OK);
+    public ResponseEntity<List<AuthUserDTO>> getAll(HttpServletRequest request) throws AccessDeniedException {
+        List<AuthUser> authUserList = authUserService.findAll();
+        List<AuthUserDTO> authUserDTOs = authUserList.stream().map(AuthUserMapper::mapFromEntity).toList();
+        return new ResponseEntity<>(authUserDTOs, HttpStatus.OK);
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<AuthUser> getUserByEmail(@PathVariable String email, HttpServletRequest request) throws AccessDeniedException {
-        AuthUser user = authUserService.findUserByEmail(email);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    public ResponseEntity<AuthUserDTO> getUserByEmail(@PathVariable String email, HttpServletRequest request) throws AccessDeniedException {
+        AuthUser authUser = authUserService.findUserByEmail(email);
+        AuthUserDTO authUserDTO = AuthUserMapper.mapFromEntity(authUser);
+        return new ResponseEntity<>(authUserDTO, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<AuthUserDTO> getById(@PathVariable Long id) {
-        AuthUserDTO user = authUserService.findUserById(id);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        AuthUser authUser = authUserService.findUserById(id);
+        AuthUserDTO authUserDTO = AuthUserMapper.mapFromEntity(authUser);
+        return new ResponseEntity<>(authUserDTO, HttpStatus.OK);
     }
 }

@@ -1,13 +1,8 @@
 package com.poec.sortie_facile_backend.auth_user;
 
-public record AuthUserDTO(
-        Long id,
-        String nickname,
-        String email,
-        String role
-       /* Long profileId*/
+import com.poec.sortie_facile_backend.auth_user.dto.AuthUserDTO;
 
-) {
+public class AuthUserMapper {
     public static AuthUserDTO mapFromEntity(AuthUser authUser) {
         return new AuthUserDTO(
                 authUser.getId(),
