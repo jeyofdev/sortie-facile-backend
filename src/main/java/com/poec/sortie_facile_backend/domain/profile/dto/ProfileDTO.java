@@ -10,6 +10,7 @@ import java.util.List;
 public record ProfileDTO(
         Long id,
         String email,
+        String nickname,
         NameFormat name,
         YearFormat year,
         String phone,

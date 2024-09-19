@@ -39,6 +39,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
         return new ProfileDTO(
                 profile.getId(),
                 profile.getUser().getEmail(),
+                profile.getUser().getNickname(),
                 new NameFormat(profile.getFirstname(), profile.getLastname()),
                 new YearFormat(profile.getDateOfBirth()),
                 Helper.formatPhoneNumber(profile.getPhone()),

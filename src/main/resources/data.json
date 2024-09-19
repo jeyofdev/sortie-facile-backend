@@ -65,13 +65,13 @@
   ],
   "users": [
     {
-      "nickname": "admin",
+      "nickname": "admin33",
       "email": "admin@admin.com",
       "password": "admin",
       "role": "ADMIN"
     },
     {
-      "nickname": "user",
+      "nickname": "user1",
       "email": "user@user.com",
       "password": "user",
       "role": "USER"
