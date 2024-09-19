@@ -6,6 +6,7 @@ import com.poec.sortie_facile_backend.data.all.activity.ActivityDataInfo;
 import com.poec.sortie_facile_backend.data.all.category.CategoryDataInfo;
 import com.poec.sortie_facile_backend.data.all.contact.ContactDataInfo;
 import com.poec.sortie_facile_backend.data.all.profile.ProfileDataInfo;
+import com.poec.sortie_facile_backend.data.all.user.UserDataInfo;
 import com.poec.sortie_facile_backend.data.location.model.ListLocationDataResponse;
 import com.poec.sortie_facile_backend.data.location.LocationDataService;
 import com.poec.sortie_facile_backend.data.location.model.LocationCityInfo;
@@ -82,39 +83,16 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (this.authUserRepository.findByEmail("admin@admin.com").isEmpty()) {
-            this.createAdmin();
-            this.createUsers();
-        }
-
         this.createDatas();
-    }
-
-    private void createAdmin() {
-        AuthUser admin = AuthUser.builder()
-                .nickname("admin")
-                .email("admin@admin.com")
-                .password(passwordEncoder.encode("admin"))
-                .role("ROLE_" + Role.ADMIN)
-                .build();
-
-        this.authUserRepository.save(admin);
-    }
-
-    private void createUsers() {
-        AuthUser user1 = AuthUser.builder()
-                .nickname("user")
-                .email("user@user.com")
-                .password(passwordEncoder.encode("user"))
-                .role("ROLE_" + Role.USER)
-                .build();
-
-        this.authUserRepository.save(user1);
     }
 
     private void createDatas() throws IOException {
         ListLocationDataResponse locationDataList = locationDataService.getAllDatas();
         AllDataResponse allDataList = allDataService.getAllDatas();
+
+        if (this.authUserRepository.findByEmail("admin@admin.com").isEmpty()) {
+            this.createUsers(allDataList);
+        }
 
         this.createContacts(allDataList);
         this.createRegions(locationDataList);
@@ -123,6 +101,28 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.createCategories(allDataList);
         this.createProfiles(allDataList);
         this.createActivities(allDataList);
+    }
+
+    private void createUsers(AllDataResponse allDataList) {
+        List<UserDataInfo> userList = allDataList.getUserDataList().stream()
+                .map(user -> new UserDataInfo(
+                        user.getNickname(),
+                        user.getEmail(),
+                        user.getPassword(),
+                        user.getRole().equals("ADMIN") ? Role.ADMIN : Role.USER
+                ))
+                .toList();
+
+        for (UserDataInfo user : userList) {
+            AuthUser newUser = AuthUser.builder()
+                    .nickname(user.getNickname())
+                    .email(user.getEmail())
+                    .password(passwordEncoder.encode(user.getPassword()))
+                    .role("ROLE_" + user.getRole())
+                    .build();
+
+            this.authUserRepository.save(newUser);
+        }
     }
 
     private void createContacts(AllDataResponse allDataList) {

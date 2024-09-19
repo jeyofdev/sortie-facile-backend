@@ -63,6 +63,20 @@
       "imgUrl": "https://images.unsplash.com/photo-1717614598237-1d82d76068c1?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     }
   ],
+  "users": [
+    {
+      "nickname": "admin",
+      "email": "admin@admin.com",
+      "password": "admin",
+      "role": "ADMIN"
+    },
+    {
+      "nickname": "user",
+      "email": "user@user.com",
+      "password": "user",
+      "role": "USER"
+    }
+  ],
   "profiles": [
     {
       "firstname":"john",
