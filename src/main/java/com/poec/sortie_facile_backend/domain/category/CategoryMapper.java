@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.category;
 
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
+import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.category.dto.CategoryDTO;
 import com.poec.sortie_facile_backend.domain.category.dto.SaveCategoryDTO;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,8 @@ public class CategoryMapper implements BaseDomainMapper<Category, CategoryDTO, S
         return new CategoryDTO(
                 category.getId(),
                 category.getTitle(),
-                category.getImgUrl()
+                category.getImgUrl(),
+                category.getActivityList().stream().map(Activity::getId).toList()
         );
     }
 

@@ -11,7 +11,8 @@ import java.util.List;
 public class ActivityDataInfo {
     private String name;
     private Date createdAt;
-    private int age;
+    private int ageMin;
+    private int ageMax;
     private String imgUrl;
     private String link;
     private String description;

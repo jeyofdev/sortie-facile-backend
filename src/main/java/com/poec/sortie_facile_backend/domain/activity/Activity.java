@@ -31,8 +31,11 @@ public class Activity {
     @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private Date createdAt;
 
-    @Column(name="age", columnDefinition = "INT")
-    private int age;
+    @Column(name="age_min", columnDefinition = "INT")
+    private int ageMin;
+
+    @Column(name="age_max", columnDefinition = "INT")
+    private int ageMax;
 
     @Column(name = "img_url", columnDefinition = "LONGTEXT")
     private String imgUrl;

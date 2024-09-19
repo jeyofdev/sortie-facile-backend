@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
+import com.poec.sortie_facile_backend.common.model.AgeFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
@@ -33,7 +34,10 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
                 activity.getId(),
                 activity.getName(),
                 activity.getCreatedAt(),
-                activity.getAge(),
+                new AgeFormat(
+                    activity.getAgeMin(),
+                    activity.getAgeMax()
+                ),
                 activity.getImgUrl(),
                 activity.getLink(),
                 activity.getDescription(),
@@ -54,7 +58,8 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
 
         activity.setName(saveActivityDTO.name());
         activity.setCreatedAt(new Date());
-        activity.setAge(saveActivityDTO.age());
+        activity.setAgeMin(saveActivityDTO.ageMin());
+        activity.setAgeMax(saveActivityDTO.ageMax());
         activity.setImgUrl(saveActivityDTO.imgUrl());
         activity.setLink(saveActivityDTO.link());
         activity.setDescription(saveActivityDTO.description());
