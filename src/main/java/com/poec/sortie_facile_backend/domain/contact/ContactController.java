@@ -27,7 +27,7 @@ public class ContactController {
     @GetMapping(ALL)
     public ResponseEntity<List<ContactDTO>> getAll() {
         List<Contact> contactList = contactService.findAll();
-        List<ContactDTO> contactDTOS = contactList.stream().map(contactMapper::mapFromEntity).toList();
+        List<ContactDTO> contactDTOS = contactList.stream().map(contact -> contactMapper.mapFromEntity(contact, false)).toList();
 
         return new ResponseEntity<>(contactDTOS, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class ContactController {
     @GetMapping(ID)
     public ResponseEntity<ContactDTO> getById(@PathVariable("id") Long contactId) {
         Contact contact = contactService.findById(contactId);
-        ContactDTO contactDTO = contactMapper.mapFromEntity(contact);
+        ContactDTO contactDTO = contactMapper.mapFromEntity(contact, false);
 
         return new ResponseEntity<>(contactDTO, HttpStatus.FOUND);
     }
@@ -44,7 +44,7 @@ public class ContactController {
     public ResponseEntity<ContactDTO> add(@Valid @RequestBody SaveContactDTO saveContactDTO) {
         Contact contact = contactMapper.mapToEntity(saveContactDTO);
         Contact newContact = contactService.add(contact);
-        ContactDTO newContactDTO = contactMapper.mapFromEntity(newContact);
+        ContactDTO newContactDTO = contactMapper.mapFromEntity(newContact, false);
 
         return new ResponseEntity<>(newContactDTO, HttpStatus.CREATED);
     }
@@ -56,7 +56,7 @@ public class ContactController {
     ) {
         Contact contact = contactMapper.mapToEntity(saveContactDTO);
         Contact updatedContact = contactService.updateById(contact, contactId);
-        ContactDTO updatedContactDTO = contactMapper.mapFromEntity(updatedContact);
+        ContactDTO updatedContactDTO = contactMapper.mapFromEntity(updatedContact, false);
 
         return new ResponseEntity<>(updatedContactDTO, HttpStatus.OK);
     }

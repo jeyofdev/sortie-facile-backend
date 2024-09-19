@@ -10,6 +10,7 @@ import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
+import com.poec.sortie_facile_backend.domain.category.CategoryMapper;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
@@ -29,14 +30,16 @@ import java.util.List;
 @Service
 public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, SaveProfileDTO> {
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Autowired
-    public ProfileMapper(CategoryRepository categoryRepository) {
+    public ProfileMapper(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
-    public ProfileDTO mapFromEntity(Profile profile) {
+    public ProfileDTO mapFromEntity(Profile profile, boolean primaryDataOnly) {
         return new ProfileDTO(
                 profile.getId(),
                 profile.getUser().getEmail(),
@@ -70,12 +73,12 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         null,
                         null,
                         null,
-                        null,
-                        null,
                         null
                 )).toList() : new ArrayList<>(),
                 profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),
-                profile.getCategoryList() != null ? profile.getCategoryList().stream().map(Category::getId).toList() : new ArrayList<>()
+                profile.getCategoryList() != null ? profile.getCategoryList().stream().map(
+                        category -> categoryMapper.mapFromEntity(category, true)
+                ).toList() : new ArrayList<>()
         );
     }
 

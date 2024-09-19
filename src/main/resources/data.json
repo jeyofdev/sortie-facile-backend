@@ -125,7 +125,7 @@
       "departmentId": 1,
       "cityId": 1,
       "categoryIds": [1, 2],
-      "profileId": 1
+      "creatorUserId": 1
     },
     {
       "name": "Projection de film en plein air",
@@ -140,7 +140,7 @@
       "departmentId": 2,
       "cityId": 2,
       "categoryIds": [3, 4],
-      "profileId": 1
+      "creatorUserId": 1
     },
     {
       "name": "Visite guidée d'un musée",
@@ -155,7 +155,7 @@
       "departmentId": 1,
       "cityId":1,
       "categoryIds": [3],
-      "profileId": 2
+      "creatorUserId": 2
     },
     {
       "name": "Match caritatif de football",
@@ -170,7 +170,7 @@
       "departmentId": 1,
       "cityId": 1,
       "categoryIds": [1],
-      "profileId": 2
+      "creatorUserId": 2
     }
   ]
 }

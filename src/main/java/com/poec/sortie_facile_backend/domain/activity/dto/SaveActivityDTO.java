@@ -39,6 +39,6 @@ public record SaveActivityDTO(
         @Nullable Long regionId,
         @Nullable Long departmentId,
         @Nullable Long cityId,
-        @Nullable Long profileId
+        @Nullable Long creatorUserId
 ) {
 }

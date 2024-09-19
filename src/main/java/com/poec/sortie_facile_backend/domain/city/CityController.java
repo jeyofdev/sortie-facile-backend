@@ -27,7 +27,7 @@ public class CityController {
     @GetMapping(ALL)
     public ResponseEntity<List<CityDTO>> getAll() {
         List<City> cityList = cityService.findAll();
-        List<CityDTO> cityDTOS = cityList.stream().map(cityMapper::mapFromEntity).toList();
+        List<CityDTO> cityDTOS = cityList.stream().map(city -> cityMapper.mapFromEntity(city, false)).toList();
 
         return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class CityController {
     @GetMapping(ID)
     public ResponseEntity<CityDTO> getById(@PathVariable("id") Long cityId) {
         City city = cityService.findById(cityId);
-        CityDTO cityDTO = cityMapper.mapFromEntity(city);
+        CityDTO cityDTO = cityMapper.mapFromEntity(city, false);
 
         return new ResponseEntity<>(cityDTO, HttpStatus.FOUND);
     }
@@ -47,7 +47,7 @@ public class CityController {
     ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City newCity = cityService.add(city, departmentId);
-        CityDTO newCityDTO = cityMapper.mapFromEntity(newCity);
+        CityDTO newCityDTO = cityMapper.mapFromEntity(newCity, false);
 
         return new ResponseEntity<>(newCityDTO, HttpStatus.CREATED);
     }
@@ -59,7 +59,7 @@ public class CityController {
     ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City updatedCity = cityService.updateById(city, cityId);
-        CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity);
+        CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity, false);
 
         return new ResponseEntity<>(updatedCityDTO, HttpStatus.OK);
     }

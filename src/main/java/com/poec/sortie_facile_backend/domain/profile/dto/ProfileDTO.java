@@ -4,6 +4,7 @@ import com.poec.sortie_facile_backend.common.model.AddressFormat;
 import com.poec.sortie_facile_backend.common.model.NameFormat;
 import com.poec.sortie_facile_backend.common.model.YearFormat;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
+import com.poec.sortie_facile_backend.domain.category.dto.CategoryDTO;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ public record ProfileDTO(
         String avatar,
         List<ActivityDTO> activities,
         List<Long> bookingIds,
-        List<Long> categoryIds
+        List<CategoryDTO> categories
 ) {
 
 }

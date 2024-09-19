@@ -22,5 +22,5 @@ public class ActivityDataInfo {
     Long departmentId;
     Long cityId;
     List<Long> categoryIds;
-    private Long profileId;
+    private Long creatorUserId;
 }

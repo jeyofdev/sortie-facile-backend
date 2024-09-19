@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RegionMapper  implements BaseDomainMapper<Region, RegionDTO, SaveRegionDTO> {
     @Override
-    public RegionDTO mapFromEntity(Region region) {
+    public RegionDTO mapFromEntity(Region region, boolean primaryDataOnly) {
         return new RegionDTO(
                 region.getId(),
                 region.getName(),
