@@ -28,7 +28,7 @@ public class ActivityController {
     @GetMapping(ALL)
     public ResponseEntity<List<ActivityDTO>> getAll() {
         List<Activity> activityList = activityService.findAll();
-        List<ActivityDTO> activityDTOS = activityList.stream().map(activityMapper::mapFromEntity).toList();
+        List<ActivityDTO> activityDTOS = activityList.stream().map(activity -> activityMapper.mapFromEntity(activity, false)).toList();
 
         return new ResponseEntity<>(activityDTOS, HttpStatus.OK);
     }
@@ -36,7 +36,7 @@ public class ActivityController {
     @GetMapping(ID)
     public ResponseEntity<ActivityDTO> getById(@PathVariable("id") Long activityId) {
         Activity activity = activityService.findById(activityId);
-        ActivityDTO activityDTO = activityMapper.mapFromEntity(activity);
+        ActivityDTO activityDTO = activityMapper.mapFromEntity(activity, false);
 
         return new ResponseEntity<>(activityDTO, HttpStatus.FOUND);
     }
@@ -51,7 +51,7 @@ public class ActivityController {
     ) {
         Activity activity = activityMapper.mapToEntity(saveActivityDTO);
         Activity newActivity = activityService.add(activity, regionId, departmentId, cityId, profileId);
-        ActivityDTO newActivityDTO = activityMapper.mapFromEntity(newActivity);
+        ActivityDTO newActivityDTO = activityMapper.mapFromEntity(newActivity, false);
 
         return new ResponseEntity<>(newActivityDTO, HttpStatus.CREATED);
     }
@@ -60,7 +60,7 @@ public class ActivityController {
     public ResponseEntity<ActivityDTO> updateById(@Valid @RequestBody SaveActivityDTO saveActivityDTO, @PathVariable("id") Long activityId) {
         Activity activity = activityMapper.mapToEntity(saveActivityDTO);
         Activity updatedActivity = activityService.updateById(activity, activityId);
-        ActivityDTO updatedActivityDTO = activityMapper.mapFromEntity(updatedActivity);
+        ActivityDTO updatedActivityDTO = activityMapper.mapFromEntity(updatedActivity, false);
 
         return new ResponseEntity<>(updatedActivityDTO, HttpStatus.OK);
     }

@@ -7,6 +7,7 @@ import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.activity.dto.SaveActivityDTO;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
+import com.poec.sortie_facile_backend.domain.category.CategoryMapper;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
@@ -26,14 +27,16 @@ import java.util.Optional;
 public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, SaveActivityDTO> {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Autowired
-    public ActivityMapper(CategoryRepository categoryRepository) {
+    public ActivityMapper(CategoryRepository categoryRepository, CategoryMapper categoryMapper) {
         this.categoryRepository = categoryRepository;
+        this.categoryMapper = categoryMapper;
     }
 
     @Override
-    public ActivityDTO mapFromEntity(Activity activity) {
+    public ActivityDTO mapFromEntity(Activity activity, boolean primaryDataOnly) {
         return new ActivityDTO(
                 activity.getId(),
                 activity.getName(),
@@ -52,7 +55,9 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
                         new DepartmentDTO(activity.getDepartment().getId(), activity.getDepartment().getName(), activity.getDepartment().getNumber(), null, null, null, null),
                         new CityDTO(activity.getCity().getId(), activity.getCity().getName(), activity.getCity().getZipCode(), null, null, null)
                 ),
-                activity.getCategoryList().stream().map(Category::getId).toList(),
+                activity.getCategoryList().stream().map(
+                        category -> categoryMapper.mapFromEntity(category, true)
+                ).toList(),
                 Optional.ofNullable(activity.getProfile()).map(Profile::getId).orElse(null),
                 activity.getBookingList().stream().map(Booking::getId).toList()
         );

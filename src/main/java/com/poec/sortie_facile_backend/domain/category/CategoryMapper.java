@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryMapper implements BaseDomainMapper<Category, CategoryDTO, SaveCategoryDTO> {
     @Override
-    public CategoryDTO mapFromEntity(Category category) {
+    public CategoryDTO mapFromEntity(Category category, boolean primaryDataOnly) {
         return new CategoryDTO(
                 category.getId(),
                 category.getTitle(),
-                category.getImgUrl(),
-                category.getActivityList().stream().map(Activity::getId).toList()
+                !primaryDataOnly ? category.getImgUrl() : null,
+                !primaryDataOnly ? category.getActivityList().stream().map(Activity::getId).toList() : null
         );
     }
 

@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> {
     @Override
-    public CityDTO mapFromEntity(City city) {
+    public CityDTO mapFromEntity(City city, boolean primaryDataOnly) {
         return new CityDTO(
                 city.getId(),
                 city.getName(),

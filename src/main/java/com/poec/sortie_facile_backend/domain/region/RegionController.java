@@ -27,7 +27,7 @@ public class RegionController {
     @GetMapping(ALL)
     public ResponseEntity<List<RegionDTO>> getAll() {
         List<Region> regionList = regionService.findAll();
-        List<RegionDTO> regionDTOS = regionList.stream().map(regionMapper::mapFromEntity).toList();
+        List<RegionDTO> regionDTOS = regionList.stream().map(region -> regionMapper.mapFromEntity(region, false)).toList();
 
         return new ResponseEntity<>(regionDTOS, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class RegionController {
     @GetMapping(ID)
     public ResponseEntity<RegionDTO> getById(@PathVariable("id") Long regionId) {
         Region region = regionService.findById(regionId);
-        RegionDTO regionDTO = regionMapper.mapFromEntity(region);
+        RegionDTO regionDTO = regionMapper.mapFromEntity(region, false);
 
         return new ResponseEntity<>(regionDTO, HttpStatus.FOUND);
     }
@@ -44,7 +44,7 @@ public class RegionController {
     public ResponseEntity<RegionDTO> add(@Valid @RequestBody SaveRegionDTO saveRegionDTO) {
         Region region = regionMapper.mapToEntity(saveRegionDTO);
         Region newRegion = regionService.add(region);
-        RegionDTO newRegionDTO = regionMapper.mapFromEntity(newRegion);
+        RegionDTO newRegionDTO = regionMapper.mapFromEntity(newRegion, false);
 
         return new ResponseEntity<>(newRegionDTO, HttpStatus.CREATED);
     }
@@ -56,7 +56,7 @@ public class RegionController {
     ) {
         Region region = regionMapper.mapToEntity(saveRegionDTO);
         Region updatedRegion = regionService.updateById(region, regionId);
-        RegionDTO updatedRegionDTO = regionMapper.mapFromEntity(updatedRegion);
+        RegionDTO updatedRegionDTO = regionMapper.mapFromEntity(updatedRegion, false);
 
         return new ResponseEntity<>(updatedRegionDTO, HttpStatus.OK);
     }

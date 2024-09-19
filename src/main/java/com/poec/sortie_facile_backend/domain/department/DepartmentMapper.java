@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class DepartmentMapper implements BaseDomainMapper<Department, DepartmentDTO, SaveDepartmentDTO> {
     @Override
-    public DepartmentDTO mapFromEntity(Department department) {
+    public DepartmentDTO mapFromEntity(Department department, boolean primaryDataOnly) {
         return new DepartmentDTO(
                 department.getId(),
                 department.getName(),

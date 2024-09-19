@@ -27,7 +27,7 @@ public class DepartmentController {
     @GetMapping(ALL)
     public ResponseEntity<List<DepartmentDTO>> getAll() {
         List<Department> departmentList = departmentService.findAll();
-        List<DepartmentDTO> departmentDTOS = departmentList.stream().map(departmentMapper::mapFromEntity).toList();
+        List<DepartmentDTO> departmentDTOS = departmentList.stream().map(department -> departmentMapper.mapFromEntity(department, false)).toList();
 
         return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class DepartmentController {
     @GetMapping(ID)
     public ResponseEntity<DepartmentDTO> getById(@PathVariable("id") Long departmentId) {
         Department department = departmentService.findById(departmentId);
-        DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department);
+        DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department, false);
 
         return new ResponseEntity<>(departmentDTO, HttpStatus.FOUND);
     }
@@ -47,7 +47,7 @@ public class DepartmentController {
     ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department newDepartment = departmentService.add(department, regionId);
-        DepartmentDTO newDepartmentDTO = departmentMapper.mapFromEntity(newDepartment);
+        DepartmentDTO newDepartmentDTO = departmentMapper.mapFromEntity(newDepartment, false);
 
         return new ResponseEntity<>(newDepartmentDTO, HttpStatus.CREATED);
     }
@@ -59,7 +59,7 @@ public class DepartmentController {
     ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department updatedDepartment = departmentService.updateById(department, departmentId);
-        DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment);
+        DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment, false);
 
         return new ResponseEntity<>(updatedDepartmentDTO, HttpStatus.OK);
     }
