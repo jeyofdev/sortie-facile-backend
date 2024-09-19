@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import static com.poec.sortie_facile_backend.core.constants.RouteConstants.*;
 
 @Configuration
 @EnableWebSecurity
@@ -40,19 +41,67 @@ public class SecurityConfig {
 
             // Liste des routes protégées / non protégées
             .authorizeHttpRequests((requests) -> requests
-                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+                    .requestMatchers(HttpMethod.GET,
+                            BASE_REGION + "/**",
+                            BASE_DEPARTMENT + "/**",
+                            BASE_CITY + "/**",
+                            BASE_CATEGORY  +"/**",
+                            BASE_ACTIVITY + "/**"
+                    ).permitAll()
 
-                    .requestMatchers(
-                            "/api/v1/contact/**",
-                            "/api/v1/region/**",
-                            "/api/v1/department/**",
-                            "/api/v1/city/**",
-                            "/api/v1/city/**",
-                            "/api/v1/category/**",
-                            "/api/v1/activity/**",
-                            "/api/v1/profile/**",
-                            "api/v1/booking/**")
+                    .requestMatchers(HttpMethod.GET,
+                            BASE_BOOKING + "**",
+                            BASE_PROFILE + "/**"
+                    ).hasAnyRole(Role.ADMIN.name(), Role.USER.name())
+
+                    .requestMatchers(HttpMethod.GET,
+                            BASE_CONTACT + "/**"
+                    ).hasRole(Role.ADMIN.name())
+
+                    .requestMatchers(HttpMethod.POST,
+                            "/api/v1/auth/**",
+                            BASE_PROFILE + "/**",
+                            BASE_CONTACT + "/**")
                     .permitAll()
+
+                    .requestMatchers(HttpMethod.POST,
+                            BASE_ACTIVITY + "/**",
+                            BASE_BOOKING + "**"
+                    ).hasAnyRole(Role.ADMIN.name(), Role.USER.name())
+
+                    .requestMatchers(HttpMethod.POST,
+                            BASE_REGION + "/**",
+                            BASE_DEPARTMENT + "/**",
+                            BASE_CITY + "/**"
+                    ).hasRole(Role.ADMIN.name())
+
+                    .requestMatchers(HttpMethod.PUT,
+                            BASE_ACTIVITY + "/**",
+                            BASE_PROFILE + "/**",
+                            BASE_BOOKING + "**"
+                    ).hasAnyRole(Role.ADMIN.name(), Role.USER.name())
+
+                    .requestMatchers(HttpMethod.PUT,
+                            BASE_CONTACT + "/**",
+                            BASE_REGION + "/**",
+                            BASE_DEPARTMENT + "/**",
+                            BASE_CITY + "/**",
+                            BASE_CATEGORY  +"/**"
+                    ).hasRole(Role.ADMIN.name())
+
+                    .requestMatchers(HttpMethod.DELETE,
+                            BASE_ACTIVITY + "/**",
+                            BASE_PROFILE + "/**",
+                            BASE_BOOKING + "**"
+                    ).hasAnyRole(Role.ADMIN.name(), Role.USER.name())
+
+                    .requestMatchers(HttpMethod.DELETE,
+                            BASE_CONTACT + "/**",
+                            BASE_REGION + "/**",
+                            BASE_DEPARTMENT + "/**",
+                            BASE_CITY + "/**",
+                            BASE_CATEGORY  +"/**"
+                            ).hasRole(Role.ADMIN.name())
 
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/all").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/admins-only").hasRole(Role.ADMIN.name())
