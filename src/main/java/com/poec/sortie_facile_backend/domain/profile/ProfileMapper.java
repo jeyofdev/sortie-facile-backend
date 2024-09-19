@@ -3,6 +3,7 @@ package com.poec.sortie_facile_backend.domain.profile;
 
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.common.model.AddressFormat;
+import com.poec.sortie_facile_backend.common.model.AgeFormat;
 import com.poec.sortie_facile_backend.common.model.NameFormat;
 import com.poec.sortie_facile_backend.common.model.YearFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
@@ -57,7 +58,10 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         activity.getId(),
                         activity.getName(),
                         activity.getCreatedAt(),
-                        activity.getAge(),
+                        new AgeFormat(
+                            activity.getAgeMin(),
+                            activity.getAgeMax()
+                        ),
                         activity.getImgUrl(),
                         null,
                         activity.getDescription(),

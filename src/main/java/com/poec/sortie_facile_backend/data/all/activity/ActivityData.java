@@ -13,8 +13,11 @@ public class ActivityData {
     @JsonProperty("createdAt")
     private String createdAt;
 
-    @JsonProperty("age")
-    private int age;
+    @JsonProperty("ageMin")
+    private int ageMin;
+
+    @JsonProperty("ageMax")
+    private int ageMax;
 
     @JsonProperty("imgUrl")
     private String imgUrl;

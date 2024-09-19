@@ -43,7 +43,6 @@ import com.poec.sortie_facile_backend.domain.region.Region;
 import com.poec.sortie_facile_backend.domain.region.RegionMapper;
 import com.poec.sortie_facile_backend.domain.region.RegionRepository;
 import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -51,9 +50,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 @Component
@@ -101,7 +97,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         this.createCities(locationDataList);
         this.createCategories(allDataList);
         this.createProfiles(allDataList);
-      /*  this.createActivities(allDataList);*/
+        this.createActivities(allDataList);
     }
 
     private void createUsers(AllDataResponse allDataList) {
@@ -274,7 +270,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .map(activity -> new ActivityDataInfo(
                         activity.getName(),
                         null,
-                        activity.getAge(),
+                        activity.getAgeMin(),
+                        activity.getAgeMax(),
                         activity.getImgUrl(),
                         activity.getLink(),
                         activity.getDescription(),
@@ -296,7 +293,8 @@ public class DatabaseInitializer implements CommandLineRunner {
 
             Activity currentActivity = activityMapper.mapToEntity(new SaveActivityDTO(
                     activity.getName(),
-                    activity.getAge(),
+                    activity.getAgeMin(),
+                    activity.getAgeMax(),
                     activity.getImgUrl(),
                     activity.getLink(),
                     activity.getDescription(),

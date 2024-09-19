@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.activity.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.poec.sortie_facile_backend.common.model.AgeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +11,7 @@ public record ActivityDTO(
         Long id,
         String name,
         Date createdDate,
-        int age,
+        AgeFormat age,
         String imgUrl,
         String link,
         String description,
