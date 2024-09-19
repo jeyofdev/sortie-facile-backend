@@ -51,4 +51,7 @@ public class ProfileData {
 
     @JsonProperty("bookingIds")
     private List<Long> bookingIds;
+
+    @JsonProperty("profileId")
+    private Long profileId;
 }

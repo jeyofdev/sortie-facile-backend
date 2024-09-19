@@ -40,11 +40,9 @@ public class AuthUserService implements IAuthUserService {
     }
 
     @Override
-    public AuthUserDTO findUserById(Long id) {
-        AuthUser user = authUserRepository.findById(id).orElseThrow(
+    public AuthUser findUserById(Long id) {
+        return authUserRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException("User with id " + id + " not found")
         );
-
-        return AuthUserDTO.mapFromEntity(user);
     }
 }
