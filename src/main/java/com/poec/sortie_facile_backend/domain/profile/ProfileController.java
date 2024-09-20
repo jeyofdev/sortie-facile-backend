@@ -24,7 +24,7 @@ public class ProfileController {
     @Autowired
     private ProfileMapper profileMapper;
 
-    @GetMapping(ALL)
+    @GetMapping()
     public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profileList = profileService.findAll();
         List<ProfileDTO> profileDTOS = profileList.stream().map(profile -> profileMapper.mapFromEntity(profile, false)).toList();
