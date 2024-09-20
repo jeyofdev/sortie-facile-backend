@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.category;
 
+import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.category.dto.CategoryDTO;
@@ -14,7 +15,10 @@ public class CategoryMapper implements BaseDomainMapper<Category, CategoryDTO, S
                 category.getId(),
                 category.getTitle(),
                 !primaryDataOnly ? category.getImgUrl() : null,
-                !primaryDataOnly ? category.getActivityList().stream().map(Activity::getId).toList() : null
+                !primaryDataOnly ? new ListIdsFormat(
+                        category.getActivityList().size(),
+                        category.getActivityList().stream().map(Activity::getId).toList()
+                ) : null
         );
     }
 

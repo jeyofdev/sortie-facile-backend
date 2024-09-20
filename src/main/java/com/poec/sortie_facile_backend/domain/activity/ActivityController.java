@@ -58,6 +58,8 @@ public class ActivityController {
 
     @PutMapping(UPDATE)
     public ResponseEntity<ActivityDTO> updateById(@Valid @RequestBody SaveActivityDTO saveActivityDTO, @PathVariable("id") Long activityId) {
+
+
         Activity activity = activityMapper.mapToEntity(saveActivityDTO);
         Activity updatedActivity = activityService.updateById(activity, activityId);
         ActivityDTO updatedActivityDTO = activityMapper.mapFromEntity(updatedActivity, false, false);

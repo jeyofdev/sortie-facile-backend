@@ -2,10 +2,7 @@ package com.poec.sortie_facile_backend.domain.profile;
 
 
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
-import com.poec.sortie_facile_backend.common.model.AddressFormat;
-import com.poec.sortie_facile_backend.common.model.AgeFormat;
-import com.poec.sortie_facile_backend.common.model.NameFormat;
-import com.poec.sortie_facile_backend.common.model.YearFormat;
+import com.poec.sortie_facile_backend.common.model.*;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
@@ -76,7 +73,10 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         null,
                         null
                 )).toList() : new ArrayList<>(),
-                profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),
+                new ListIdsFormat(
+                        profile.getBookingList().size(),
+                        profile.getBookingList().stream().map(Booking::getId).toList()
+                ),
                 profile.getCategoryList() != null ? profile.getCategoryList().stream().map(
                         category -> categoryMapper.mapFromEntity(category, true, false)
                 ).toList() : new ArrayList<>()

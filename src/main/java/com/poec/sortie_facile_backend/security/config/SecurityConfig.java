@@ -73,7 +73,8 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST,
                             BASE_REGION + "/**",
                             BASE_DEPARTMENT + "/**",
-                            BASE_CITY + "/**"
+                            BASE_CITY + "/**",
+                            BASE_CATEGORY + "/**"
                     ).hasRole(Role.ADMIN.name())
 
                     .requestMatchers(HttpMethod.PUT,

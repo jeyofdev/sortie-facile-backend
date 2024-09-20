@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.city.City;
@@ -9,6 +10,7 @@ import com.poec.sortie_facile_backend.domain.region.Region;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,4 +80,26 @@ public class Activity {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
+
+    @Override
+    public String toString() {
+        return "Activity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createdAt=" + createdAt +
+                ", ageMin=" + ageMin +
+                ", ageMax=" + ageMax +
+                ", imgUrl='" + imgUrl + '\'' +
+                ", link='" + link + '\'' +
+                ", description='" + description + '\'' +
+                ", nbGuest=" + nbGuest +
+                ", isVisible=" + isVisible +
+                ", city=" + city +
+                ", region=" + region +
+                ", department=" + department +
+                ", bookingList=" + bookingList +
+                ", categoryList=" + categoryList +
+                ", profile=" + profile +
+                '}';
+    }
 }

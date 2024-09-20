@@ -2,6 +2,7 @@ package com.poec.sortie_facile_backend.domain.activity.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.poec.sortie_facile_backend.common.model.AgeFormat;
+import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
 import com.poec.sortie_facile_backend.common.model.LocationFormat;
 import com.poec.sortie_facile_backend.domain.category.dto.CategoryDTO;
 
@@ -22,6 +23,6 @@ public record ActivityDTO(
         LocationFormat location,
         List<CategoryDTO> categories,
         Long creatorUserId,
-        List<Long> bookingIds
+        ListIdsFormat bookingIds
 ) {
 }
