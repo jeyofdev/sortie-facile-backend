@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 @AllArgsConstructor
-public class ListIdsFormat {
+public class ListRelationWithSizeFormat<T> {
     private int count;
-    private List<Long> results;
+    private List<T> results;
 }
