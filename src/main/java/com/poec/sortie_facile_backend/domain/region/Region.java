@@ -21,7 +21,7 @@ public class Region {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", columnDefinition = "VARCHAR(50)")
+    @Column(name = "name", columnDefinition = "VARCHAR(50)", unique = true)
     private String name;
 
     @OneToMany(mappedBy = "region", cascade = {CascadeType.PERSIST, CascadeType.REFRESH})

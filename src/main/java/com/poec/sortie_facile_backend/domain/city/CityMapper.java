@@ -1,5 +1,6 @@
 package com.poec.sortie_facile_backend.domain.city;
 
+import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
@@ -18,7 +19,10 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
                 city.getId(),
                 city.getName(),
                 city.getZipCode(),
-                city.getActivityList().stream().map(Activity::getId).toList(),
+                new ListIdsFormat(
+                        city.getActivityList().size(),
+                        city.getActivityList().stream().map(Activity::getId).toList()
+                ),
                 Optional.ofNullable(city.getDepartment()).map(Department::getId).orElse(null),
                 isAdmin ? city.getProfileList().stream().map(Profile::getId).toList() : null
         );
