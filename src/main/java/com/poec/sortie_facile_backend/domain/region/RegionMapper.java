@@ -9,15 +9,15 @@ import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegionMapper  implements BaseDomainMapper<Region, RegionDTO, SaveRegionDTO> {
+public class RegionMapper implements BaseDomainMapper<Region, RegionDTO, SaveRegionDTO> {
     @Override
-    public RegionDTO mapFromEntity(Region region, boolean primaryDataOnly) {
+    public RegionDTO mapFromEntity(Region region, boolean primaryDataOnly, boolean isAdmin) {
         return new RegionDTO(
                 region.getId(),
                 region.getName(),
                 region.getDepartmentList().stream().map(Department::getId).toList(),
                 region.getActivityList().stream().map(Activity::getId).toList(),
-                region.getProfileList().stream().map(Profile::getId).toList()
+                isAdmin ? region.getProfileList().stream().map(Profile::getId).toList() : null
         );
     }
 

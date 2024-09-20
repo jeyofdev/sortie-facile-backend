@@ -14,7 +14,7 @@ import java.util.Optional;
 @Service
 public class DepartmentMapper implements BaseDomainMapper<Department, DepartmentDTO, SaveDepartmentDTO> {
     @Override
-    public DepartmentDTO mapFromEntity(Department department, boolean primaryDataOnly) {
+    public DepartmentDTO mapFromEntity(Department department, boolean primaryDataOnly, boolean isAdmin) {
         return new DepartmentDTO(
                 department.getId(),
                 department.getName(),
@@ -22,7 +22,7 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
                 department.getActivityList().stream().map(Activity::getId).toList(),
                 Optional.ofNullable(department.getRegion()).map(Region::getId).orElse(null),
                 department.getCityList().stream().map(City::getId).toList(),
-                department.getProfileList().stream().map(Profile::getId).toList()
+                isAdmin ? department.getProfileList().stream().map(Profile::getId).toList() : null
         );
     }
 

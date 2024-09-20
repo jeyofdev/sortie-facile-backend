@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,16 +27,20 @@ public class CityController {
 
     @GetMapping(ALL)
     public ResponseEntity<List<CityDTO>> getAll() {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
         List<City> cityList = cityService.findAll();
-        List<CityDTO> cityDTOS = cityList.stream().map(city -> cityMapper.mapFromEntity(city, false)).toList();
+        List<CityDTO> cityDTOS = cityList.stream().map(city -> cityMapper.mapFromEntity(city, false, roles.equals("[ROLE_ADMIN]"))).toList();
 
         return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<CityDTO> getById(@PathVariable("id") Long cityId) {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
         City city = cityService.findById(cityId);
-        CityDTO cityDTO = cityMapper.mapFromEntity(city, false);
+        CityDTO cityDTO = cityMapper.mapFromEntity(city, false, roles.equals("[ROLE_ADMIN]"));
 
         return new ResponseEntity<>(cityDTO, HttpStatus.FOUND);
     }
@@ -47,7 +52,7 @@ public class CityController {
     ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City newCity = cityService.add(city, departmentId);
-        CityDTO newCityDTO = cityMapper.mapFromEntity(newCity, false);
+        CityDTO newCityDTO = cityMapper.mapFromEntity(newCity, false, false);
 
         return new ResponseEntity<>(newCityDTO, HttpStatus.CREATED);
     }
@@ -59,7 +64,7 @@ public class CityController {
     ) {
         City city = cityMapper.mapToEntity(saveCityDTO);
         City updatedCity = cityService.updateById(city, cityId);
-        CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity, false);
+        CityDTO updatedCityDTO = cityMapper.mapFromEntity(updatedCity, false, false);
 
         return new ResponseEntity<>(updatedCityDTO, HttpStatus.OK);
     }

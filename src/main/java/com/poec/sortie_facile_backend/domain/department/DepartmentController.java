@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,16 +27,20 @@ public class DepartmentController {
 
     @GetMapping(ALL)
     public ResponseEntity<List<DepartmentDTO>> getAll() {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
         List<Department> departmentList = departmentService.findAll();
-        List<DepartmentDTO> departmentDTOS = departmentList.stream().map(department -> departmentMapper.mapFromEntity(department, false)).toList();
+        List<DepartmentDTO> departmentDTOS = departmentList.stream().map(department -> departmentMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"))).toList();
 
         return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
     @GetMapping(ID)
     public ResponseEntity<DepartmentDTO> getById(@PathVariable("id") Long departmentId) {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
         Department department = departmentService.findById(departmentId);
-        DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department, false);
+        DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"));
 
         return new ResponseEntity<>(departmentDTO, HttpStatus.FOUND);
     }
@@ -47,7 +52,7 @@ public class DepartmentController {
     ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department newDepartment = departmentService.add(department, regionId);
-        DepartmentDTO newDepartmentDTO = departmentMapper.mapFromEntity(newDepartment, false);
+        DepartmentDTO newDepartmentDTO = departmentMapper.mapFromEntity(newDepartment, false, false);
 
         return new ResponseEntity<>(newDepartmentDTO, HttpStatus.CREATED);
     }
@@ -59,7 +64,7 @@ public class DepartmentController {
     ) {
         Department department = departmentMapper.mapToEntity(saveDepartmentDTO);
         Department updatedDepartment = departmentService.updateById(department, departmentId);
-        DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment, false);
+        DepartmentDTO updatedDepartmentDTO = departmentMapper.mapFromEntity(updatedDepartment, false, false);
 
         return new ResponseEntity<>(updatedDepartmentDTO, HttpStatus.OK);
     }

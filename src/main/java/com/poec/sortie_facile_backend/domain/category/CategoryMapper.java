@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryMapper implements BaseDomainMapper<Category, CategoryDTO, SaveCategoryDTO> {
     @Override
-    public CategoryDTO mapFromEntity(Category category, boolean primaryDataOnly) {
+    public CategoryDTO mapFromEntity(Category category, boolean primaryDataOnly, boolean isAdmin) {
         return new CategoryDTO(
                 category.getId(),
                 category.getTitle(),

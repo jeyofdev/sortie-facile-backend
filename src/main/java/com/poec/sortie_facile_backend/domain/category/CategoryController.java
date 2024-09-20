@@ -27,7 +27,7 @@ public class CategoryController {
     @GetMapping(ALL)
     public ResponseEntity<List<CategoryDTO>> getAll() {
         List<Category> categoryList = categoryService.findAll();
-        List<CategoryDTO> categoryDTOS = categoryList.stream().map(category -> categoryMapper.mapFromEntity(category, false)).toList();
+        List<CategoryDTO> categoryDTOS = categoryList.stream().map(category -> categoryMapper.mapFromEntity(category, false, false)).toList();
 
         return new ResponseEntity<>(categoryDTOS, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class CategoryController {
     @GetMapping(ID)
     public ResponseEntity<CategoryDTO> getById(@PathVariable("id") Long categoryId) {
         Category category = categoryService.findById(categoryId);
-        CategoryDTO categoryDTO = categoryMapper.mapFromEntity(category, false);
+        CategoryDTO categoryDTO = categoryMapper.mapFromEntity(category, false, false);
 
         return new ResponseEntity<>(categoryDTO, HttpStatus.FOUND);
     }
@@ -44,7 +44,7 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> add(@Valid @RequestBody SaveCategoryDTO saveCategoryDTO) {
         Category category = categoryMapper.mapToEntity(saveCategoryDTO);
         Category newCategory = categoryService.add(category);
-        CategoryDTO newCategoryDTO = categoryMapper.mapFromEntity(newCategory, false);
+        CategoryDTO newCategoryDTO = categoryMapper.mapFromEntity(newCategory, false, false);
 
         return new ResponseEntity<>(newCategoryDTO, HttpStatus.CREATED);
     }
@@ -56,7 +56,7 @@ public class CategoryController {
     ) {
         Category category = categoryMapper.mapToEntity(saveCategoryDTO);
         Category updatedCategory = categoryService.updateById(category, categoryId);
-        CategoryDTO updatedCategoryDTO = categoryMapper.mapFromEntity(updatedCategory, false);
+        CategoryDTO updatedCategoryDTO = categoryMapper.mapFromEntity(updatedCategory, false, false);
 
         return new ResponseEntity<>(updatedCategoryDTO, HttpStatus.OK);
     }

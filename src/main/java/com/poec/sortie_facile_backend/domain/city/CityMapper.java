@@ -13,14 +13,14 @@ import java.util.Optional;
 @Service
 public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> {
     @Override
-    public CityDTO mapFromEntity(City city, boolean primaryDataOnly) {
+    public CityDTO mapFromEntity(City city, boolean primaryDataOnly, boolean isAdmin) {
         return new CityDTO(
                 city.getId(),
                 city.getName(),
                 city.getZipCode(),
                 city.getActivityList().stream().map(Activity::getId).toList(),
                 Optional.ofNullable(city.getDepartment()).map(Department::getId).orElse(null),
-                city.getProfileList().stream().map(Profile::getId).toList()
+                isAdmin ? city.getProfileList().stream().map(Profile::getId).toList() : null
         );
     }
 
