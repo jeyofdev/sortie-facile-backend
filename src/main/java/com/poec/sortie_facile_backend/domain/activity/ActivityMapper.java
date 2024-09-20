@@ -1,7 +1,7 @@
 package com.poec.sortie_facile_backend.domain.activity;
 
 import com.poec.sortie_facile_backend.common.model.AgeFormat;
-import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
+import com.poec.sortie_facile_backend.common.model.ListRelationWithSizeFormat;
 import com.poec.sortie_facile_backend.common.model.LocationFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
@@ -56,11 +56,15 @@ public class ActivityMapper implements BaseDomainMapper<Activity, ActivityDTO, S
                         new DepartmentDTO(activity.getDepartment().getId(), activity.getDepartment().getName(), activity.getDepartment().getNumber(), null, null, null, null),
                         new CityDTO(activity.getCity().getId(), activity.getCity().getName(), activity.getCity().getZipCode(), null, null, null)
                 ),
-                activity.getCategoryList().stream().map(
-                        category -> categoryMapper.mapFromEntity(category, true, false)
-                ).toList(),
+                new ListRelationWithSizeFormat<>(
+                        activity.getCategoryList().size(),
+                        activity.getCategoryList().stream().map(
+                                category -> categoryMapper.mapFromEntity(category, true, false)
+                        ).toList()
+                ),
+
                 Optional.ofNullable(activity.getProfile()).map(Profile::getId).orElse(null),
-                new ListIdsFormat(
+                new ListRelationWithSizeFormat<>(
                         activity.getBookingList().size(),
                         activity.getBookingList().stream().map(Booking::getId).toList()
                 )

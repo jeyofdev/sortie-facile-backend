@@ -1,6 +1,6 @@
 package com.poec.sortie_facile_backend.domain.department;
 
-import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
+import com.poec.sortie_facile_backend.common.model.ListRelationWithSizeFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.city.City;
@@ -20,16 +20,19 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
                 department.getId(),
                 department.getName(),
                 department.getNumber(),
-                new ListIdsFormat(
+                new ListRelationWithSizeFormat<>(
                         department.getActivityList().size(),
                         department.getActivityList().stream().map(Activity::getId).toList()
                 ),
                 Optional.ofNullable(department.getRegion()).map(Region::getId).orElse(null),
-                new ListIdsFormat(
+                new ListRelationWithSizeFormat<>(
                         department.getCityList().size(),
                         department.getCityList().stream().map(City::getId).toList()
                 ),
-                isAdmin ? department.getProfileList().stream().map(Profile::getId).toList() : null
+                isAdmin ? new ListRelationWithSizeFormat<>(
+                        department.getProfileList().size(),
+                        department.getProfileList().stream().map(Profile::getId).toList()
+                ) : null
         );
     }
 

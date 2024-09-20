@@ -1,6 +1,6 @@
 package com.poec.sortie_facile_backend.domain.region;
 
-import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
+import com.poec.sortie_facile_backend.common.model.ListRelationWithSizeFormat;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.department.Department;
@@ -16,15 +16,18 @@ public class RegionMapper implements BaseDomainMapper<Region, RegionDTO, SaveReg
         return new RegionDTO(
                 region.getId(),
                 region.getName(),
-                new ListIdsFormat(
+                new ListRelationWithSizeFormat<>(
                         region.getDepartmentList().size(),
                         region.getDepartmentList().stream().map(Department::getId).toList()
                 ),
-                new ListIdsFormat(
+                new ListRelationWithSizeFormat<>(
                         region.getActivityList().size(),
                         region.getActivityList().stream().map(Activity::getId).toList()
                 ),
-                isAdmin ? region.getProfileList().stream().map(Profile::getId).toList() : null
+                isAdmin ? new ListRelationWithSizeFormat<>(
+                    region.getProfileList().size(),
+                    region.getProfileList().stream().map(Profile::getId).toList()
+                ) : null
         );
     }
 

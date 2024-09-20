@@ -1,6 +1,5 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
-
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.common.model.*;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
@@ -16,13 +15,11 @@ import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
-import com.poec.sortie_facile_backend.domain.region.RegionMapper;
 import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
 import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -55,31 +52,37 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 ),
                 profile.getDescription(),
                 profile.getAvatar(),
-                profile.getActivityList() != null ? profile.getActivityList().stream().map(activity -> new ActivityDTO(
-                        activity.getId(),
-                        activity.getName(),
-                        activity.getCreatedAt(),
-                        new AgeFormat(
-                            activity.getAgeMin(),
-                            activity.getAgeMax()
-                        ),
-                        activity.getImgUrl(),
-                        null,
-                        activity.getDescription(),
-                        activity.getNbGuest(),
-                        activity.isVisible(),
-                        null,
-                        null,
-                        null,
-                        null
-                )).toList() : new ArrayList<>(),
-                new ListIdsFormat(
+                new ListRelationWithSizeFormat<>(
+                        profile.getActivityList().size(),
+                        profile.getActivityList().stream().map(activity -> new ActivityDTO(
+                                activity.getId(),
+                                activity.getName(),
+                                activity.getCreatedAt(),
+                                new AgeFormat(
+                                    activity.getAgeMin(),
+                                    activity.getAgeMax()
+                                ),
+                                activity.getImgUrl(),
+                                null,
+                                activity.getDescription(),
+                                activity.getNbGuest(),
+                                activity.isVisible(),
+                                null,
+                                null,
+                                null,
+                                null
+                        )).toList()
+                ),
+                new ListRelationWithSizeFormat<>(
                         profile.getBookingList().size(),
                         profile.getBookingList().stream().map(Booking::getId).toList()
                 ),
-                profile.getCategoryList() != null ? profile.getCategoryList().stream().map(
-                        category -> categoryMapper.mapFromEntity(category, true, false)
-                ).toList() : new ArrayList<>()
+                new ListRelationWithSizeFormat<>(
+                        profile.getCategoryList().size(),
+                        profile.getCategoryList().stream()
+                                .map(category -> categoryMapper.mapFromEntity(category, true, false))
+                                .toList()
+                )
         );
     }
 
