@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContactMapper implements BaseDomainMapper<Contact, ContactDTO, SaveContactDTO> {
     @Override
-    public ContactDTO mapFromEntity(Contact contact, boolean primaryDataOnly) {
+    public ContactDTO mapFromEntity(Contact contact, boolean primaryDataOnly, boolean isAdmin) {
         return new ContactDTO(
                 contact.getId(),
                 contact.getTitle(),

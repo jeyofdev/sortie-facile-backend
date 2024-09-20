@@ -27,7 +27,7 @@ public class ProfileController {
     @GetMapping()
     public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profileList = profileService.findAll();
-        List<ProfileDTO> profileDTOS = profileList.stream().map(profile -> profileMapper.mapFromEntity(profile, false)).toList();
+        List<ProfileDTO> profileDTOS = profileList.stream().map(profile -> profileMapper.mapFromEntity(profile, false, false)).toList();
 
         return new ResponseEntity<>(profileDTOS, HttpStatus.OK);
     }
@@ -35,7 +35,7 @@ public class ProfileController {
     @GetMapping(ID)
     public ResponseEntity<ProfileDTO> getById(@PathVariable("id") Long profileId) {
         Profile profile = profileService.findById(profileId);
-        ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false);
+        ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false, false);
 
         return new ResponseEntity<>(profileDTO, HttpStatus.FOUND);
     }
@@ -50,7 +50,7 @@ public class ProfileController {
     ) {
         Profile activity = profileMapper.mapToEntity(saveProfileDTO);
         Profile newProfile = profileService.add(activity, regionId, departmentId, cityId, userId);
-        ProfileDTO newProfileDTO = profileMapper.mapFromEntity(newProfile, false);
+        ProfileDTO newProfileDTO = profileMapper.mapFromEntity(newProfile, false, false);
 
         return new ResponseEntity<>(newProfileDTO, HttpStatus.CREATED);
     }
@@ -62,7 +62,7 @@ public class ProfileController {
     ) {
         Profile profile = profileMapper.mapToEntity(saveProfileDTO);
         Profile updatedProfile = profileService.updateById(profile, profileId);
-        ProfileDTO updatedProfileDTO = profileMapper.mapFromEntity(updatedProfile, false);
+        ProfileDTO updatedProfileDTO = profileMapper.mapFromEntity(updatedProfile, false, false);
 
         return new ResponseEntity<>(updatedProfileDTO, HttpStatus.OK);
     }

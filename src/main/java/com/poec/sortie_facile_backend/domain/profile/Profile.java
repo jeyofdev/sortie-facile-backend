@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.profile;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
 import com.poec.sortie_facile_backend.domain.category.Category;
@@ -11,6 +12,7 @@ import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class Profile {
     @Column(name = "date_of_birth", columnDefinition = "Date")
     private LocalDate dateOfBirth;
 
-    @OneToMany(mappedBy = "profile", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     private List<Activity> activityList;
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
@@ -84,9 +86,3 @@ public class Profile {
     @JsonIgnoreProperties("profile")
     private AuthUser user;
 }
-
-
-
-
-
-

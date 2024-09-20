@@ -2,10 +2,7 @@ package com.poec.sortie_facile_backend.domain.profile;
 
 
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
-import com.poec.sortie_facile_backend.common.model.AddressFormat;
-import com.poec.sortie_facile_backend.common.model.AgeFormat;
-import com.poec.sortie_facile_backend.common.model.NameFormat;
-import com.poec.sortie_facile_backend.common.model.YearFormat;
+import com.poec.sortie_facile_backend.common.model.*;
 import com.poec.sortie_facile_backend.core.interfaces.BaseDomainMapper;
 import com.poec.sortie_facile_backend.domain.activity.dto.ActivityDTO;
 import com.poec.sortie_facile_backend.domain.booking.Booking;
@@ -19,6 +16,7 @@ import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.ProfileDTO;
 import com.poec.sortie_facile_backend.domain.profile.dto.SaveProfileDTO;
 import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.domain.region.RegionMapper;
 import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
 import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +37,7 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
     }
 
     @Override
-    public ProfileDTO mapFromEntity(Profile profile, boolean primaryDataOnly) {
+    public ProfileDTO mapFromEntity(Profile profile, boolean primaryDataOnly, boolean isAdmin) {
         return new ProfileDTO(
                 profile.getId(),
                 profile.getUser().getEmail(),
@@ -75,9 +73,12 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         null,
                         null
                 )).toList() : new ArrayList<>(),
-                profile.getBookingList() != null ? profile.getBookingList().stream().map(Booking::getId).toList() : new ArrayList<>(),
+                new ListIdsFormat(
+                        profile.getBookingList().size(),
+                        profile.getBookingList().stream().map(Booking::getId).toList()
+                ),
                 profile.getCategoryList() != null ? profile.getCategoryList().stream().map(
-                        category -> categoryMapper.mapFromEntity(category, true)
+                        category -> categoryMapper.mapFromEntity(category, true, false)
                 ).toList() : new ArrayList<>()
         );
     }

@@ -86,64 +86,78 @@ public class ProfileService extends AbstractDomainService<Profile> {
 
     @Override
     public Profile updateById(Profile profile, Long profileId) {
-        Profile existingProfile = findById(profileId);
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        Long userId = authUserRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId();
 
-        existingProfile.setFirstname(profile.getFirstname());
-        existingProfile.setLastname(profile.getLastname());
-        existingProfile.setStreetNumber(profile.getStreetNumber());
-        existingProfile.setStreet(profile.getStreet());
-        existingProfile.setZipCode(profile.getZipCode());
-        existingProfile.setDescription(profile.getDescription());
-        existingProfile.setAvatar(profile.getAvatar());
-        existingProfile.setPhone(profile.getPhone());
-        existingProfile.setDateOfBirth(profile.getDateOfBirth());
+        if((roles.equals("[ROLE_ADMIN]")) || (roles.equals("[ROLE_USER]") && Objects.equals(profileId, userId))) {
+            Profile existingProfile = findById(profileId);
 
-        // update region id
-        if (profile.getRegion() != null) {
-            Region region = regionRepository.findById(profile.getRegion().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Region with id " + profile.getRegion().getId() + " not found"));
-            existingProfile.setRegion(region);
+            existingProfile.setFirstname(profile.getFirstname());
+            existingProfile.setLastname(profile.getLastname());
+            existingProfile.setStreetNumber(profile.getStreetNumber());
+            existingProfile.setStreet(profile.getStreet());
+            existingProfile.setZipCode(profile.getZipCode());
+            existingProfile.setDescription(profile.getDescription());
+            existingProfile.setAvatar(profile.getAvatar());
+            existingProfile.setPhone(profile.getPhone());
+            existingProfile.setDateOfBirth(profile.getDateOfBirth());
+
+            // update region id
+            if (profile.getRegion() != null) {
+                Region region = regionRepository.findById(profile.getRegion().getId())
+                        .orElseThrow(() -> new EntityNotFoundException("Region with id " + profile.getRegion().getId() + " not found"));
+                existingProfile.setRegion(region);
+            }
+
+            // update department id
+            if (profile.getDepartment() != null) {
+                Department department = departmentRepository.findById(profile.getDepartment().getId())
+                        .orElseThrow(() -> new EntityNotFoundException("Department with id " + profile.getDepartment().getId() + " not found"));
+                existingProfile.setDepartment(department);
+            }
+
+            // update city id
+            if (profile.getCity() != null) {
+                City city = cityRepository.findById(profile.getCity().getId())
+                        .orElseThrow(() -> new EntityNotFoundException("City with id " + profile.getCity().getId() + " not found"));
+                existingProfile.setCity(city);
+            }
+
+            // update category ids list
+            if (profile.getCategoryList() != null) {
+                List<Category> newCategories = categoryRepository.findAllById(profile.getCategoryList().stream()
+                        .map(Category::getId)
+                        .toList()
+                );
+
+                existingProfile.setCategoryList(newCategories);
+            }
+
+            return profileRepository.save(existingProfile);
+        } else {
+            throw new AccessDeniedException("You are not authorized to update this resource");
         }
-
-        // update department id
-        if (profile.getDepartment() != null) {
-            Department department = departmentRepository.findById(profile.getDepartment().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("Department with id " + profile.getDepartment().getId() + " not found"));
-            existingProfile.setDepartment(department);
-        }
-
-        // update city id
-        if (profile.getCity() != null) {
-            City city = cityRepository.findById(profile.getCity().getId())
-                    .orElseThrow(() -> new EntityNotFoundException("City with id " + profile.getCity().getId() + " not found"));
-            existingProfile.setCity(city);
-        }
-
-        // update category ids list
-        if (profile.getCategoryList() != null) {
-            List<Category> newCategories = categoryRepository.findAllById(profile.getCategoryList().stream()
-                    .map(Category::getId)
-                    .toList()
-            );
-
-            existingProfile.setCategoryList(newCategories);
-        }
-
-        return profileRepository.save(existingProfile);
     }
 
     @Override
     public void deleteById(Long profileId) {
-        Profile profile = findById(profileId);
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        Long userId = authUserRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId();
 
-        for (Activity activity : profile.getActivityList()) {
-            activity.setProfile(null);
+        if((roles.equals("[ROLE_ADMIN]")) || (roles.equals("[ROLE_USER]") && Objects.equals(profileId, userId))) {
+            Profile profile = findById(profileId);
+
+            for (Activity activity : profile.getActivityList()) {
+                activity.setProfile(null);
+            }
+
+            for (Category category : profile.getCategoryList()) {
+                category.setProfileList(null);
+            }
+
+            repository.deleteById(profileId);
+        } else {
+            throw new AccessDeniedException("You are not authorized to delete this resource");
         }
-
-        for (Category category : profile.getCategoryList()) {
-            category.setProfileList(null);
-        }
-
-        repository.deleteById(profileId);
     }
 }

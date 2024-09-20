@@ -1,6 +1,7 @@
 package com.poec.sortie_facile_backend.domain.city.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.poec.sortie_facile_backend.common.model.ListIdsFormat;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public record CityDTO(
         Long id,
         String name,
         String zipCode,
-        List<Long> activityIds,
+        ListIdsFormat activityIds,
         Long departmentId,
         List<Long> profileIds
 ) {

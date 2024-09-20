@@ -21,7 +21,7 @@ public class Category {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "title", columnDefinition = "VARCHAR(200)")
+    @Column(name = "title", columnDefinition = "VARCHAR(200)", unique = true)
     private String title;
 
     @Column(name = "img_url", columnDefinition = "LONGTEXT")
