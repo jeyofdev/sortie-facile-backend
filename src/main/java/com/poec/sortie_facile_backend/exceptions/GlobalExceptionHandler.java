@@ -69,7 +69,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException exception, HttpServletRequest request) {
-        return handleException(exception, HttpStatus.NOT_FOUND, request, null);
+        return handleException(exception, HttpStatus.UNAUTHORIZED, request, null);
     }
 
     /**

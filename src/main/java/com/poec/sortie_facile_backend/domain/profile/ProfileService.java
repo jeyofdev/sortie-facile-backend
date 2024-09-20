@@ -14,9 +14,12 @@ import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class ProfileService extends AbstractDomainService<Profile> {
@@ -66,6 +69,19 @@ public class ProfileService extends AbstractDomainService<Profile> {
         profile.setUser(authUser);
 
         return profileRepository.save(profile);
+    }
+
+    @Override
+    public Profile findById(Long profileId) {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        Long userId = authUserRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId();
+
+        if((roles.equals("[ROLE_ADMIN]")) || (roles.equals("[ROLE_USER]") && Objects.equals(profileId, userId))) {
+            return repository.findById(profileId).orElseThrow(
+                    () -> new EntityNotFoundException("Profile with id " + profileId + " cannot be found"));
+        } else {
+            throw new AccessDeniedException("You are not authorized to access this resource");
+        }
     }
 
     @Override

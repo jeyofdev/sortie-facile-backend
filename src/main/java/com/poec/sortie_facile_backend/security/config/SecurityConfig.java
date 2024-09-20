@@ -50,12 +50,13 @@ public class SecurityConfig {
                     ).permitAll()
 
                     .requestMatchers(HttpMethod.GET,
-                            BASE_BOOKING + "**",
-                            BASE_PROFILE + "/**"
+                            BASE_BOOKING + "/**",
+                            BASE_PROFILE + ID
                     ).hasAnyRole(Role.ADMIN.name(), Role.USER.name())
 
                     .requestMatchers(HttpMethod.GET,
-                            BASE_CONTACT + "/**"
+                            BASE_CONTACT + "/**",
+                            BASE_PROFILE + "/**"
                     ).hasRole(Role.ADMIN.name())
 
                     .requestMatchers(HttpMethod.POST,
@@ -64,7 +65,7 @@ public class SecurityConfig {
                             BASE_CONTACT + "/**")
                     .permitAll()
 
-                    .requestMatchers(HttpMethod.POST,
+                    /*.requestMatchers(HttpMethod.POST,
                             BASE_ACTIVITY + "/**",
                             BASE_BOOKING + "**"
                     ).hasAnyRole(Role.ADMIN.name(), Role.USER.name())
@@ -101,7 +102,7 @@ public class SecurityConfig {
                             BASE_DEPARTMENT + "/**",
                             BASE_CITY + "/**",
                             BASE_CATEGORY  +"/**"
-                            ).hasRole(Role.ADMIN.name())
+                            ).hasRole(Role.ADMIN.name())*/
 
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/all").hasAnyRole(Role.ADMIN.name(), Role.USER.name())
                     .requestMatchers(HttpMethod.GET, "/api/v1/demo/admins-only").hasRole(Role.ADMIN.name())
