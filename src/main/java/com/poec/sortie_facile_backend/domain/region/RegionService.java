@@ -7,6 +7,7 @@ import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.department.DepartmentRepository;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +21,15 @@ public class RegionService  extends AbstractDomainService<Region> {
         super(regionRepository, "region");
         this.regionRepository = regionRepository;
         this.departmentRepository = departmentRepository;
+    }
+
+    @Override
+    public Region add(Region region) {
+        try {
+            return regionRepository.save(region);
+        } catch (DataIntegrityViolationException exception) {
+            throw new DataIntegrityViolationException("Region name already exists");
+        }
     }
 
     @Override
