@@ -4,6 +4,7 @@ import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,6 +16,15 @@ public class CategoryService extends AbstractDomainService<Category> {
     public CategoryService(CategoryRepository categoryRepository) {
         super(categoryRepository, "category");
         this.categoryRepository = categoryRepository;
+    }
+
+    @Override
+    public Category add(Category category) {
+        try {
+            return categoryRepository.save(category);
+        } catch (DataIntegrityViolationException exception) {
+            throw new DataIntegrityViolationException("Category name already exists");
+        }
     }
 
     @Override
