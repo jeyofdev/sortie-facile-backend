@@ -12,10 +12,21 @@
 	<artifactId>sortie_facile_backend</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>sortie_facile_backend</name>
-	<description>Review of the back end spring boot of the POEC Java / Angular 2024 training project</description>
+	<description>This repository is a fork of the base project that I started from scratch with my own vision in terms of development.</description>
 	<properties>
 		<java.version>22</java.version>
 	</properties>
+
+	<developers>
+		<developer>
+			<name>jeyofdev</name>
+			<email>jgregoire.dev@gmail.com</email>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
 
 	<dependencies>
 		<dependency>
