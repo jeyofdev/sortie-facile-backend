@@ -85,7 +85,7 @@ public class AuthService implements IAuthService {
                     .build();
 
         } catch (BadCredentialsException ex) {
-            throw new BadCredentialsException("Bad credentials");
+            throw new BadCredentialsException("Login failed. Please verify your credentials and try again.");
         }
     }
 }
