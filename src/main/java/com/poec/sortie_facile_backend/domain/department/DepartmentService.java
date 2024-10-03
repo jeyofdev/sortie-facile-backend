@@ -11,6 +11,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DepartmentService extends AbstractDomainService<Department> {
 
@@ -24,6 +26,13 @@ public class DepartmentService extends AbstractDomainService<Department> {
         this.departmentRepository = departmentRepository;
         this.regionRepository = regionRepository;
         this.cityRepository = cityRepository;
+    }
+
+    public List<Department> findByRegion(Long regionId) {
+        regionRepository.findById(regionId)
+               .orElseThrow(() -> new EntityNotFoundException("Region with id " + regionId + " not found"));
+
+        return departmentRepository.findByRegionId(regionId);
     }
 
     public Department add(Department department, Long RegionId) {
