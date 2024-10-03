@@ -2,6 +2,8 @@ package com.poec.sortie_facile_backend.domain.city;
 
 import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
+import com.poec.sortie_facile_backend.domain.department.Department;
+import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +45,16 @@ public class CityController {
         CityDTO cityDTO = cityMapper.mapFromEntity(city, false, roles.equals("[ROLE_ADMIN]"));
 
         return new ResponseEntity<>(cityDTO, HttpStatus.FOUND);
+    }
+
+    @GetMapping(ALL + DEPARTMENT + ID)
+    public ResponseEntity<List<CityDTO>> getByDepartment(@PathVariable("id") Long departmentId) {
+        String roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
+        List<City> cityList = cityService.findByDepartment(departmentId);
+        List<CityDTO> cityDTOS = cityList.stream().map(department -> cityMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"))).toList();
+
+        return new ResponseEntity<>(cityDTOS, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")

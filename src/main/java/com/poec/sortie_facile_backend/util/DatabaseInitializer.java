@@ -182,11 +182,12 @@ public class DatabaseInitializer implements CommandLineRunner {
         List<LocationCityInfo> cityList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode(), location.getDepartmentName()))
                 .distinct()
-                .limit(100)
+               /* .limit(25000)*/
                 .toList();
 
         for (LocationCityInfo city : cityList) {
             Department department = departmentRepository.findByName(city.getDepartmentName());
+
 
             City currentCity = cityMapper.mapToEntity(
                     new SaveCityDTO(city.getLabel(), city.getZipCode(), null)

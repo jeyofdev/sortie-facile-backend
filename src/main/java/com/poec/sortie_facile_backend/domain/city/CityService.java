@@ -9,6 +9,8 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CityService extends AbstractDomainService<City> {
 
@@ -20,6 +22,13 @@ public class CityService extends AbstractDomainService<City> {
         super(cityRepository, "city");
         this.cityRepository = cityRepository;
         this.departmentRepository = departmentRepository;
+    }
+
+    public List<City> findByDepartment(Long departmentId) {
+        departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new EntityNotFoundException("Department with id " + departmentId + " not found"));
+
+        return cityRepository.findByDepartmentId(departmentId);
     }
 
     public City add(City city, Long departmentId) {
@@ -61,4 +70,6 @@ public class CityService extends AbstractDomainService<City> {
 
         repository.deleteById(cityId);
     }
+
+
 }
