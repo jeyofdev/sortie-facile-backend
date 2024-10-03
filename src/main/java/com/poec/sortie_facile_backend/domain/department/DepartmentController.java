@@ -45,6 +45,16 @@ public class DepartmentController {
         return new ResponseEntity<>(departmentDTO, HttpStatus.FOUND);
     }
 
+    @GetMapping(ALL + REGION + ID)
+    public ResponseEntity<List<DepartmentDTO>> getByRegion(@PathVariable("id") Long regionId) {
+        String roles = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
+        List<Department> departmentList = departmentService.findByRegion(regionId);
+        List<DepartmentDTO> departmentDTOS = departmentList.stream().map(department -> departmentMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"))).toList();
+
+        return new ResponseEntity<>(departmentDTOS, HttpStatus.FOUND);
+    }
+
     @PostMapping(ADD + REGION + ID)
     public ResponseEntity<DepartmentDTO> add(
             @Valid @RequestBody SaveDepartmentDTO saveDepartmentDTO,
