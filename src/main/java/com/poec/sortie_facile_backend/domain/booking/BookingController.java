@@ -35,7 +35,7 @@ public class BookingController {
         Booking booking = bookingService.findById(bookingId);
         BookingDTO bookingDTO = bookingMapper.mapFromEntity(booking);
 
-        return new ResponseEntity<>(bookingDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(bookingDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD + ACTIVITY + "/{activityId}" + PROFILE + "/{profileId}")

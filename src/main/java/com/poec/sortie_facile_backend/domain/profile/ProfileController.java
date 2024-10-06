@@ -37,7 +37,7 @@ public class ProfileController {
         Profile profile = profileService.findById(profileId);
         ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false, false);
 
-        return new ResponseEntity<>(profileDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")

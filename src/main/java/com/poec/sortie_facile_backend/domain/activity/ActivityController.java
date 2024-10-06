@@ -38,7 +38,7 @@ public class ActivityController {
         Activity activity = activityService.findById(activityId);
         ActivityDTO activityDTO = activityMapper.mapFromEntity(activity, false, false);
 
-        return new ResponseEntity<>(activityDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(activityDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + PROFILE + "/{profileId}")

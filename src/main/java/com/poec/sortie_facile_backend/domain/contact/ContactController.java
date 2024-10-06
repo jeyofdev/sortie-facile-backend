@@ -37,7 +37,7 @@ public class ContactController {
         Contact contact = contactService.findById(contactId);
         ContactDTO contactDTO = contactMapper.mapFromEntity(contact, false, false);
 
-        return new ResponseEntity<>(contactDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(contactDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD)

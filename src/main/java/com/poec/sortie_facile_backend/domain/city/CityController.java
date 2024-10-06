@@ -44,7 +44,7 @@ public class CityController {
         City city = cityService.findById(cityId);
         CityDTO cityDTO = cityMapper.mapFromEntity(city, false, roles.equals("[ROLE_ADMIN]"));
 
-        return new ResponseEntity<>(cityDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(cityDTO, HttpStatus.OK);
     }
 
     @GetMapping(ALL + DEPARTMENT + ID)
