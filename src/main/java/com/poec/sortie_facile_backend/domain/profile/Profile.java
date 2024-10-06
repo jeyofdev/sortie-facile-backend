@@ -34,6 +34,9 @@ public class Profile {
     @Column(name = "lastname", columnDefinition = "VARCHAR(50)")
     private String lastname;
 
+    @Column(name = "date_of_birth", columnDefinition = "Date")
+    private LocalDate dateOfBirth;
+
     @Column(name = "street_number", columnDefinition = "VARCHAR(4)")
     private String streetNumber;
 
@@ -43,20 +46,26 @@ public class Profile {
     @Column(name = "zip_code", columnDefinition = "VARCHAR(5)")
     private String zipCode;
 
-    @Column(name = "description", columnDefinition = "LONGTEXT")
-    private String description;
+    @Column(name = "phone", columnDefinition = "VARCHAR(10)")
+    private String phone;
+
+    @Column(name = "twitter", columnDefinition = "VARCHAR(50)")
+    private String twitter;
+
+    @Column(name = "instagram", columnDefinition = "VARCHAR(50)")
+    private String instagram;
+
+    @Column(name = "facebook", columnDefinition = "VARCHAR(50)")
+    private String facebook;
 
     @Column(name = "avatar", columnDefinition = "LONGTEXT")
     private String avatar;
 
-    @Column(name = "phone", columnDefinition = "VARCHAR(10)")
-    private String phone;
-
-    @Column(name = "date_of_birth", columnDefinition = "Date")
-    private LocalDate dateOfBirth;
+    @Column(name = "description", columnDefinition = "LONGTEXT")
+    private String description;
 
     @OneToMany(mappedBy = "profile", cascade = {CascadeType.MERGE, CascadeType.REFRESH})
-    private List<Activity> activityList;
+    private List<Activity> activityList = new ArrayList<>();
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "region_id", referencedColumnName = "id")

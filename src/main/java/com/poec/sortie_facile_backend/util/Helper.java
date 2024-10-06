@@ -86,6 +86,12 @@ public class Helper {
             throw new IllegalArgumentException("The 'phoneNumber' field must be provided and cannot be empty.");
         }
 
-        return phoneNumber.replaceAll("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})", "$1 $2 $3 $4 $5");
+        String cleanedNumber = phoneNumber.replaceAll("[- ]", "");
+
+        if (cleanedNumber.length() != 10 || !cleanedNumber.matches("\\d+")) {
+            throw new IllegalArgumentException("Invalid phone number. Must contain exactly 10 digits.");
+        }
+
+        return phoneNumber.replaceAll("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})", "$1-$2-$3-$4-$5");
     }
 }
