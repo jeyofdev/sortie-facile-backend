@@ -37,7 +37,7 @@ public class CategoryController {
         Category category = categoryService.findById(categoryId);
         CategoryDTO categoryDTO = categoryMapper.mapFromEntity(category, false, false);
 
-        return new ResponseEntity<>(categoryDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(categoryDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD)

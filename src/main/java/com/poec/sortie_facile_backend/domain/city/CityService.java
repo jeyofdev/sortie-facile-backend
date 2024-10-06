@@ -31,6 +31,14 @@ public class CityService extends AbstractDomainService<City> {
         return cityRepository.findByDepartmentId(departmentId);
     }
 
+    public List<City> findByZipCode(String zipCode) {
+        if (!zipCode.matches("\\d{5}")) {
+            throw new IllegalArgumentException("Invalid postal code format. It should consist of 5 digits.");
+        }
+
+        return cityRepository.findByZipCode(zipCode);
+    }
+
     public City add(City city, Long departmentId) {
         Department newDepartment = departmentRepository.findById(departmentId)
                 .orElseThrow(
@@ -70,6 +78,4 @@ public class CityService extends AbstractDomainService<City> {
 
         repository.deleteById(cityId);
     }
-
-
 }

@@ -41,7 +41,6 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                 profile.getUser().getNickname(),
                 new NameFormat(profile.getFirstname(), profile.getLastname()),
                 new YearFormat(profile.getDateOfBirth()),
-                Helper.formatPhoneNumber(profile.getPhone()),
                 new AddressFormat(
                         profile.getStreetNumber(),
                         profile.getStreet(),
@@ -49,6 +48,14 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         new RegionDTO(profile.getRegion().getId(), profile.getRegion().getName(), null, null, null),
                         new DepartmentDTO(profile.getDepartment().getId(), profile.getDepartment().getName(), profile.getDepartment().getNumber(), null, null, null, null),
                         new CityDTO(profile.getCity().getId(), profile.getCity().getName(), profile.getCity().getZipCode(), null, null, null)
+                ),
+                new ContactFormat(
+                        profile.getPhone(),
+                        new SocialFormat(
+                                profile.getTwitter(),
+                                profile.getInstagram(),
+                                profile.getFacebook()
+                        )
                 ),
                 profile.getDescription(),
                 profile.getAvatar(),
@@ -93,12 +100,15 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
         profile.setFirstname(saveProfileDTO.firstname());
         profile.setLastname(saveProfileDTO.lastname());
         profile.setDateOfBirth(saveProfileDTO.dateOfBirth());
-        profile.setPhone(saveProfileDTO.phone());
         profile.setStreetNumber(saveProfileDTO.streetNumber());
         profile.setStreet(saveProfileDTO.street());
         profile.setZipCode(saveProfileDTO.zipCode());
-        profile.setDescription(saveProfileDTO.description());
+        profile.setPhone(saveProfileDTO.phone());
+        profile.setTwitter(saveProfileDTO.twitter());
+        profile.setInstagram(saveProfileDTO.instagram());
+        profile.setFacebook(saveProfileDTO.facebook());
         profile.setAvatar(saveProfileDTO.avatar());
+        profile.setDescription(saveProfileDTO.description());
 
         if (saveProfileDTO.categoryIds() != null) {
             List<Category> categoryList = categoryRepository.findAllById(saveProfileDTO.categoryIds());

@@ -42,7 +42,7 @@ public class DepartmentController {
         Department department = departmentService.findById(departmentId);
         DepartmentDTO departmentDTO = departmentMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"));
 
-        return new ResponseEntity<>(departmentDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(departmentDTO, HttpStatus.OK);
     }
 
     @GetMapping(ALL + REGION + ID)
@@ -52,7 +52,7 @@ public class DepartmentController {
         List<Department> departmentList = departmentService.findByRegion(regionId);
         List<DepartmentDTO> departmentDTOS = departmentList.stream().map(department -> departmentMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"))).toList();
 
-        return new ResponseEntity<>(departmentDTOS, HttpStatus.FOUND);
+        return new ResponseEntity<>(departmentDTOS, HttpStatus.OK);
     }
 
     @PostMapping(ADD + REGION + ID)

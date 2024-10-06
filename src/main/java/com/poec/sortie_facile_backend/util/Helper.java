@@ -31,6 +31,26 @@ public class Helper {
     }
 
     /**
+     * Capitalize each word of a string
+     */
+    public static String capitalizeEachWord(String str) {
+        if (str == null || str.isEmpty()) {
+            throw new IllegalArgumentException("The 'str' field must be provided and cannot be empty.");
+        }
+
+        String[] words = str.split("[- ]");
+
+        StringBuilder capitalized = new StringBuilder();
+        for (String word : words) {
+            capitalized.append(Character.toUpperCase(word.charAt(0)))
+                    .append(word.substring(1).toLowerCase())
+                    .append(str.contains("-") ? "-" : " ");
+        }
+
+        return capitalized.substring(0, capitalized.length() - 1);
+    }
+
+    /**
      * calculate age from a date
      */
     public static int calculateAge(LocalDate date) {
@@ -66,6 +86,12 @@ public class Helper {
             throw new IllegalArgumentException("The 'phoneNumber' field must be provided and cannot be empty.");
         }
 
-        return phoneNumber.replaceAll("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})", "$1 $2 $3 $4 $5");
+        String cleanedNumber = phoneNumber.replaceAll("[- ]", "");
+
+        if (cleanedNumber.length() != 10 || !cleanedNumber.matches("\\d+")) {
+            throw new IllegalArgumentException("Invalid phone number. Must contain exactly 10 digits.");
+        }
+
+        return phoneNumber.replaceAll("(\\d{2})(\\d{2})(\\d{2})(\\d{2})(\\d{2})", "$1-$2-$3-$4-$5");
     }
 }

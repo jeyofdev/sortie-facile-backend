@@ -23,9 +23,6 @@ public record SaveProfileDTO(
         @NotNull(message = "The date of birth field is required.")
         LocalDate dateOfBirth,
 
-        @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
-        String phone,
-
         @NotNull(message = "The street number field is required.")
         @NotBlank(message = "The name street number cannot be empty.")
         @Pattern(regexp = "^[0-9]*$", message = "The street number must be a maximum of 4 digits.")
@@ -40,12 +37,19 @@ public record SaveProfileDTO(
         @Pattern(regexp = "\\d{5}", message = "The zip code must be exactly 5 digits.")
         String zipCode,
 
-        @NotNull(message = "The description field is required.")
-        @NotBlank(message = "The description field cannot be empty.")
-        String description,
+        @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
+        String phone,
+
+        @Nullable String twitter,
+        @Nullable String instagram,
+        @Nullable String facebook,
 
         @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
         String avatar,
+
+        @NotNull(message = "The description field is required.")
+        @NotBlank(message = "The description field cannot be empty.")
+        String description,
 
         @Nullable List<Long> categoryIds,
         @Nullable Long regionId,

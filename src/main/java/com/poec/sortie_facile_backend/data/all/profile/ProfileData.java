@@ -13,6 +13,9 @@ public class ProfileData {
     @JsonProperty("lastname")
     private String lastname;
 
+    @JsonProperty("dateOfBirth")
+    private String dateOfBirth;
+
     @JsonProperty("streetNumber")
     private String streetNumber;
 
@@ -22,17 +25,23 @@ public class ProfileData {
     @JsonProperty("zipCode")
     private String zipCode;
 
+    @JsonProperty("phone")
+    private String phone;
+
+    @JsonProperty("twitter")
+    private String twitter;
+
+    @JsonProperty("instagram")
+    private String instagram;
+
+    @JsonProperty("facebook")
+    private String facebook;
+
     @JsonProperty("description")
     private String description;
 
     @JsonProperty("avatar")
     private String avatar;
-
-    @JsonProperty("phone")
-    private String phone;
-
-    @JsonProperty("dateOfBirth")
-    private String dateOfBirth;
 
     @JsonProperty("regionId")
     private Long regionId;

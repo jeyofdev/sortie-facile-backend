@@ -7,6 +7,7 @@ import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import com.poec.sortie_facile_backend.domain.region.dto.RegionDTO;
 import com.poec.sortie_facile_backend.domain.region.dto.SaveRegionDTO;
+import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,7 @@ public class RegionMapper implements BaseDomainMapper<Region, RegionDTO, SaveReg
     public RegionDTO mapFromEntity(Region region, boolean primaryDataOnly, boolean isAdmin) {
         return new RegionDTO(
                 region.getId(),
-                region.getName(),
+                Helper.capitalizeEachWord(region.getName()),
                 new ListRelationWithSizeFormat<>(
                         region.getDepartmentList().size(),
                         region.getDepartmentList().stream().map(Department::getId).toList()

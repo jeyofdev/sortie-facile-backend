@@ -7,6 +7,7 @@ import com.poec.sortie_facile_backend.domain.city.dto.CityDTO;
 import com.poec.sortie_facile_backend.domain.city.dto.SaveCityDTO;
 import com.poec.sortie_facile_backend.domain.department.Department;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
+import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,7 +18,7 @@ public class CityMapper implements BaseDomainMapper<City, CityDTO, SaveCityDTO> 
     public CityDTO mapFromEntity(City city, boolean primaryDataOnly, boolean isAdmin) {
         return new CityDTO(
                 city.getId(),
-                city.getName(),
+                Helper.capitalizeEachWord(city.getName()),
                 city.getZipCode(),
                 new ListRelationWithSizeFormat<>(
                         city.getActivityList().size(),

@@ -24,7 +24,7 @@ public class ProfileController {
     @Autowired
     private ProfileMapper profileMapper;
 
-    @GetMapping()
+    @GetMapping(ALL)
     public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profileList = profileService.findAll();
         List<ProfileDTO> profileDTOS = profileList.stream().map(profile -> profileMapper.mapFromEntity(profile, false, false)).toList();
@@ -37,7 +37,7 @@ public class ProfileController {
         Profile profile = profileService.findById(profileId);
         ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false, false);
 
-        return new ResponseEntity<>(profileDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")

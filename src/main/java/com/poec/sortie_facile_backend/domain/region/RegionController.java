@@ -51,7 +51,7 @@ public class RegionController {
         Region region = regionService.findById(regionId);
         RegionDTO regionDTO = regionMapper.mapFromEntity(region, false, roles.equals("[ROLE_ADMIN]"));
 
-        return new ResponseEntity<>(regionDTO, HttpStatus.FOUND);
+        return new ResponseEntity<>(regionDTO, HttpStatus.OK);
     }
 
     @PostMapping(ADD)

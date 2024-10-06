@@ -182,7 +182,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         List<LocationCityInfo> cityList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode(), location.getDepartmentName()))
                 .distinct()
-               /* .limit(25000)*/
+                .limit(1000)
                 .toList();
 
         for (LocationCityInfo city : cityList) {
@@ -214,13 +214,16 @@ public class DatabaseInitializer implements CommandLineRunner {
                 .map(profile -> new ProfileDataInfo(
                         profile.getFirstname(),
                         profile.getLastname(),
+                        LocalDate.parse(profile.getDateOfBirth()),
                         profile.getStreetNumber(),
                         profile.getStreet(),
                         profile.getZipCode(),
-                        profile.getDescription(),
-                        profile.getAvatar(),
                         profile.getPhone(),
-                        LocalDate.parse(profile.getDateOfBirth()),
+                        profile.getTwitter(),
+                        profile.getInstagram(),
+                        profile.getFacebook(),
+                        profile.getAvatar(),
+                        profile.getDescription(),
                         profile.getRegionId(),
                         profile.getDepartmentId(),
                         profile.getCityId(),
@@ -241,10 +244,13 @@ public class DatabaseInitializer implements CommandLineRunner {
                             profile.getFirstname(),
                             profile.getLastname(),
                             profile.getDateOfBirth(),
-                            profile.getPhone(),
                             profile.getStreetNumber(),
                             profile.getStreet(),
                             profile.getZipCode(),
+                            profile.getPhone(),
+                            profile.getTwitter(),
+                            profile.getInstagram(),
+                            profile.getFacebook(),
                             profile.getDescription(),
                             profile.getAvatar(),
                             profile.getCategoryIds(),
