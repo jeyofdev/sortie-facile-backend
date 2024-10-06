@@ -8,6 +8,7 @@ import com.poec.sortie_facile_backend.domain.department.dto.DepartmentDTO;
 import com.poec.sortie_facile_backend.domain.department.dto.SaveDepartmentDTO;
 import com.poec.sortie_facile_backend.domain.profile.Profile;
 import com.poec.sortie_facile_backend.domain.region.Region;
+import com.poec.sortie_facile_backend.util.Helper;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -18,7 +19,7 @@ public class DepartmentMapper implements BaseDomainMapper<Department, Department
     public DepartmentDTO mapFromEntity(Department department, boolean primaryDataOnly, boolean isAdmin) {
         return new DepartmentDTO(
                 department.getId(),
-                department.getName(),
+                Helper.capitalizeEachWord(department.getName()),
                 department.getNumber(),
                 new ListRelationWithSizeFormat<>(
                         department.getActivityList().size(),
