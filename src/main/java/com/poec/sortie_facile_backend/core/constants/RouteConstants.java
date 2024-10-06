@@ -16,6 +16,7 @@ public class RouteConstants {
     public static final String DELETE = "/delete/{id}";
     public static final String ID = "/{id}";
     public static final String UPDATE = "/update/{id}";
+    public static final String ZIP_CODE = "/zipcode/{zipCode}";
 
     public static final String BASE_USER = BASE_URL + "/user";
     public static final String BASE_ACTIVITY = BASE_URL + "/activity";
