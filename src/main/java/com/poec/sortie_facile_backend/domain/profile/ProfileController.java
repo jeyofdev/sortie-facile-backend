@@ -24,7 +24,7 @@ public class ProfileController {
     @Autowired
     private ProfileMapper profileMapper;
 
-    @GetMapping(ALL)
+    @GetMapping()
     public ResponseEntity<List<ProfileDTO>> getAll() {
         List<Profile> profileList = profileService.findAll();
         List<ProfileDTO> profileDTOS = profileList.stream().map(profile -> profileMapper.mapFromEntity(profile, false, false)).toList();
@@ -37,7 +37,7 @@ public class ProfileController {
         Profile profile = profileService.findById(profileId);
         ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false, false);
 
-        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
+        return new ResponseEntity<>(profileDTO, HttpStatus.FOUND);
     }
 
     @PostMapping(ADD + REGION + "/{regionId}" + DEPARTMENT + "/{departmentId}" + CITY + "/{cityId}" + USER + "/{userId}")
@@ -65,6 +65,22 @@ public class ProfileController {
         ProfileDTO updatedProfileDTO = profileMapper.mapFromEntity(updatedProfile, false, false);
 
         return new ResponseEntity<>(updatedProfileDTO, HttpStatus.OK);
+    }
+
+    @PostMapping(ID + CATEGORY + "/{categoryId}")
+    public ResponseEntity<ProfileDTO> addCategoryToProfile(@PathVariable("id") Long profileId, @PathVariable("categoryId") Long categoryId) {
+        Profile profile = profileService.addCategoryToProfile(profileId, categoryId);
+        ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false, false);
+
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
+    }
+
+    @PutMapping(ID + CATEGORY + "/{categoryId}")
+    public ResponseEntity<ProfileDTO> removeCategoryToProfile(@PathVariable("id") Long profileId, @PathVariable("categoryId") Long categoryId) {
+        Profile profile = profileService.removeCategoryToProfile(profileId, categoryId);
+        ProfileDTO profileDTO = profileMapper.mapFromEntity(profile, false, false);
+
+        return new ResponseEntity<>(profileDTO, HttpStatus.OK);
     }
 
     //-----------------

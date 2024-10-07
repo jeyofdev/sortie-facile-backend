@@ -4,6 +4,7 @@ import com.poec.sortie_facile_backend.core.abstracts.AbstractDomainService;
 import com.poec.sortie_facile_backend.domain.activity.Activity;
 import com.poec.sortie_facile_backend.domain.category.Category;
 import com.poec.sortie_facile_backend.domain.category.CategoryRepository;
+import com.poec.sortie_facile_backend.domain.category.CategoryService;
 import com.poec.sortie_facile_backend.domain.city.City;
 import com.poec.sortie_facile_backend.domain.city.CityRepository;
 import com.poec.sortie_facile_backend.domain.department.Department;
@@ -30,9 +31,10 @@ public class ProfileService extends AbstractDomainService<Profile> {
     private final CityRepository cityRepository;
     private final RegionRepository regionRepository;
     private final DepartmentRepository departmentRepository;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ProfileService(ProfileRepository profileRepository, CategoryRepository categoryRepository, AuthUserRepository authUserRepository, CityRepository cityRepository, RegionRepository regionRepository, DepartmentRepository departmentRepository) {
+    public ProfileService(ProfileRepository profileRepository, CategoryRepository categoryRepository, AuthUserRepository authUserRepository, CityRepository cityRepository, RegionRepository regionRepository, DepartmentRepository departmentRepository, CategoryService categoryService) {
         super(profileRepository, "profile");
         this.profileRepository = profileRepository;
         this.categoryRepository = categoryRepository;
@@ -40,6 +42,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
         this.cityRepository = cityRepository;
         this.regionRepository = regionRepository;
         this.departmentRepository = departmentRepository;
+        this.categoryService = categoryService;
     }
 
     public Profile add(Profile profile, Long regionId, Long departmentId, Long cityId, Long userId) {
@@ -124,7 +127,7 @@ public class ProfileService extends AbstractDomainService<Profile> {
             }
 
             // update category ids list
-            if (profile.getCategoryList() != null) {
+            if (!profile.getCategoryList().isEmpty()) {
                 List<Category> newCategories = categoryRepository.findAllById(profile.getCategoryList().stream()
                         .map(Category::getId)
                         .toList()
@@ -158,6 +161,47 @@ public class ProfileService extends AbstractDomainService<Profile> {
             repository.deleteById(profileId);
         } else {
             throw new AccessDeniedException("You are not authorized to delete this resource");
+        }
+    }
+
+    public Profile addCategoryToProfile(Long profileId, Long categoryId) {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+
+        Long userId = authUserRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName())
+                .orElseThrow(() -> new AccessDeniedException("You are not authorized to access this resource.")).getId();
+
+
+        if (roles.equals("[ROLE_ADMIN]") || (roles.equals("[ROLE_USER]") && Objects.equals(profileId, userId))) {
+            Profile profile = findById(profileId);
+            Category category = categoryService.findById(categoryId);
+
+            if (profile.getCategoryList().contains(category)) {
+                throw new IllegalArgumentException("The category with the id " + categoryId + " is already associated with the profile with the id " + profileId + ".");
+            }
+
+            profile.getCategoryList().add(category);
+            return profileRepository.save(profile);
+        }
+
+        throw new AccessDeniedException("You are not authorized to access this resource.");
+    }
+
+    public Profile removeCategoryToProfile(Long profileId, Long categoryId) {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        Long userId = authUserRepository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get().getId();
+
+        if((roles.equals("[ROLE_ADMIN]")) || (roles.equals("[ROLE_USER]") && Objects.equals(profileId, userId))) {
+            Profile profile = findById(profileId);
+            Category category = categoryService.findById(categoryId);
+
+            if (!profile.getCategoryList().contains(category)) {
+                throw new IllegalArgumentException("The category with the id " + categoryId + " is not associated with the profile with the id " + profileId + ".");
+            }
+
+            profile.getCategoryList().remove(category);
+            return profileRepository.save(profile);
+        } else {
+            throw new AccessDeniedException("You are not authorized to access this resource");
         }
     }
 }
