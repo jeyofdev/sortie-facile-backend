@@ -78,6 +78,10 @@ public class SecurityConfig {
                     ).hasRole(Role.ADMIN.name())
 
                     .requestMatchers(HttpMethod.PUT,
+                            "/api/v1/auth/**"
+                    ).permitAll()
+
+                    .requestMatchers(HttpMethod.PUT,
                             BASE_ACTIVITY + "/**",
                             BASE_PROFILE + "/**",
                             BASE_BOOKING + "**"

@@ -22,13 +22,13 @@ public class JwtService {
 
     // generate jwt token with user information
     // and an expiration time
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, Integer expiration) {
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 1000 ))
+                .setExpiration(new Date(System.currentTimeMillis() + expiration ))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -61,7 +61,6 @@ public class JwtService {
                 .getBody();
     }
 
-
     // check if the JWT token is valid
     // and if the user information matches
     public boolean isTokenValid(String token, UserDetails userDetails) {
@@ -78,6 +77,8 @@ public class JwtService {
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
     }
+
+
 }
 
 

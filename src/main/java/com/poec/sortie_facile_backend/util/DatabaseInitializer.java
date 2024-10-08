@@ -91,13 +91,13 @@ public class DatabaseInitializer implements CommandLineRunner {
             this.createUsers(allDataList);
         }
 
-        this.createContacts(allDataList);
+     /*   this.createContacts(allDataList);
         this.createRegions(locationDataList);
         this.createDepartments(locationDataList);
         this.createCities(locationDataList);
         this.createCategories(allDataList);
         this.createProfiles(allDataList);
-        this.createActivities(allDataList);
+        this.createActivities(allDataList);*/
     }
 
     private void createUsers(AllDataResponse allDataList) {
