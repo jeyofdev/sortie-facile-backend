@@ -12,12 +12,12 @@ import java.util.List;
 public record SaveProfileDTO(
         @NotNull(message = "The firstname field is required.")
         @NotBlank(message = "The name firstname cannot be empty.")
-        @Size(min = 2, max = 50, message = "The firstname field must contain between 2 and 50 characters.")
+        @Size(min = 2, max = 30, message = "The firstname field must contain between 2 and 30 characters.")
         String firstname,
 
         @NotNull(message = "The lastname field is required.")
         @NotBlank(message = "The name lastname cannot be empty.")
-        @Size(min = 2, max = 50, message = "The lastname field must contain between 2 and 50 characters.")
+        @Size(min = 2, max = 30, message = "The lastname field must contain between 2 and 30 characters.")
         String lastname,
 
         @NotNull(message = "The date of birth field is required.")
@@ -30,7 +30,7 @@ public record SaveProfileDTO(
 
         @NotNull(message = "The street field is required.")
         @NotBlank(message = "The name street cannot be empty.")
-        @Size(min = 2, max = 50, message = "The street field must contain between 2 and 50 characters.")
+        @Size(min = 2, max = 80, message = "The street field must contain between 2 and 80 characters.")
         String street,
 
         @NotNull(message = "The zip code field is required.")
@@ -40,10 +40,16 @@ public record SaveProfileDTO(
         @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
         String phone,
 
+        @Size(min = 3, max = 30, message = "The twitter pseudo field must contain between 3 and 30 characters.")
         @Nullable String twitter,
+
+        @Size(min = 3, max = 30, message = "The twitter pseudo field must contain between 3 and 30 characters.")
         @Nullable String instagram,
+
+        @Size(min = 3, max = 30, message = "The twitter pseudo field must contain between 3 and 30 characters.")
         @Nullable String facebook,
 
+        @Nullable
         @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
         String avatar,
 
