@@ -29,6 +29,7 @@ public class AuthService implements IAuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final EmailService emailService;
 
     @Override
     public Map<String, String> register(RegisterRequest request) throws UsernameAlreadyTakenException {
@@ -94,7 +95,7 @@ public class AuthService implements IAuthService {
     public AuthResponse requestPasswordReset(String email) {
         // get user by email
         AuthUser user = repository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found in Database"));
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
         // create additional claims for the reset token
         Map<String, Object> extraClaims = new HashMap<>();
@@ -107,10 +108,13 @@ public class AuthService implements IAuthService {
         user.setResetTokenExpiration(LocalDateTime.now().plusMinutes(15));
         repository.save(user);
 
+        // send password reset email
+        emailService.sendPasswordResetEmail(user.getEmail(), jwtToken);
+
         // return token
         return AuthResponse.builder()
                 .token(jwtToken)
-                .message("Password reset token generated")
+                .message("An email containing a link to reset your password has been sent to your address. Please check your inbox and follow the instructions.")
                 .build();
     }
 
@@ -131,7 +135,7 @@ public class AuthService implements IAuthService {
         repository.save(user);
 
         return ResetPasswordResponse.builder()
-                .message("Password successfully updated")
+                .message("Your password has been updated successfully. You can now use your new password to log in.")
                 .build();
     }
 }
