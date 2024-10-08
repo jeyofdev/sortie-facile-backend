@@ -62,7 +62,7 @@ public class CityController {
         List<City> cityList = cityService.findByDepartment(departmentId);
         List<CityDTO> cityDTOS = cityList.stream().map(department -> cityMapper.mapFromEntity(department, false, roles.equals("[ROLE_ADMIN]"))).toList();
 
-        return new ResponseEntity<>(cityDTOS, HttpStatus.FOUND);
+        return new ResponseEntity<>(cityDTOS, HttpStatus.OK);
     }
 
     @PostMapping(ADD + DEPARTMENT + "/{departmentId}")
