@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,6 +40,14 @@ public class AuthUser implements UserDetails {
     @JsonIgnore
     @Column(name = "role", columnDefinition = "VARCHAR(20)")
     private String role;
+
+    @JsonIgnore
+    @Column(name = "reset_token", columnDefinition = "VARCHAR(255)")
+    private String resetToken;
+
+    @JsonIgnore
+    @Column(name = "reset_token_expiration", columnDefinition = "TIMESTAMP")
+    private LocalDateTime resetTokenExpiration;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
