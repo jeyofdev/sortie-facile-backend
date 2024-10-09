@@ -100,7 +100,7 @@ public class AuthService implements IAuthService {
     public MessageResponse requestPasswordReset(String email) {
         // get user by email
         AuthUser user = repository.findByEmail(email)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new UsernameNotFoundException("No account was found associated with this email address. Please check the email you provided or consider creating a new account."));
 
         // create additional claims for the reset token
         Map<String, Object> extraClaims = new HashMap<>();

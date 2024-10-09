@@ -23,7 +23,7 @@ public class EmailService {
 
     public void sendPasswordResetEmail(String toEmail, String resetToken) {
 
-        String resetUrl = "http://localhost:8080/api/v1/auth/update-password?resetToken=" + resetToken;
+        String resetUrl = "http://localhost:3000/auth/reset-password?resetToken=" + resetToken;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
@@ -35,7 +35,7 @@ public class EmailService {
     }
 
     public void sendValidationEmail(String email, String verificationToken) {
-        String verificationUrl = "http://localhost:8080/api/v1/auth/verification-account?verificationToken=" + verificationToken;
+        String verificationUrl = "http://localhost:3000/auth/verification-account?verificationToken=" + verificationToken;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
