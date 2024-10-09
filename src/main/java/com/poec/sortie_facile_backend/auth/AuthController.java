@@ -1,16 +1,10 @@
 package com.poec.sortie_facile_backend.auth;
 
-import com.poec.sortie_facile_backend.auth.model.LoginRequest;
-import com.poec.sortie_facile_backend.auth.model.AuthResponse;
-import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
-import com.poec.sortie_facile_backend.auth.model.ResetPasswordResponse;
+import com.poec.sortie_facile_backend.auth.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -20,8 +14,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> register(@RequestBody RegisterRequest request) {
-        Map<String, String> registerResponse = authService.register(request);
+    public ResponseEntity<RegisterResponse> register(@RequestBody RegisterRequest request) {
+        RegisterResponse registerResponse = authService.register(request);
         return new ResponseEntity<>(registerResponse, HttpStatus.OK);
     }
 
@@ -32,17 +26,23 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
-    public ResponseEntity<AuthResponse> requestPasswordReset(@RequestParam String email) {
-        AuthResponse requestPasswordResetResponse = authService.requestPasswordReset(email);
+    public ResponseEntity<MessageResponse> requestPasswordReset(@RequestParam("email") String email) {
+        MessageResponse requestPasswordResetResponse = authService.requestPasswordReset(email);
         return new ResponseEntity<>(requestPasswordResetResponse, HttpStatus.OK);
     }
 
     @PostMapping("/update-password")
-    public ResponseEntity<ResetPasswordResponse> resetPassword(
-            @RequestParam String token,
-            @RequestParam String newPassword
+    public ResponseEntity<MessageResponse> resetPassword(
+            @RequestParam("resetToken") String resetToken,
+            @RequestParam("newPassword") String newPassword
     ) {
-        ResetPasswordResponse resetPasswordResponse = authService.resetPassword(token, newPassword);
-        return new ResponseEntity<>(resetPasswordResponse, HttpStatus.OK);
+        MessageResponse messageResponse = authService.resetPassword(resetToken, newPassword);
+        return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/verification-account")
+    public ResponseEntity<MessageResponse> validateAccount(@RequestParam("verificationToken") String verificationToken) {
+        MessageResponse messageResponse = authService.validateAccount(verificationToken);
+        return new ResponseEntity<>(messageResponse, HttpStatus.OK);
     }
 }

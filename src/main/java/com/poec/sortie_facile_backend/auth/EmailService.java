@@ -21,11 +21,9 @@ public class EmailService {
         this.emailSender = emailSender;
     }
 
-    public void sendPasswordResetEmail(String toEmail, String token) {
+    public void sendPasswordResetEmail(String toEmail, String resetToken) {
 
-        String resetUrl = "http://localhost:8080/api/v1/auth/update-password?token=" + token;
-
-        System.out.println(resetUrl);
+        String resetUrl = "http://localhost:8080/api/v1/auth/update-password?resetToken=" + resetToken;
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
@@ -33,7 +31,17 @@ public class EmailService {
         message.setSubject("Reset your password");
         message.setText("To reset your password, please click on the following link : " + resetUrl);
 
-        System.out.println(message);
+        emailSender.send(message);
+    }
+
+    public void sendValidationEmail(String email, String verificationToken) {
+        String verificationUrl = "http://localhost:8080/api/v1/auth/verification-account?verificationToken=" + verificationToken;
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setFrom(fromEmail);
+        message.setSubject("Verification of your account");
+        message.setText("Please click the following link to verify your account: " + verificationUrl);
 
         emailSender.send(message);
     }
