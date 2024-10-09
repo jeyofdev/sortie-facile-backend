@@ -40,14 +40,17 @@ public record SaveProfileDTO(
         @Pattern(regexp = "^\\+?[0-9]*$", message = "Please provide a valid phone number.")
         String phone,
 
-        @Size(min = 3, max = 30, message = "The twitter pseudo field must contain between 3 and 30 characters.")
-        @Nullable String twitter,
+        @Nullable
+        @Pattern(regexp = "^$|^[a-zA-Z0-9_]{3,30}$", message = "The twitter pseudo must be between 3 and 30 characters or empty.")
+        String twitter,
 
-        @Size(min = 3, max = 30, message = "The twitter pseudo field must contain between 3 and 30 characters.")
-        @Nullable String instagram,
+        @Nullable
+        @Pattern(regexp = "^$|^[a-zA-Z0-9_]{3,30}$", message = "The instagram pseudo must be between 3 and 30 characters or empty.")
+        String instagram,
 
-        @Size(min = 3, max = 30, message = "The twitter pseudo field must contain between 3 and 30 characters.")
-        @Nullable String facebook,
+        @Nullable
+        @Pattern(regexp = "^$|^[a-zA-Z0-9_]{3,30}$", message = "The instagram pseudo must be between 3 and 30 characters or empty.")
+        String facebook,
 
         @Nullable
         @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
