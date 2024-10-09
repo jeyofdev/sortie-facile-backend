@@ -1,9 +1,6 @@
 package com.poec.sortie_facile_backend.auth;
 
-import com.poec.sortie_facile_backend.auth.model.LoginRequest;
-import com.poec.sortie_facile_backend.auth.model.AuthResponse;
-import com.poec.sortie_facile_backend.auth.model.RegisterRequest;
-import com.poec.sortie_facile_backend.auth.model.ResetPasswordResponse;
+import com.poec.sortie_facile_backend.auth.model.*;
 import com.poec.sortie_facile_backend.core.interfaces.IAuthService;
 import com.poec.sortie_facile_backend.exceptions.UsernameAlreadyTakenException;
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
@@ -32,7 +29,7 @@ public class AuthService implements IAuthService {
     private final EmailService emailService;
 
     @Override
-    public Map<String, String> register(RegisterRequest request) throws UsernameAlreadyTakenException {
+    public RegisterResponse register(RegisterRequest request) throws UsernameAlreadyTakenException {
 
         if (repository.findByEmail(request.getEmail()).isEmpty()) {
             var user = AuthUser.builder()
@@ -40,16 +37,24 @@ public class AuthService implements IAuthService {
                     .email(request.getEmail())
                     .password(passwordEncoder.encode(request.getPassword()))
                     .role("ROLE_" + request.getRequiredRole())
+                    .isVerified(false)
                     .build();
+
+            // generate validation token
+            String verificationToken = jwtService.generateToken(Map.of("type", "verification"), user, 24 * 60 * 60 * 1000);
+            user.setVerificationToken(verificationToken);
+            user.setVerificationTokenExpiration(LocalDateTime.now().plusDays(1));
 
             repository.save(user);
 
-            // response to client
-            Map<String, String> body = new HashMap<>();
-            body.put("message", "Account successfully created as user");
-            body.put("userId", String.valueOf(user.getId()));
+            // send email
+            emailService.sendValidationEmail(user.getEmail(), verificationToken);
 
-            return body;
+            // response to client
+            return RegisterResponse.builder()
+                    .message("Your registration has been successfully recorded. A validation email has been sent to you. Please check your inbox and follow the instructions to complete your registration.")
+                    .userId(String.valueOf(user.getId()))
+                    .build();
 
         } else {
             throw new UsernameAlreadyTakenException("Username already taken");
@@ -92,7 +97,7 @@ public class AuthService implements IAuthService {
         }
     }
 
-    public AuthResponse requestPasswordReset(String email) {
+    public MessageResponse requestPasswordReset(String email) {
         // get user by email
         AuthUser user = repository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found"));
@@ -112,13 +117,12 @@ public class AuthService implements IAuthService {
         emailService.sendPasswordResetEmail(user.getEmail(), jwtToken);
 
         // return token
-        return AuthResponse.builder()
-                .token(jwtToken)
+        return MessageResponse.builder()
                 .message("An email containing a link to reset your password has been sent to your address. Please check your inbox and follow the instructions.")
                 .build();
     }
 
-    public ResetPasswordResponse resetPassword(String token, String newPassword) {
+    public MessageResponse resetPassword(String token, String newPassword) {
         // check token
         AuthUser user = repository.findByResetToken(token)
                 .orElseThrow(() -> new IllegalStateException("Invalid token"));
@@ -134,8 +138,29 @@ public class AuthService implements IAuthService {
 
         repository.save(user);
 
-        return ResetPasswordResponse.builder()
+        return MessageResponse.builder()
                 .message("Your password has been updated successfully. You can now use your new password to log in.")
+                .build();
+    }
+
+    public MessageResponse validateAccount(String verificationToken) {
+        AuthUser user = repository.findByVerificationToken(verificationToken)
+                .orElseThrow(() -> new IllegalStateException("Invalid verification token"));
+
+        // check if the token is expired
+        if (user.getVerificationTokenExpiration().isBefore(LocalDateTime.now())) {
+            throw new IllegalStateException("Verification token has expired");
+        }
+
+        // mark user as verified and save user
+        user.setVerified(true);
+        user.setVerificationToken(null);
+        user.setVerificationTokenExpiration(null);
+
+        repository.save(user);
+
+        return MessageResponse.builder()
+                .message("Your email is verified! You now have full access to your account.")
                 .build();
     }
 }

@@ -42,6 +42,18 @@ public class AuthUser implements UserDetails {
     private String role;
 
     @JsonIgnore
+    @Column(name = "is_verified", columnDefinition = "BOOLEAN")
+    private boolean isVerified;
+
+    @JsonIgnore
+    @Column(name = "verification_token", columnDefinition = "VARCHAR(255)")
+    private String verificationToken;
+
+    @JsonIgnore
+    @Column(name = "verification_token_expiration", columnDefinition = "TIMESTAMP")
+    private LocalDateTime verificationTokenExpiration;
+
+    @JsonIgnore
     @Column(name = "reset_token", columnDefinition = "VARCHAR(255)")
     private String resetToken;
 
