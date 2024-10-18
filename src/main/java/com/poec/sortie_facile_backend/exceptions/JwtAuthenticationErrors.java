@@ -26,19 +26,19 @@ public class JwtAuthenticationErrors implements AuthenticationEntryPoint {
 
         if (request.getAttribute("expired_exception") != null) {
             error.put("is_token_expired", "true");
-            error.put("error_message", "JWT has expired. Please log in again.");
+            error.put("message", "JWT has expired. Please log in again.");
         }
         else if (request.getAttribute("malformed_exception") != null) {
             error.put("is_jwt_malformed", "true");
-            error.put("error_message", "JWT is malformed. Please verify its integrity.");
+            error.put("message", "JWT is malformed. Please verify its integrity.");
         }
         else if (request.getAttribute("jwt_exception") != null) {
             error.put("is_jwt_exception", "true");
-            error.put("error_message", "");
+            error.put("message", "");
         }
         else if (request.getAttribute("no_jwt_provided") != null) {
             error.put("no_jwt_provided", "true");
-            error.put("error_message", "No JWT provided.");
+            error.put("message", "No JWT provided.");
         }
 
         new ObjectMapper().writeValue(response.getOutputStream(), error);

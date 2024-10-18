@@ -19,8 +19,8 @@ public class ProfileDataInfo {
     private String twitter;
     private String instagram;
     private String facebook;
-    private String avatar;
     private String description;
+    private String avatar;
     private Long regionId;
     private Long departmentId;
     private Long cityId;

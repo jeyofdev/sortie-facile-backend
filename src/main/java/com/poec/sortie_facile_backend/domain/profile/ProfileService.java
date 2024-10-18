@@ -104,6 +104,9 @@ public class ProfileService extends AbstractDomainService<Profile> {
             existingProfile.setAvatar(profile.getAvatar());
             existingProfile.setPhone(profile.getPhone());
             existingProfile.setDateOfBirth(profile.getDateOfBirth());
+            existingProfile.setTwitter(profile.getTwitter());
+            existingProfile.setInstagram(profile.getInstagram());
+            existingProfile.setFacebook(profile.getFacebook());
 
             // update region id
             if (profile.getRegion() != null) {
