@@ -34,6 +34,16 @@ public class EmailService {
         emailSender.send(message);
     }
 
+    public void sendUpdatePasswordEmail(String toEmail) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setFrom(fromEmail);
+        message.setSubject("Password Updated");
+        message.setText("Good news! Your password has been successfully changed. You can now use your new password to log in to your account. If you didn’t make this change or if you have any issues, feel free to contact us as soon as possible. We’re here to help you keep your account safe.");
+
+        emailSender.send(message);
+    }
+
     public void sendValidationEmail(String email, String verificationToken) {
         String verificationUrl = "http://localhost:3000/auth/verification-account?verificationToken=" + verificationToken;
 

@@ -26,7 +26,7 @@ public class AccessDeniedHandler implements org.springframework.security.web.acc
 
         Map<String, String> error = new HashMap<>();
         error.put("access_denied", "true");
-        error.put("error_message", "You do not have sufficient rights");
+        error.put("message", "You do not have sufficient rights");
 
         new ObjectMapper().writeValue(response.getOutputStream(), error);
     }

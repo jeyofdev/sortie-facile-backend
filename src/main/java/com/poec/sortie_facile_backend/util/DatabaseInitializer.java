@@ -182,7 +182,7 @@ public class DatabaseInitializer implements CommandLineRunner {
         List<LocationCityInfo> cityList = locationDataList.getLocationDataList().stream()
                 .map(location -> new LocationCityInfo(location.getLabel(), location.getZipCode(), location.getDepartmentName()))
                 .distinct()
-              /*  .limit(1000)*/
+                /*.limit(100)*/
                 .toList();
 
         for (LocationCityInfo city : cityList) {
@@ -222,8 +222,8 @@ public class DatabaseInitializer implements CommandLineRunner {
                         profile.getTwitter(),
                         profile.getInstagram(),
                         profile.getFacebook(),
-                        profile.getAvatar(),
                         profile.getDescription(),
+                        profile.getAvatar(),
                         profile.getRegionId(),
                         profile.getDepartmentId(),
                         profile.getCityId(),

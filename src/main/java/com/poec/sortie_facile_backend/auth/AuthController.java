@@ -31,12 +31,24 @@ public class AuthController {
         return new ResponseEntity<>(requestPasswordResetResponse, HttpStatus.OK);
     }
 
-    @PostMapping("/update-password")
+    @PostMapping("/reset-password")
     public ResponseEntity<MessageResponse> resetPassword(
             @RequestParam("resetToken") String resetToken,
             @RequestParam("newPassword") String newPassword
     ) {
         MessageResponse messageResponse = authService.resetPassword(resetToken, newPassword);
+        return new ResponseEntity<>(messageResponse, HttpStatus.OK);
+    }
+
+    @PostMapping("/update-password")
+    public ResponseEntity<MessageResponse> updatePassword(
+            @RequestBody UpdatePasswordRequest changePasswordRequest
+    ) {
+        MessageResponse messageResponse = authService.updatePassword(
+                changePasswordRequest.getOldPassword(),
+                changePasswordRequest.getNewPassword()
+        );
+
         return new ResponseEntity<>(messageResponse, HttpStatus.OK);
     }
 

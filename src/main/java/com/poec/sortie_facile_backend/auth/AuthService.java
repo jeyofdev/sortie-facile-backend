@@ -6,10 +6,13 @@ import com.poec.sortie_facile_backend.exceptions.UsernameAlreadyTakenException;
 import com.poec.sortie_facile_backend.auth_user.AuthUser;
 import com.poec.sortie_facile_backend.auth_user.AuthUserRepository;
 import com.poec.sortie_facile_backend.security.service.JwtService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -141,6 +145,36 @@ public class AuthService implements IAuthService {
         return MessageResponse.builder()
                 .message("Your password has been updated successfully. You can now use your new password to log in.")
                 .build();
+    }
+
+    public MessageResponse updatePassword(String oldPassword, String newPassword) {
+        String roles  = SecurityContextHolder.getContext().getAuthentication().getAuthorities().toString();
+        System.out.println(roles);
+
+        if((roles.equals("[ROLE_ADMIN]")) || (roles.equals("[ROLE_USER]"))) {
+            AuthUser user = repository.findByEmail(SecurityContextHolder.getContext().getAuthentication().getName()).get();
+
+            if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+                throw new IllegalStateException("Old password is incorrect.");
+            }
+
+            if (newPassword == null || newPassword.length() < 8) {
+                throw new IllegalArgumentException("The new password must contain at least 8 characters.");
+            }
+
+            // update password
+            user.setPassword(passwordEncoder.encode(newPassword));
+            repository.save(user);
+
+            // send email
+            emailService.sendUpdatePasswordEmail(user.getEmail());
+
+            return MessageResponse.builder()
+                    .message("Your password has been updated successfully.")
+                    .build();
+        } else {
+            throw new AccessDeniedException("You are not authorized to access this resource");
+        }
     }
 
     public MessageResponse validateAccount(String verificationToken) {

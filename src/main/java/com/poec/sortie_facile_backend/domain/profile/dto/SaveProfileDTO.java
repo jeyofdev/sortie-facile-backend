@@ -52,13 +52,13 @@ public record SaveProfileDTO(
         @Pattern(regexp = "^$|^[a-zA-Z0-9_]{3,30}$", message = "The instagram pseudo must be between 3 and 30 characters or empty.")
         String facebook,
 
-        @Nullable
-        @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
-        String avatar,
-
         @NotNull(message = "The description field is required.")
         @NotBlank(message = "The description field cannot be empty.")
         String description,
+
+        @Nullable
+        @Pattern(regexp = "^(https?|ftp)://[^\s/$.?#].[^\s]*$", message = "The avatar URL must be a valid URL.")
+        String avatar,
 
         @Nullable List<Long> categoryIds,
         @Nullable Long regionId,
