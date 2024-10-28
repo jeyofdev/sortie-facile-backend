@@ -45,9 +45,9 @@ public class ProfileMapper implements BaseDomainMapper<Profile, ProfileDTO, Save
                         profile.getStreetNumber(),
                         profile.getStreet(),
                         profile.getZipCode(),
-                        new RegionDTO(profile.getRegion().getId(), profile.getRegion().getName(), null, null, null),
-                        new DepartmentDTO(profile.getDepartment().getId(), profile.getDepartment().getName(), profile.getDepartment().getNumber(), null, null, null, null),
-                        new CityDTO(profile.getCity().getId(), profile.getCity().getName(), profile.getCity().getZipCode(), null, null, null)
+                        new RegionDTO(profile.getRegion().getId(), Helper.capitalizeEachWord(profile.getRegion().getName()), null, null, null),
+                        new DepartmentDTO(profile.getDepartment().getId(), Helper.capitalizeEachWord(profile.getDepartment().getName()), profile.getDepartment().getNumber(), null, null, null, null),
+                        new CityDTO(profile.getCity().getId(), Helper.capitalizeEachWord(profile.getCity().getName()), profile.getCity().getZipCode(), null, null, null)
                 ),
                 new ContactFormat(
                         profile.getPhone(),

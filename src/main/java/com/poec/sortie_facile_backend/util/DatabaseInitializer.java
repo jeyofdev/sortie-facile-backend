@@ -87,17 +87,37 @@ public class DatabaseInitializer implements CommandLineRunner {
         ListLocationDataResponse locationDataList = locationDataService.getAllDatas();
         AllDataResponse allDataList = allDataService.getAllDatas();
 
-        if (this.authUserRepository.findByEmail("admin@admin.com").isEmpty()) {
+        if (this.authUserRepository.findByEmail("admin@admin.fr").isEmpty()) {
             this.createUsers(allDataList);
         }
 
-        this.createContacts(allDataList);
-        this.createRegions(locationDataList);
-        this.createDepartments(locationDataList);
-        this.createCities(locationDataList);
-        this.createCategories(allDataList);
-        this.createProfiles(allDataList);
-        this.createActivities(allDataList);
+        if (this.contactRepository.count() <= 0) {
+            this.createContacts(allDataList);
+        };
+
+        if (this.regionRepository.count() <= 0) {
+            this.createRegions(locationDataList);
+        };
+
+        if (this.departmentRepository.count() <= 0) {
+            this.createDepartments(locationDataList);
+        };
+
+        if (this.cityRepository.count() <= 0) {
+            this.createCities(locationDataList);
+        };
+
+        if (this.categoryRepository.count() <= 0) {
+            this.createCategories(allDataList);
+        };
+
+        if (this.profileRepository.count() <= 0) {
+            this.createProfiles(allDataList);
+        };
+
+        if (this.activityRepository.count() <= 0) {
+            this.createActivities(allDataList);
+        };
     }
 
     private void createUsers(AllDataResponse allDataList) {
