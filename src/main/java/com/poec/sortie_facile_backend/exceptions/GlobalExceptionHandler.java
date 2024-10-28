@@ -83,6 +83,22 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * to handle the case where a method was invoked while the object was not in a suitable state to execute it
+     */
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.BAD_REQUEST, request, null);
+    }
+
+    /**
+     * to handle the case where a method was called with one or more invalid arguments
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException exception, HttpServletRequest request) {
+        return handleException(exception, HttpStatus.BAD_REQUEST, request, null);
+    }
+
+    /**
      * to handle the case when the incoming request does not match the expected type.
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
