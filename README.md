@@ -3,9 +3,9 @@
 </p>
 
 <p align="center">
-	<img src="https://img.shields.io/github/last-commit/jeyofdev/spring-dto-mapper?style=flat-square&logo=git&logoColor=white&color=157bed" alt="last-commit">
-	<img src="https://img.shields.io/github/languages/top/jeyofdev/spring-dto-mapper?style=flat-square&color=157bed" alt="repo-top-language">
-	<img src="https://img.shields.io/github/languages/count/jeyofdev/spring-dto-mapper?style=flat-square&color=157bed" alt="repo-language-count">
+	<img src="https://img.shields.io/github/last-commit/jeyofdev/sortie-facile-backend?style=flat-square&logo=git&logoColor=white&color=157bed" alt="last-commit">
+	<img src="https://img.shields.io/github/languages/top/jeyofdev/sortie-facile-backend?style=flat-square&color=157bed" alt="repo-top-language">
+	<img src="https://img.shields.io/github/languages/count/jeyofdev/sortie-facile-backend?style=flat-square&color=157bed" alt="repo-language-count">
 <p>
 
 <p align="center">
